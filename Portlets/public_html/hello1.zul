@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+
+	<script type="text/javascript" src="/zksandbox.js.dsp"/>
+
+	<window title="My First window" border="normal" width="200px" apply="zk.TestEventComposer">
+		<div>
+		Hello, World!
+		<label id="docTypeLabel">unknown</label>
+		</div>
+		<div>
+		<button id="zkr" label="zkr"/>
+		<label id="zkrLabel">Not clicked</label>
+		</div>
+		<div>
+		<button id="rasp" label="rasp"/>
+		<label id="raspLabel">Not clicked</label>
+		</div>
+		<div>
+		<button id="money" label="money"/>
+		<label id="moneyLabel">Not clicked</label>
+		</div>
+	</window>
+
+</zk>

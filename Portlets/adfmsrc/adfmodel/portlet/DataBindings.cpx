@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.61.92" id="DataBindings" SeparateXMLFiles="false"
+             Package="adfmodel.portlet" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/portlet/bindings"
+             className="oracle.adf.model.portlet.binding.PortletBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adfdtinternal.view.faces.portlet.PortletDefinitionDTFactory"/>
+  </definitionFactories>
+</Application>

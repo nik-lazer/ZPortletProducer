@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+    <library-property>
+        <name>org.zkoss.web.servlet.http.URLEncoder</name>
+        <value>zk.PortletBridgeURLEncoder</value>
+    </library-property>
+    <client-config>
+        <debug-js>true</debug-js>
+    </client-config>
+    <library-property>
+        <name>org.zkoss.web.classWebResource.cache</name>
+        <value>false</value>
+    </library-property>
+	<system-config>
+		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
+	</system-config>
+</zk>
