@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Hello"?>
 <zk>
-<?script src="/zksandbox.js.dsp"?>
+<script type="text/javascript" src="/zksandbox.js.dsp"/>
 <window title="My First window" border="normal" width="200px" apply="zk.TestComposer">
     Hello, World!
     <button id="btn" label="Hi"/>

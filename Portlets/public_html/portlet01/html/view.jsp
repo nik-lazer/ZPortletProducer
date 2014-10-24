@@ -4,11 +4,19 @@
 <%@ taglib uri = "http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <portlet:defineObjects/>
 <link href="<%=renderResponse.encodeURL(renderRequest.getContextPath()+"/portlet01/html/css.jsp")%>" type="text/css" charset="UTF-8" rel="stylesheet">
-<script type="text/javascript" src="<%=response.encodeURL(request.getContextPath()+"/portlet01/js/jquery.js")%>"></script>
-<script type="text/javascript" src="<%=response.encodeURL(request.getContextPath()+"/portlet01/html/js.jsp")%>"></script>
+<%
+	request.setAttribute("oracle.portlet.server.useStatelessProxying", Boolean.TRUE);
+	String jQueryUrl = response.encodeURL(request.getContextPath()+"/portlet01/js/jquery.js");
+	String jsUrl = response.encodeURL(request.getContextPath()+"/portlet01/html/js.jsp");
+	String imgUrl = response.encodeURL(request.getContextPath()+"/portlet01/img/1.jpg");
+	String testUrl = response.encodeURL(request.getContextPath()+"/portlet01/html/test2.html");
+	request.removeAttribute("oracle.portlet.server.useStatelessProxying");
+%>
+<script type="text/javascript" src="<%=jQueryUrl%>"></script>
+<script type="text/javascript" src="<%=jsUrl%>"></script>
 <style>
     .portlet-font {
-        background-image: url("<%=renderResponse.encodeURL(request.getContextPath()+"/portlet01/img/1.jpg")%>");
+        background-image: url("<%=imgUrl%>");
     }
 
 </style>
@@ -18,7 +26,7 @@
         url2 = val;
     }
 
-    test2('<%=renderResponse.encodeURL(request.getContextPath()+"/portlet01/html/test2.html")%>');
+    test2('<%=testUrl%>');
     jQuery(function() {
         $("#target2").load(url2, function() {
             $("#result2").html("Success2");
