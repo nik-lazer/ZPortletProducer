@@ -1,4 +1,5 @@
 Portlets/deploy/*.*
+Portlets/classes/*
 deploy/*.*
 out
 *.class
