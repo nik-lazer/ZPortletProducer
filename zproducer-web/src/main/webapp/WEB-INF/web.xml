@@ -1,0 +1,281 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+	<filter>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<filter-class>oracle.portlet.server.service.ContextFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRPBaseService</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRP_v2_Markup_Service</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRPServiceDescriptionService</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRP_v2_ServiceDescription_Service</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRPRegistrationService</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRP_v2_Registration_Service</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRPPortletManagementService</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>portletfilter</filter-name>
+		<servlet-name>WSRP_v2_PortletManagement_Service</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>JpsFilter</filter-name>
+		<servlet-name>WSRPBaseService</servlet-name>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<!--Added by WSRP install tool-->
+		<filter-name>JpsFilter</filter-name>
+		<servlet-name>WSRP_v2_Markup_Service</servlet-name>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPTestPage</servlet-name>
+		<servlet-class>oracle.portlet.producer.container.TestPage</servlet-class>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRPPortletManagementService</description>
+		<display-name>Web Service WSRPPortletManagementService</display-name>
+		<servlet-name>WSRPPortletManagementService</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v1.soap.WSRP_v1_PortletManagement_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v1_PortletManagement</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRPRegistrationService</description>
+		<display-name>Web Service WSRPRegistrationService</display-name>
+		<servlet-name>WSRPRegistrationService</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v1.soap.WSRP_v1_Registration_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v1_Registration</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRPBaseService</description>
+		<display-name>Web Service WSRPBaseService</display-name>
+		<servlet-name>WSRPBaseService</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v1.soap.WSRP_v1_Markup_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v1_Markup</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRPServiceDescriptionService</description>
+		<display-name>Web Service WSRPServiceDescriptionService</display-name>
+		<servlet-name>WSRPServiceDescriptionService</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v1.soap.WSRP_v1_ServiceDescription_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v1_ServiceDescription</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRP_v2_ServiceDescription_Service</description>
+		<display-name>Web Service WSRP_v2_ServiceDescription_Service</display-name>
+		<servlet-name>WSRP_v2_ServiceDescription_Service</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v2.soap.WSRP_v2_ServiceDescription_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v2_ServiceDescription</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRP_v2_Markup_Service</description>
+		<display-name>Web Service WSRP_v2_Markup_Service</display-name>
+		<servlet-name>WSRP_v2_Markup_Service</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v2.soap.WSRP_v2_Markup_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v2_Markup</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRP_v2_Registration_Service</description>
+		<display-name>Web Service WSRP_v2_Registration_Service</display-name>
+		<servlet-name>WSRP_v2_Registration_Service</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v2.soap.WSRP_v2_Registration_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v2_Registration</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<description>Web Service WSRP_v2_PortletManagement_Service</description>
+		<display-name>Web Service WSRP_v2_PortletManagement_Service</display-name>
+		<servlet-name>WSRP_v2_PortletManagement_Service</servlet-name>
+		<servlet-class>oracle.j2ee.ws.server.JAXRPCServlet</servlet-class>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceInterface</param-name>
+			<param-value>oracle.portlet.wsrp.v2.soap.WSRP_v2_PortletManagement_PortType</param-value>
+		</init-param>
+		<init-param>
+			<param-name>oracle.webservices.jaxrpc.ServiceImpl</param-name>
+			<param-value>oracle.portlet.server.adapter.web.WSRP_v2_PortletManagement</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<!--Added by WSRP install tool-->
+		<servlet-name>PortletProducerResourceServlet</servlet-name>
+		<servlet-class>oracle.portlet.producer.container.endpoint.resourceservlet.ResourceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPTestPage</servlet-name>
+		<url-pattern>/info</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPBaseService</servlet-name>
+		<url-pattern>/portlets/WSRPBaseService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRP_v2_Markup_Service</servlet-name>
+		<url-pattern>/portlets/WSRP_v2_Markup_Service</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPPortletManagementService</servlet-name>
+		<url-pattern>/portlets/WSRPPortletManagementService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRP_v2_PortletManagement_Service</servlet-name>
+		<url-pattern>/portlets/WSRP_v2_PortletManagement_Service</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPRegistrationService</servlet-name>
+		<url-pattern>/portlets/WSRPRegistrationService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRP_v2_Registration_Service</servlet-name>
+		<url-pattern>/portlets/WSRP_v2_Registration_Service</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPServiceDescriptionService</servlet-name>
+		<url-pattern>/portlets/WSRPServiceDescriptionService</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPServiceDescriptionService</servlet-name>
+		<url-pattern>/portlets/wsrp1</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRPServiceDescriptionService</servlet-name>
+		<url-pattern>/portlets</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRP_v2_ServiceDescription_Service</servlet-name>
+		<url-pattern>/portlets/WSRP_v2_ServiceDescription_Service</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<!--Added by WSRP install tool-->
+		<servlet-name>WSRP_v2_ServiceDescription_Service</servlet-name>
+		<url-pattern>/portlets/wsrp2</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PortletProducerResourceServlet</servlet-name>
+		<url-pattern>/portlets/resources/*</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<!--Added by WSRP install tool-->
+		<welcome-file>info</welcome-file>
+	</welcome-file-list>
+	<env-entry>
+		<description>Consumer preference store</description>
+		<env-entry-name>oracle/portal/wsrp/server/persistentStore</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>Consumer</env-entry-value>
+	</env-entry>
+	<env-entry>
+		<env-entry-name>oracle/portal/wsrp/server/enableJavaObjectCache</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>true</env-entry-value>
+	</env-entry>
+</web-app>

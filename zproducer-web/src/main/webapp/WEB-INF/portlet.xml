@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<portlet-app version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <portlet id="1362982663494">
+        <portlet-name>portlet01</portlet-name>
+        <display-name xml:lang="en-US">Portlet01</display-name>
+        <display-name xml:lang="en">English Display Name</display-name>
+        <portlet-class>lan.test.portlet.simple.Portlet01</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>view</portlet-mode>
+        </supports>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>edit</portlet-mode>
+        </supports>
+        <supported-locale>en-US</supported-locale>
+        <resource-bundle>lan.test.portlet.resource.Portlet01Bundle</resource-bundle>
+        <portlet-info>
+            <title>Portlet01</title>
+            <short-title>Portlet01</short-title>
+            <keywords/>
+        </portlet-info>
+        <portlet-preferences>
+            <preference>
+                <name>portletTitle</name>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+    <portlet>
+   <description xml:lang="EN">HelloZK</description>
+   <portlet-name>HelloZK</portlet-name>
+   <display-name xml:lang="EN">HelloZK</display-name>
+   <portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+   <expiration-cache>0</expiration-cache>
+   <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+   </supports>
+   <supported-locale>en</supported-locale>
+   <portlet-info>
+      <title>HelloZK Portlet</title>
+      <short-title>HelloZK</short-title>
+      <keywords>zk</keywords>
+      </portlet-info>
+   <portlet-preferences>
+   <preference>
+      <name>zk_page</name>
+      <value>/hello.zul</value>
+   </preference>
+   </portlet-preferences>
+   <!-- 
+   <security-role-ref>
+      <role-name>power-user</role-name>
+      </security-role-ref>
+      <security-role-ref>
+      <role-name>user</role-name>
+      </security-role-ref>
+   <security-role-ref>
+      <role-name>administrator</role-name>
+   </security-role-ref>
+   -->
+	    <supported-public-render-parameter>location</supported-public-render-parameter>
+    </portlet>
+
+	<portlet>
+		<description xml:lang="EN">HelloZK Recent</description>
+		<portlet-name>HelloZK Recent</portlet-name>
+		<display-name xml:lang="EN">HelloZK Recent</display-name>
+		<portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<portlet-info>
+			<title>HelloZK Portlet Recent</title>
+			<short-title>HelloZK Recent</short-title>
+			<keywords>zk,recent</keywords>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>zk_page</name>
+				<value>/hello_recent.zul</value>
+			</preference>
+		</portlet-preferences>
+		<supported-public-render-parameter>location</supported-public-render-parameter>
+	</portlet>
+
+	<portlet>
+		<portlet-name>CatalogPortlet</portlet-name>
+		<display-name xml:lang="en-US">Catalog Portlet</display-name>
+		<display-name xml:lang="en">Catalog English Portlet</display-name>
+		<portlet-class>lan.test.portlet.simple.CatalogPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en-US</supported-locale>
+		<portlet-info>
+			<title>Catalog Portlet 01 long</title>
+			<short-title>Catalog Portlet 01</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>portletTitle</name>
+			</preference>
+		</portlet-preferences>
+                <supported-public-render-parameter>location</supported-public-render-parameter>
+        </portlet>
+
+	<portlet>
+		<portlet-name>RecentPortlet</portlet-name>
+		<display-name xml:lang="en-US">Recent Portlet</display-name>
+		<display-name xml:lang="en">Recent English Portlet</display-name>
+		<portlet-class>lan.test.portlet.simple.RecentPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en-US</supported-locale>
+		<portlet-info>
+			<title>Recent Portlet 01 long</title>
+			<short-title>Recent Portlet 01</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>portletTitle</name>
+			</preference>
+		</portlet-preferences>
+                  <supported-public-render-parameter>location</supported-public-render-parameter>
+ </portlet>
+
+
+	<portlet>
+		<portlet-name>InitPortlet</portlet-name>
+		<display-name xml:lang="en-US">Init Portlet</display-name>
+		<display-name xml:lang="en">Init English Portlet</display-name>
+		<portlet-class>lan.test.portlet.simple.InitPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en-US</supported-locale>
+		<portlet-info>
+			<title>Init Portlet</title>
+			<short-title>Init Portlet</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>portletTitle</name>
+			</preference>
+		</portlet-preferences>
+		<!--<supported-publishing-event>
+			<qname xmlns:x="http://otr.ru/testevent">x:testEvent</qname>
+		</supported-publishing-event>-->
+		<!--<supported-public-render-parameter>docTypeName</supported-public-render-parameter>-->
+	</portlet>
+<portlet>
+		<portlet-name>zk-portlet</portlet-name>
+		<display-name xml:lang="ru">ZKPortlet</display-name>
+		<display-name xml:lang="en">English ZkPortlet</display-name>
+		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
+		<!--<portlet-class>com.otr.sufd.portlet.UfosMainPortlet</portlet-class>-->
+		<portlet-class>lan.test.portlet.zk.TestEventDhtmlLayoutPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>ru</supported-locale>
+		<!--<resource-bundle>com.otr.   sufd.portlet.resource.UfosMainPortletBundle</resource-bundle>-->
+		<portlet-info>
+			<title>ZKPortlet</title>
+			<short-title>ZKPortlet</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>zk_page</name>
+				<value>/hello1.zul</value>
+			</preference>
+		</portlet-preferences>
+		<!--<supported-processing-event>
+			<qname xmlns:x="http://otr.ru/testevent">x:testEvent</qname>
+		</supported-processing-event>-->
+		<!--<supported-public-render-parameter>docTypeName</supported-public-render-parameter>-->
+	</portlet>
+
+	<portlet>
+		<portlet-name>zk-recent-portlet</portlet-name>
+		<display-name xml:lang="ru">ZKRecentPortlet</display-name>
+		<display-name xml:lang="en">English Recent ZkPortlet</display-name>
+		<portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>ru</supported-locale>
+		<!--<resource-bundle>com.otr.   sufd.portlet.resource.UfosMainPortletBundle</resource-bundle>-->
+		<portlet-info>
+			<title>ZKRecentPortlet</title>
+			<short-title>ZKRecentPortlet</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>zk_page</name>
+				<value>/recent.zul</value>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+
+
+	<custom-portlet-mode>
+		<portlet-mode>about</portlet-mode>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<portlet-mode>config</portlet-mode>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<portlet-mode>edit_defaults</portlet-mode>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<portlet-mode>preview</portlet-mode>
+	</custom-portlet-mode>
+	<custom-portlet-mode>
+		<portlet-mode>print</portlet-mode>
+	</custom-portlet-mode>
+
+	<!--<default-namespace>http://otr.ru/testevent</default-namespace>-->
+	<!--<event-definition>
+		<qname xmlns:x="http://otr.ru/testevent">x:testEvent</qname>
+		<value-type>lan.lan.test.portlet.zk.zk.TestEvent</value-type>
+	</event-definition>-->
+
+    <public-render-parameter>
+        <identifier>location</identifier>
+        <name>location</name>
+    </public-render-parameter>
+	<!--
+	<public-render-parameter>
+		<identifier>docTypeName</identifier>
+		<name>docTypeName</name>
+	</public-render-parameter>
+	-->
+
+    <container-runtime-option>
+		<name>javax.portlet.actionScopedRequestAttributes</name>
+		<value>true</value>
+	</container-runtime-option>
+	<container-runtime-option>
+		<name>javax.portlet.renderHeaders</name>
+		<value>true</value>
+	</container-runtime-option>
+	<container-runtime-option>
+		<name>com.oracle.portlet.minimumWsrpVersion</name>
+		<value>2</value>
+	</container-runtime-option>
+
+</portlet-app>

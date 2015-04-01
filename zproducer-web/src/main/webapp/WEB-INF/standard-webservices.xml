@@ -1,0 +1,78 @@
+<webservices xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://www.ibm.com/webservices/xsd/j2ee_web_services_1_1.xsd"
+             version="1.1">
+	<webservice-description>
+		<webservice-description-name>WSRP_v1_Service</webservice-description-name>
+		<wsdl-file>WEB-INF/wsdl/WSRP_v1_Service.wsdl</wsdl-file>
+		<jaxrpc-mapping-file>WEB-INF/WSRP_v1_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
+		<port-component>
+			<port-component-name>WSRPPortletManagementService</port-component-name>
+			<wsdl-port xmlns:wsa0="urn:oasis:names:tc:wsrp:v1:wsdl">wsa0:WSRPPortletManagementService</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v1.soap.WSRP_v1_PortletManagement_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRPPortletManagementService</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRPRegistrationService</port-component-name>
+			<wsdl-port xmlns:wsa1="urn:oasis:names:tc:wsrp:v1:wsdl">wsa1:WSRPRegistrationService</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v1.soap.WSRP_v1_Registration_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRPRegistrationService</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRPBaseService</port-component-name>
+			<wsdl-port xmlns:wsa2="urn:oasis:names:tc:wsrp:v1:wsdl">wsa2:WSRPBaseService</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v1.soap.WSRP_v1_Markup_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRPBaseService</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRPServiceDescriptionService</port-component-name>
+			<wsdl-port xmlns:wsa3="urn:oasis:names:tc:wsrp:v1:wsdl">wsa3:WSRPServiceDescriptionService</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v1.soap.WSRP_v1_ServiceDescription_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRPServiceDescriptionService</servlet-link>
+			</service-impl-bean>
+		</port-component>
+	</webservice-description>
+	<webservice-description>
+		<webservice-description-name>WSRP_v2_Service</webservice-description-name>
+		<wsdl-file>WEB-INF/wsdl/WSRP_v2_Service.wsdl</wsdl-file>
+		<jaxrpc-mapping-file>WEB-INF/WSRP_v2_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
+		<port-component>
+			<port-component-name>WSRP_v2_ServiceDescription_Service</port-component-name>
+			<wsdl-port xmlns:wsa0="urn:oasis:names:tc:wsrp:v2:wsdl">wsa0:WSRP_v2_ServiceDescription_Service</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v2.soap.WSRP_v2_ServiceDescription_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRP_v2_ServiceDescription_Service</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRP_v2_Markup_Service</port-component-name>
+			<wsdl-port xmlns:wsa1="urn:oasis:names:tc:wsrp:v2:wsdl">wsa1:WSRP_v2_Markup_Service</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v2.soap.WSRP_v2_Markup_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRP_v2_Markup_Service</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRP_v2_Registration_Service</port-component-name>
+			<wsdl-port xmlns:wsa2="urn:oasis:names:tc:wsrp:v2:wsdl">wsa2:WSRP_v2_Registration_Service</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v2.soap.WSRP_v2_Registration_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRP_v2_Registration_Service</servlet-link>
+			</service-impl-bean>
+		</port-component>
+		<port-component>
+			<port-component-name>WSRP_v2_PortletManagement_Service</port-component-name>
+			<wsdl-port xmlns:wsa3="urn:oasis:names:tc:wsrp:v2:wsdl">wsa3:WSRP_v2_PortletManagement_Service</wsdl-port>
+			<service-endpoint-interface>oracle.portlet.wsrp.v2.soap.WSRP_v2_PortletManagement_PortType</service-endpoint-interface>
+			<service-impl-bean>
+				<servlet-link>WSRP_v2_PortletManagement_Service</servlet-link>
+			</service-impl-bean>
+		</port-component>
+	</webservice-description>
+</webservices>

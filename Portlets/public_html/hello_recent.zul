@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?page title="Hello Recent"?>
-<zk>
-<script type="text/javascript" src="/zksandbox.js.dsp"/>
-<window title="My second window" border="normal" width="200px" apply="zk.TestRecentComposer">
-    <div id="hitext">Hello, World!</div>
-    <button id="hibutton" label="Hi" onClick='alert("Welcome")'/>
-</window>
-</zk>
