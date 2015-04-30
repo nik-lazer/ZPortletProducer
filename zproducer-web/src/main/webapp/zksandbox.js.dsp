@@ -3,8 +3,9 @@
 <%@ taglib uri="http://www.zkoss.org/dsp/zk/core" prefix="z" %>
 ${z:setCWRCacheControl()}
 <c:include page="~./js/zul.layout.wpd"/>
+<c:include page="~./js/zul.lang.wpd"/>
 <c:include page="~./js/zul.utl.wpd"/>
 <c:include page="~./js/zul.wnd.wpd"/>
 <c:include page="~./js/zul.box.wpd"/>
-<c:include page="~./js/lan.lan.test.portlet.zk.zk.cpsp.wpd"/>
+<c:include page="~./js/zk.cpsp.wpd"/>
 

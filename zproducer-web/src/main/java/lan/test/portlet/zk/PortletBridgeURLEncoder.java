@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * URLEncoder для запуска УФОСа как портлета
- * @author Pobedenniy Alexey
+ * @author nik-lazer
  */
 public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 	private static final String WSRP_TOKEN = "wsrp_rewrite";
-	private String portalPath = "Application1-Portal-context-root";
+	private String portalPath = "Application6-Portal-context-root";
 
 	public String encodeURL(ServletContext ctx, ServletRequest request, ServletResponse response, String uri, Encodes.URLEncoder defaultEncoder) throws Exception {
 		if (uri.startsWith("images")) {
@@ -23,7 +23,7 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 		String defUrl = defaultEncoder.encodeURL(ctx, request, response, uri, defaultEncoder);
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-			if (!defUrl.startsWith(WSRP_TOKEN) && isPortletRequest(httpServletRequest)) {
+			if (!defUrl.startsWith(WSRP_TOKEN)) {
 				if (defUrl.startsWith(httpServletRequest.getContextPath())) {
 					defUrl = defUrl.replaceFirst(httpServletRequest.getContextPath(), getPortalPrefix());
 					defUrl += "?ses=" + ((HttpServletRequest) request).getRequestedSessionId();
@@ -37,12 +37,6 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 		return defUrl;
 	}
 
-	private boolean isPortletRequest(HttpServletRequest httpServletRequest) {
-		String referer = httpServletRequest.getHeader("referer");
-		String keyPath = getPortalContextPath() + "/" + getPortletKeyword();
-		return referer != null && referer.contains(keyPath);
-	}
-
 	private String getPortalPrefix() {
 		return "/" + getPortalContextPath() + getPortalSuffix();
 	}
@@ -53,9 +47,5 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 
 	private String getPortalContextPath() {
 		return portalPath;
-	}
-
-	private String getPortletKeyword() {
-		return "adfportlet";
 	}
 }

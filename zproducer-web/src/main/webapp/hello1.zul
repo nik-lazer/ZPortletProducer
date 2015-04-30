@@ -3,7 +3,7 @@
 
 	<script type="text/javascript" src="/zksandbox.js.dsp"/>
 
-	<window title="My First window" border="normal" width="200px" apply="TestEventComposer">
+	<window title="My First window" border="normal" width="200px" apply="lan.test.portlet.zk.TestEventComposer">
 		<div>
 		Hello, World!
 		<label id="docTypeLabel">unknown</label>

@@ -12,8 +12,8 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * TODO: comment
- * @author lazarev_nv 20.06.2013   14:52
+ * Composer for hello.zul
+ * @author nik-lazer 20.06.2013   14:52
  */
 public class TestComposer extends SelectorComposer {
 	@Wire

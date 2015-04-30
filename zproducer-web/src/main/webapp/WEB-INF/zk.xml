@@ -2,7 +2,7 @@
 <zk>
     <library-property>
         <name>org.zkoss.web.servlet.http.URLEncoder</name>
-        <value>PortletBridgeURLEncoder</value>
+        <value>lan.test.portlet.zk.PortletBridgeURLEncoder</value>
     </library-property>
     <client-config>
         <debug-js>true</debug-js>
@@ -12,6 +12,6 @@
         <value>false</value>
     </library-property>
 	<system-config>
-		<cache-provider-class>org.zkoss.lan.lan.test.portlet.zk.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
+		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
 	</system-config>
 </zk>
