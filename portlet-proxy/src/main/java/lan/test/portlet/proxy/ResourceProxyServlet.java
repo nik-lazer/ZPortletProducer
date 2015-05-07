@@ -8,6 +8,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -18,6 +20,7 @@ import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
 import javax.servlet.ServletConfig;
@@ -33,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -77,7 +81,8 @@ public class ResourceProxyServlet extends HttpServlet {
 		if (ses != null && !ses.isEmpty()) {
 			setSessionId(proxyMethod, ses);
 		}
-		createRequest(request, response, proxyMethod);
+		prepareRequest(request, response, proxyMethod);
+		sendRequest(request, response, proxyMethod);
 	}
 
 	@Override
@@ -90,11 +95,12 @@ public class ResourceProxyServlet extends HttpServlet {
 
 		String uri = getTargetUrl(request);
 		HttpPost httpPost = new HttpPost(uri);
-		createRequest(request, response, httpPost);
+		prepareRequest(request, response, httpPost);
+		fillPostRequest(request, response, httpPost);
+		sendRequest(request, response, httpPost);
 	}
 
-	private void createRequest(HttpServletRequest request, HttpServletResponse response, HttpUriRequest httpUriRequest) throws IOException{
-		CloseableHttpClient client = HttpClients.createDefault();
+	private void prepareRequest(HttpServletRequest request, HttpServletResponse response, HttpUriRequest httpUriRequest) throws IOException{
 		Enumeration<String> requestHeaders = request.getHeaderNames();
 		while (requestHeaders.hasMoreElements()) {
 			String name = requestHeaders.nextElement();
@@ -104,10 +110,31 @@ public class ResourceProxyServlet extends HttpServlet {
 		}
 		httpUriRequest.removeHeaders(HTTP.TRANSFER_ENCODING);
 		httpUriRequest.removeHeaders(HTTP.CONTENT_LEN);
+	}
+
+	private void fillPostRequest(HttpServletRequest request, HttpServletResponse response, HttpPost httpPost) throws IOException{
 		if (ServletFileUpload.isMultipartContent(request)) {
-			httpUriRequest.removeHeaders(HTTP.CONTENT_TYPE);
-			handleMultiPart(request, (HttpPost) httpUriRequest);
+			httpPost.removeHeaders(HTTP.CONTENT_TYPE);
+			handleMultiPart(request, httpPost);
+		} else {
+			String ses = request.getParameter("ses");
+			if (ses != null && !ses.isEmpty()) {
+				setSessionId(httpPost, ses);
+			}
+			Enumeration paramNames = request.getParameterNames();
+			List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+			while (paramNames.hasMoreElements()) {
+				String name = paramNames.nextElement().toString();
+				if (!"ses".equals(name)) {
+					urlParameters.add(new BasicNameValuePair(name, request.getParameter(name)));
+				}
+			}
+			httpPost.setEntity(new UrlEncodedFormEntity(urlParameters));
 		}
+	}
+
+	private void sendRequest(HttpServletRequest request, HttpServletResponse response, HttpUriRequest httpUriRequest) throws IOException{
+		CloseableHttpClient client = HttpClients.createDefault();
 		CloseableHttpResponse httpResponse = client.execute(httpUriRequest);
 		org.apache.http.Header[] responseHeaders = httpResponse.getAllHeaders();
 		for (int i=0; i<responseHeaders.length; i++) {

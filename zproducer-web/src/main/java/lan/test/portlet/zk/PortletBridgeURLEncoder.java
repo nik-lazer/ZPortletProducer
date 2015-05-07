@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * URLEncoder для запуска УФОСа как портлета
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 	private static final String WSRP_TOKEN = "wsrp_rewrite";
-	private String portalPath = "Application6-Portal-context-root";
+	private String portalPath = "Application7-Portal-context-root";
 
 	public String encodeURL(ServletContext ctx, ServletRequest request, ServletResponse response, String uri, Encodes.URLEncoder defaultEncoder) throws Exception {
 		if (uri.startsWith("images")) {
@@ -26,7 +27,10 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 			if (!defUrl.startsWith(WSRP_TOKEN)) {
 				if (defUrl.startsWith(httpServletRequest.getContextPath())) {
 					defUrl = defUrl.replaceFirst(httpServletRequest.getContextPath(), getPortalPrefix());
-					defUrl += "?ses=" + ((HttpServletRequest) request).getRequestedSessionId();
+					HttpSession session = httpServletRequest.getSession();
+					if (session != null) {
+						defUrl += "?ses=" + session.getId();
+					}
 				}
 			}
 			if ("/".equals(uri)) {
