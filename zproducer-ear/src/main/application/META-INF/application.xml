@@ -10,10 +10,4 @@
 			<context-root>zproducer</context-root>
 		</web>
 	</module>
-	<module>
-		<web>
-			<web-uri>portlet-proxy.war</web-uri>
-			<context-root>Application7-Portal-context-root</context-root>
-		</web>
-	</module>
 </application>

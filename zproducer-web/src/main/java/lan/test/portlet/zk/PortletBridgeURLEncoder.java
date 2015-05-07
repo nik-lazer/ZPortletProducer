@@ -24,13 +24,10 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 		String defUrl = defaultEncoder.encodeURL(ctx, request, response, uri, defaultEncoder);
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-			if (!defUrl.startsWith(WSRP_TOKEN)) {
+			if (!defUrl.startsWith(WSRP_TOKEN) && isPortletRequest(httpServletRequest)) {
 				if (defUrl.startsWith(httpServletRequest.getContextPath())) {
 					defUrl = defUrl.replaceFirst(httpServletRequest.getContextPath(), getPortalPrefix());
-					HttpSession session = httpServletRequest.getSession();
-					if (session != null) {
-						defUrl += "?ses=" + session.getId();
-					}
+					defUrl += "?ses=" + ((HttpServletRequest) request).getRequestedSessionId();
 				}
 			}
 			if ("/".equals(uri)) {
@@ -39,6 +36,12 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 		}
 
 		return defUrl;
+	}
+
+	private boolean isPortletRequest(HttpServletRequest httpServletRequest) {
+		String referer = httpServletRequest.getHeader("referer");
+		String keyPath = getPortalContextPath() + "/" + getPortletKeyword();
+		return referer != null && referer.contains(keyPath);
 	}
 
 	private String getPortalPrefix() {
@@ -51,5 +54,9 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 
 	private String getPortalContextPath() {
 		return portalPath;
+	}
+
+	private String getPortletKeyword() {
+		return "adfportlet";
 	}
 }

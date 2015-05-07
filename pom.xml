@@ -7,7 +7,6 @@
 	<modules>
 		<module>zproducer-web</module>
 		<module>zproducer-ear</module>
-		<module>portlet-proxy</module>
 	</modules>
 	<packaging>pom</packaging>
 	<properties>
