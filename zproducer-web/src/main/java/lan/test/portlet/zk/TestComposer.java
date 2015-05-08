@@ -7,6 +7,9 @@ import org.zkoss.zk.ui.event.EventQueue;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Image;
 
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +20,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TestComposer extends SelectorComposer {
 	@Wire
-	org.zkoss.zul.Button btn;
-	private EventQueue eq;
+	Button btn;
+	@Wire
+	Div div;
+	@Wire
+	Image picture;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -30,8 +36,8 @@ public class TestComposer extends SelectorComposer {
 		HttpServletRequest request = (HttpServletRequest) Executions.getCurrent().getNativeRequest();
 
 		Object response = Executions.getCurrent().getNativeResponse();
-		//response.setRenderParameter("location", book.getIsbnNumber().toString());
 		PortletRequest portletRequest = (PortletRequest) request.getAttribute("javax.portlet.request");
 		btn.setLabel("clicked");
+		picture.setSrc("/1.jpg");
 	}
 }

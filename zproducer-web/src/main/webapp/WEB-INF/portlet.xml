@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<portlet-app version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <portlet id="1362982663494">
-        <portlet-name>portlet01</portlet-name>
-        <display-name xml:lang="en-US">Portlet01</display-name>
-        <display-name xml:lang="en">English Display Name</display-name>
-        <portlet-class>lan.test.portlet.simple.Portlet01</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-        </supports>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>edit</portlet-mode>
-        </supports>
-        <supported-locale>en-US</supported-locale>
-        <resource-bundle>lan.test.portlet.resource.Portlet01Bundle</resource-bundle>
-        <portlet-info>
-            <title>Portlet01</title>
-            <short-title>Portlet01</short-title>
-            <keywords/>
-        </portlet-info>
-        <portlet-preferences>
-            <preference>
-                <name>portletTitle</name>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-    <portlet>
-   <description xml:lang="EN">HelloZK</description>
-   <portlet-name>HelloZK</portlet-name>
-   <display-name xml:lang="EN">HelloZK</display-name>
-   <portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
-   <expiration-cache>0</expiration-cache>
-   <supports>
-      <mime-type>text/html</mime-type>
-      <portlet-mode>view</portlet-mode>
-   </supports>
-   <supported-locale>en</supported-locale>
-   <portlet-info>
-      <title>HelloZK Portlet</title>
-      <short-title>HelloZK</short-title>
-      <keywords>zk</keywords>
-      </portlet-info>
-   <portlet-preferences>
-   <preference>
-      <name>zk_page</name>
-      <value>/hello.zul</value>
-   </preference>
-   </portlet-preferences>
-   <!-- 
-   <security-role-ref>
-      <role-name>power-user</role-name>
-      </security-role-ref>
-      <security-role-ref>
-      <role-name>user</role-name>
-      </security-role-ref>
-   <security-role-ref>
-      <role-name>administrator</role-name>
-   </security-role-ref>
-   -->
-	    <supported-public-render-parameter>location</supported-public-render-parameter>
-    </portlet>
+<portlet-app version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<portlet id="1362982663494">
+		<portlet-name>portlet01</portlet-name>
+		<display-name xml:lang="en-US">Portlet01</display-name>
+		<display-name xml:lang="en">English Display Name</display-name>
+		<portlet-class>lan.test.portlet.simple.Portlet01</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>edit</portlet-mode>
+		</supports>
+		<supported-locale>en-US</supported-locale>
+		<resource-bundle>lan.test.portlet.resource.Portlet01Bundle</resource-bundle>
+		<portlet-info>
+			<title>Portlet01</title>
+			<short-title>Portlet01</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>portletTitle</name>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+	<portlet>
+		<description xml:lang="EN">HelloZK</description>
+		<portlet-name>HelloZK</portlet-name>
+		<display-name xml:lang="EN">HelloZK</display-name>
+		<portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<portlet-info>
+			<title>HelloZK Portlet</title>
+			<short-title>HelloZK</short-title>
+			<keywords>zk</keywords>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>zk_page</name>
+				<value>/hello.zul</value>
+			</preference>
+		</portlet-preferences>
+		<!--
+		   <security-role-ref>
+			  <role-name>power-user</role-name>
+			  </security-role-ref>
+			  <security-role-ref>
+			  <role-name>user</role-name>
+			  </security-role-ref>
+		   <security-role-ref>
+			  <role-name>administrator</role-name>
+		   </security-role-ref>
+		   -->
+		<supported-public-render-parameter>location</supported-public-render-parameter>
+	</portlet>
 
 	<portlet>
 		<description xml:lang="EN">HelloZK Recent</description>
@@ -110,8 +111,8 @@
 				<name>portletTitle</name>
 			</preference>
 		</portlet-preferences>
-                <supported-public-render-parameter>location</supported-public-render-parameter>
-        </portlet>
+		<supported-public-render-parameter>location</supported-public-render-parameter>
+	</portlet>
 
 	<portlet>
 		<portlet-name>RecentPortlet</portlet-name>
@@ -134,8 +135,8 @@
 				<name>portletTitle</name>
 			</preference>
 		</portlet-preferences>
-                  <supported-public-render-parameter>location</supported-public-render-parameter>
- </portlet>
+		<supported-public-render-parameter>location</supported-public-render-parameter>
+	</portlet>
 
 
 	<portlet>
@@ -164,7 +165,7 @@
 		</supported-publishing-event>-->
 		<!--<supported-public-render-parameter>docTypeName</supported-public-render-parameter>-->
 	</portlet>
-<portlet>
+	<portlet>
 		<portlet-name>zk-portlet</portlet-name>
 		<display-name xml:lang="ru">ZKPortlet</display-name>
 		<display-name xml:lang="en">English ZkPortlet</display-name>
@@ -243,10 +244,10 @@
 		<value-type>lan.lan.test.portlet.zk.zk.TestEvent</value-type>
 	</event-definition>-->
 
-    <public-render-parameter>
-        <identifier>location</identifier>
-        <name>location</name>
-    </public-render-parameter>
+	<public-render-parameter>
+		<identifier>location</identifier>
+		<name>location</name>
+	</public-render-parameter>
 	<!--
 	<public-render-parameter>
 		<identifier>docTypeName</identifier>
@@ -254,7 +255,7 @@
 	</public-render-parameter>
 	-->
 
-    <container-runtime-option>
+	<container-runtime-option>
 		<name>javax.portlet.actionScopedRequestAttributes</name>
 		<value>true</value>
 	</container-runtime-option>
