@@ -2,6 +2,9 @@
 <%@ taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" %>
 <%@ taglib uri="http://www.zkoss.org/dsp/zk/core" prefix="z" %>
 ${z:setCWRCacheControl()}
+
+var fUploadUrl = '${c:encodeURL('/upload')}';
+
 <c:include page="~./js/zul.layout.wpd"/>
 <c:include page="~./js/zul.lang.wpd"/>
 <c:include page="~./js/zul.utl.wpd"/>
