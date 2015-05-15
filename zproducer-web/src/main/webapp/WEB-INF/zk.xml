@@ -14,4 +14,8 @@
 	<system-config>
 		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
 	</system-config>
+	<listener>
+		<description>App init</description>
+		<listener-class>lan.test.portlet.zk.util.UIUtils</listener-class>
+	</listener>
 </zk>

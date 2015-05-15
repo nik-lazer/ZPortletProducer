@@ -1,6 +1,7 @@
 
 package lan.test.portlet.zk;
 
+import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -22,6 +23,8 @@ public class TestComposer extends SelectorComposer {
 	@Wire
 	Button btn;
 	@Wire
+	Button histButton;
+	@Wire
 	Div div;
 	@Wire
 	Image picture;
@@ -39,5 +42,10 @@ public class TestComposer extends SelectorComposer {
 		PortletRequest portletRequest = (PortletRequest) request.getAttribute("javax.portlet.request");
 		btn.setLabel("clicked");
 		picture.setSrc("/1.jpg");
+	}
+
+	@Listen("onClick = button#histButton")
+	public void badHistory() {
+		WebBrowserHistoryManager.popUrlFromStackAndReplace();
 	}
 }
