@@ -21,7 +21,9 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 		if (uri.startsWith("images")) {
 			uri = "/" + uri;
 		}
+		request.setAttribute("oracle.portlet.server.resourceRequiresRewriting", Boolean.FALSE);
 		String defUrl = defaultEncoder.encodeURL(ctx, request, response, uri, defaultEncoder);
+		request.removeAttribute("oracle.portlet.server.resourceRequiresRewriting");
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 			if (!defUrl.startsWith(WSRP_TOKEN) && isPortletRequest(httpServletRequest)) {
