@@ -1,5 +1,6 @@
 package lan.test.portlet.zk.history;
 
+import lan.test.config.ApplicationContextFactory;
 import lan.test.portlet.zk.util.UIUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.zkoss.json.JSONValue;
@@ -18,7 +19,7 @@ public class WebBrowserHistoryManager {
 	public static final String URL_HISTORY_KEY = "URL_HISTORY_STACK";
 	private static String defaultPage;
 
-	static boolean needRewriteUrl = true;
+	static boolean needRewriteUrl = ApplicationContextFactory.getConfig().isNeedRewriteUrl();
 
 	public static void addNewUrlToStackAndReplace(Map<String, ?> state, String title, String url) {
 		LinkedList<String> stack = (LinkedList<String>) Executions.getCurrent().getSession().getAttribute(URL_HISTORY_KEY);

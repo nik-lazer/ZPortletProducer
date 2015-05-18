@@ -1,5 +1,6 @@
 package lan.test.portlet.zk;
 
+import lan.test.config.ApplicationContextFactory;
 import org.zkoss.web.servlet.http.Encodes;
 
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpSession;
  */
 public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 	private static final String WSRP_TOKEN = "wsrp_rewrite";
-	private String portalPath = "Application7-Portal-context-root";
 
 	public String encodeURL(ServletContext ctx, ServletRequest request, ServletResponse response, String uri, Encodes.URLEncoder defaultEncoder) throws Exception {
 		if (uri.startsWith("images")) {
@@ -51,14 +51,14 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 	}
 
 	private String getPortalSuffix() {
-		return "/resourceproxy/cache/portlets/resources";
+		return ApplicationContextFactory.getConfig().getResContextSuffix();
 	}
 
 	private String getPortalContextPath() {
-		return portalPath;
+		return ApplicationContextFactory.getConfig().getResContextPrefix();
 	}
 
 	private String getPortletKeyword() {
-		return "adfportlet";
+		return ApplicationContextFactory.getConfig().getResPortletKeyword();
 	}
 }
