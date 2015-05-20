@@ -12,5 +12,6 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="applicationContextProvder" class="lan.test.config.ApplicationContextProvider"/>
 	<context:component-scan base-package="lan.test"/>
 </beans>

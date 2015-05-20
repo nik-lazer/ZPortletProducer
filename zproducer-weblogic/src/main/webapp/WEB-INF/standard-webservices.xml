@@ -4,7 +4,7 @@
 	<webservice-description>
 		<webservice-description-name>WSRP_v1_Service</webservice-description-name>
 		<wsdl-file>WEB-INF/wsdl/WSRP_v1_Service.wsdl</wsdl-file>
-		<jaxrpc-mapping-file>WEB-INF/WSRP_v1_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
+		<jaxrpc-mapping-file>WSRP_v1_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
 		<port-component>
 			<port-component-name>WSRPPortletManagementService</port-component-name>
 			<wsdl-port xmlns:wsa0="urn:oasis:names:tc:wsrp:v1:wsdl">wsa0:WSRPPortletManagementService</wsdl-port>
@@ -41,7 +41,7 @@
 	<webservice-description>
 		<webservice-description-name>WSRP_v2_Service</webservice-description-name>
 		<wsdl-file>WEB-INF/wsdl/WSRP_v2_Service.wsdl</wsdl-file>
-		<jaxrpc-mapping-file>WEB-INF/WSRP_v2_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
+		<jaxrpc-mapping-file>WSRP_v2_Service-java-wsdl-mapping.xml</jaxrpc-mapping-file>
 		<port-component>
 			<port-component-name>WSRP_v2_ServiceDescription_Service</port-component-name>
 			<wsdl-port xmlns:wsa0="urn:oasis:names:tc:wsrp:v2:wsdl">wsa0:WSRP_v2_ServiceDescription_Service</wsdl-port>

@@ -1,7 +1,9 @@
 
 package lan.test.portlet.zk;
 
+import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -21,13 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TestComposer extends SelectorComposer {
 	@Wire
-	Button btn;
+	private Button btn;
 	@Wire
-	Button histButton;
+	private Button histButton;
 	@Wire
-	Div div;
+	private Div div;
 	@Wire
-	Image picture;
+	private Image picture;
+	private WebBrowserHistoryManager webBrowserHistoryManager = ApplicationContextProvider.getHistoryManager();
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -46,6 +49,6 @@ public class TestComposer extends SelectorComposer {
 
 	@Listen("onClick = button#histButton")
 	public void badHistory() {
-		WebBrowserHistoryManager.popUrlFromStackAndReplace();
+		webBrowserHistoryManager.popUrlFromStackAndReplace();
 	}
 }

@@ -1,6 +1,6 @@
 package lan.test.portlet.zk;
 
-import lan.test.config.ApplicationContextFactory;
+import lan.test.config.ApplicationContextProvider;
 import org.zkoss.web.servlet.http.Encodes;
 
 
@@ -51,14 +51,14 @@ public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
 	}
 
 	private String getPortalSuffix() {
-		return ApplicationContextFactory.getConfig().getResContextSuffix();
+		return ApplicationContextProvider.getConfig().getResContextSuffix();
 	}
 
 	private String getPortalContextPath() {
-		return ApplicationContextFactory.getConfig().getResContextPrefix();
+		return ApplicationContextProvider.getConfig().getResContextPrefix();
 	}
 
 	private String getPortletKeyword() {
-		return ApplicationContextFactory.getConfig().getResPortletKeyword();
+		return ApplicationContextProvider.getConfig().getResPortletKeyword();
 	}
 }
