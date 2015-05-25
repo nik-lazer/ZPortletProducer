@@ -13,6 +13,7 @@
 		</div>
 		<button id="btn" label="Hi"/>
 	    <button id="histButton" label="Bad history"/>
+	    <button id="downloadButton" label="download"/>
     </vlayout>
 </window>
 </zk>

@@ -1,9 +1,9 @@
-
 package lan.test.portlet.zk;
 
 import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.zkoss.zhtml.Filedownload;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -16,6 +16,14 @@ import org.zkoss.zul.Image;
 
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
+
+import static lan.test.portlet.zk.util.UIUtils.resolveFileName;
 
 /**
  * Composer for hello.zul
@@ -26,6 +34,8 @@ public class TestComposer extends SelectorComposer {
 	private Button btn;
 	@Wire
 	private Button histButton;
+	@Wire
+	private Button downloadButton;
 	@Wire
 	private Div div;
 	@Wire
@@ -50,5 +60,17 @@ public class TestComposer extends SelectorComposer {
 	@Listen("onClick = button#histButton")
 	public void badHistory() {
 		webBrowserHistoryManager.popUrlFromStackAndReplace();
+	}
+
+	@Listen("onClick = button#downloadButton")
+	public void dowloadFile() {
+		String text = "File to download";
+		InputStream inputStream = null;
+		try {
+			inputStream = new ByteArrayInputStream(text.getBytes("UTF-8"));
+			Filedownload.save(inputStream, null, resolveFileName(Calendar.getInstance()));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }

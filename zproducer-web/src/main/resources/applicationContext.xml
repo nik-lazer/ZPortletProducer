@@ -12,6 +12,12 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="config" class="lan.test.config.ConfigBean">
+		<property name="resContextPrefix" value="${resources.context.prefix}"/>
+		<property name="resContextSuffix" value="${resources.context.suffix}"/>
+		<property name="resPortletKeyword" value="${resources.portlet.keyword}"/>
+		<property name="needRewriteUrl" value="${history.needRewriteUrl}"/>
+	</bean>
 	<bean id="applicationContextProvder" class="lan.test.config.ApplicationContextProvider"/>
 	<context:component-scan base-package="lan.test"/>
 </beans>
