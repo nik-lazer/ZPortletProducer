@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-    <client-config>
+	<library-property>
+		<name>org.zkoss.web.servlet.http.URLEncoder</name>
+		<value>lan.test.zk.liferay.PortletURLEncoder</value>
+	</library-property>
+	<client-config>
         <debug-js>true</debug-js>
     </client-config>
     <library-property>
         <name>org.zkoss.web.classWebResource.cache</name>
         <value>false</value>
     </library-property>
+	<library-property>
+		<name>org.zkoss.zk.portlet2.namespacedParameter.enabled</name>
+		<value>true</value>
+	</library-property>
 	<listener>
 		<description>App init</description>
 		<listener-class>lan.test.portlet.zk.util.UIUtils</listener-class>
 	</listener>
+	<system-config>
+		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
+	</system-config>
 
-<!--	<library-property>
-		<name>org.zkoss.zk.portlet.PageRenderPatch.class</name>
-		<value>org.zkoss.zkplus.liferay.JQueryRenderCachedPatch</value>
-	</library-property>
-	<library-property>
-		<name>org.zkoss.zkplus.liferary.jQueryPatch</name>
-		<value>1500</value>
-	</library-property>-->
+
+	<!--	<library-property>
+			<name>org.zkoss.zk.portlet.PageRenderPatch.class</name>
+			<value>org.zkoss.zkplus.liferay.JQueryRenderCachedPatch</value>
+		</library-property>
+		<library-property>
+			<name>org.zkoss.zkplus.liferary.jQueryPatch</name>
+			<value>1500</value>
+		</library-property>-->
 	<library-property>
 		<name>org.zkoss.zk.portlet.PageRenderPatch.class</name>
 		<value>org.zkoss.zkplus.liferay.NonRootContextJQueryRenderPatch</value>

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
+	<library-property>
+		<name>org.zkoss.web.servlet.http.URLEncoder</name>
+		<value>lan.test.portlet.zk.PortletBridgeURLEncoder</value>
+	</library-property>
     <client-config>
         <debug-js>true</debug-js>
     </client-config>
@@ -7,9 +11,6 @@
         <name>org.zkoss.web.classWebResource.cache</name>
         <value>false</value>
     </library-property>
-	<system-config>
-		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
-	</system-config>
 	<listener>
 		<description>App init</description>
 		<listener-class>lan.test.portlet.zk.util.UIUtils</listener-class>
