@@ -28,6 +28,7 @@
 			</preference>
 		</portlet-preferences>
 	</portlet>
+
 	<portlet>
 		<description xml:lang="EN">HelloZK</description>
 		<portlet-name>HelloZK</portlet-name>
@@ -50,7 +51,6 @@
 				<value>/hello.zul</value>
 			</preference>
 		</portlet-preferences>
-		<!--
 		   <security-role-ref>
 			  <role-name>power-user</role-name>
 			  </security-role-ref>
@@ -60,7 +60,6 @@
 		   <security-role-ref>
 			  <role-name>administrator</role-name>
 		   </security-role-ref>
-		   -->
 		<supported-public-render-parameter>location</supported-public-render-parameter>
 	</portlet>
 

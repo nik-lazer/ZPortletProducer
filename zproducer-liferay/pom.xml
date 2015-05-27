@@ -6,9 +6,9 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>zproducer-weblogic</artifactId>
+	<artifactId>zproducer-liferay</artifactId>
 	<packaging>war</packaging>
-	<name>zproducer-weblogic Maven Webapp</name>
+	<name>zproducer-liferay Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -25,7 +25,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>zproducer-weblogic</finalName>
+		<finalName>zproducer-liferay</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
@@ -63,7 +63,6 @@
 					</overlays>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

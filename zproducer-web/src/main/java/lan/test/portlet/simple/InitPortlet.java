@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * TODO: comment
- * @author lazarev_nv 24.06.2013   16:13
+ * @author nik-lazer 24.06.2013   16:13
  */
 public class InitPortlet extends GenericPortlet {
 

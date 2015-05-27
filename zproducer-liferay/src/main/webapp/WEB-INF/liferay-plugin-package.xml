@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 6.2.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_6_2_0.dtd">
+<plugin-package>
+	<name>ZK Producer</name>
+	<module-id>/lan/test/zproducer/war</module-id>
+	<types>
+		<type>portlet</type>
+	</types>
+	<tags>
+		<tag>zproducer</tag>
+	</tags>
+	<short-description>
+		Zkoss Portlet producer
+	</short-description>
+	<change-log>
+		Initial Deployment
+	</change-log>
+
+	<author>nik-lazer</author>
+	<licenses>
+		<license osi-approved="true">GPL</license>
+	</licenses>
+	<liferay-versions>
+		<liferay-version>6.1.0+</liferay-version>
+		<liferay-version>6.2.0+</liferay-version>
+	</liferay-versions>
+</plugin-package>

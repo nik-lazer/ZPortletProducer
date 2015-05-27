@@ -1,6 +1,6 @@
 <%@ page contentType = "text/html; charset=UTF-8"
          pageEncoding = "UTF-8"
-         import = "javax.portlet.*, java.util.*, Portlet01, Portlet01Bundle"%>
+         import = "javax.portlet.*, java.util.*, lan.test.portlet.simple.Portlet01, lan.test.portlet.resource.Portlet01Bundle"%>
 <%@ taglib uri = "http://java.sun.com/portlet_2_0" prefix="portlet"%>
 
 <portlet:defineObjects/>

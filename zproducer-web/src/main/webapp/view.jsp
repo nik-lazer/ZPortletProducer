@@ -1,7 +1,7 @@
 <%@ page contentType = "text/html; charset=UTF-8"
          pageEncoding = "UTF-8"
-         import = "javax.portlet.*, java.util.*, InitPortlet"%>
-<%@ taglib uri = "http://java.sun.com/portlet_2_0" prefix="portlet"%>
+         import = "javax.portlet.*, java.util.*, lan.test.portlet.simple.InitPortlet"%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <portlet:defineObjects/>
 <h1>Test init portlet ant deploy</h1>
 <p class="portlet-font">Welcome, this is the ${renderRequest.portletMode} mode.</p>
