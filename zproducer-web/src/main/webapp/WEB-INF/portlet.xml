@@ -33,7 +33,8 @@
 		<description xml:lang="EN">HelloZK</description>
 		<portlet-name>HelloZK</portlet-name>
 		<display-name xml:lang="EN">HelloZK</display-name>
-		<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>
+		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
+		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -51,15 +52,6 @@
 				<value>/hello.zul</value>
 			</preference>
 		</portlet-preferences>
-		   <security-role-ref>
-			  <role-name>power-user</role-name>
-			  </security-role-ref>
-			  <security-role-ref>
-			  <role-name>user</role-name>
-			  </security-role-ref>
-		   <security-role-ref>
-			  <role-name>administrator</role-name>
-		   </security-role-ref>
 		<supported-public-render-parameter>location</supported-public-render-parameter>
 	</portlet>
 
@@ -67,7 +59,7 @@
 		<description xml:lang="EN">HelloZK Recent</description>
 		<portlet-name>HelloZK Recent</portlet-name>
 		<display-name xml:lang="EN">HelloZK Recent</display-name>
-		<portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
 		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -199,7 +191,7 @@
 		<portlet-name>zk-recent-portlet</portlet-name>
 		<display-name xml:lang="ru">ZKRecentPortlet</display-name>
 		<display-name xml:lang="en">English Recent ZkPortlet</display-name>
-		<portlet-class>lan.test.portlet.zk.UfosDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

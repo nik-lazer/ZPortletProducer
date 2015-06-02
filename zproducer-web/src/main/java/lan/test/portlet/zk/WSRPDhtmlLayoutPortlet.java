@@ -1,5 +1,6 @@
 package lan.test.portlet.zk;
 
+import org.apache.commons.lang3.StringUtils;
 import org.zkoss.lang.Classes;
 import org.zkoss.lang.Exceptions;
 import org.zkoss.lang.Library;
@@ -11,6 +12,10 @@ import org.zkoss.web.portlet.RenderHttpServletRequest;
 import org.zkoss.web.portlet.RenderHttpServletResponse;
 import org.zkoss.web.portlet.ResourceHttpServletRequest;
 import org.zkoss.web.portlet.ResourceHttpServletResponse;
+import org.zkoss.web.servlet.Charsets;
+import org.zkoss.web.servlet.http.Encodes;
+import org.zkoss.web.util.resource.ClassWebResource;
+import org.zkoss.zk.au.http.AuExtension;
 import org.zkoss.zk.au.http.DHtmlUpdateServlet;
 import org.zkoss.zk.mesg.MZk;
 import org.zkoss.zk.ui.Desktop;
@@ -41,6 +46,7 @@ import org.zkoss.zk.ui.util.DesktopRecycle;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -49,7 +55,10 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
@@ -58,10 +67,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * TODO: comment
- * @author lazarev_nv 28.05.2013   15:09
+ * Omplementation WSRP portlet class
+ * @author nik-lazer 28.05.2013   15:09
  */
-public class UfosDhtmlLayoutPortlet extends GenericPortlet {
+public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
+	public static final String PORTLET_RESPONSE = "portlet.response";
+	public static final String CREATE_RESOURCE_URL = "create.resource.url";
+
 	private static final Log log = Log.lookup(DHtmlLayoutPortlet.class);
 
 	/** The parameter or attribute to specify the path of the ZUML page. */
@@ -88,7 +100,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		boolean bRichlet = false;
 		String path = request.getParameter(ATTR_PAGE);
 		if (path == null) {
-			path = (String)request.getAttribute(ATTR_PAGE);
+			path = (String) request.getAttribute(ATTR_PAGE);
 			if (path == null) {
 				PortletPreferences prefs = request.getPreferences();
 				path = prefs.getValue(ATTR_PAGE, null);
@@ -96,7 +108,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 					path = request.getParameter(ATTR_RICHLET);
 					bRichlet = path != null;
 					if (!bRichlet) {
-						path = (String)request.getAttribute(ATTR_RICHLET);
+						path = (String) request.getAttribute(ATTR_RICHLET);
 						bRichlet = path != null;
 						if (!bRichlet) {
 							path = prefs.getValue(ATTR_RICHLET, null);
@@ -118,7 +130,8 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		SessionsCtrl.setCurrent(sess);
 		try {
 			// Bug ZK-1179: process I18N in portlet environment
-			HttpServletRequest httpreq = RenderHttpServletRequest.getInstance(request);
+			HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
+			HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 			HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 			final Object old = I18Ns.setup(httpreq.getSession(), httpreq, httpres,
 					sess.getWebApp().getConfiguration().getResponseCharset());
@@ -132,7 +145,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 			}
 		} finally {
 			SessionsCtrl.requestExit(sess);
-			SessionsCtrl.setCurrent((Session)null);
+			SessionsCtrl.setCurrent((Session) null);
 		}
 	}
 
@@ -145,9 +158,11 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		final WebManager webman = getWebManager();
 		final WebApp wapp = webman.getWebApp();
 
-		final HttpServletRequest httpreq = ResourceHttpServletRequest.getInstance(request);
+		final HttpServletRequest httpServletRequest = ResourceHttpServletRequest.getInstance(request);
+		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
 		final Session sess = getSession(request, false);
+		httpreq.setAttribute(CREATE_RESOURCE_URL, Boolean.TRUE);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
 		boolean compress = false; //Some portal container (a.k.a GateIn) doesn't work with gzipped output stream.
@@ -164,6 +179,33 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		}
 		final Object old = I18Ns.setup(httpreq.getSession(), httpreq, httpres, "UTF-8");
 		try {
+			String resourceID = request.getResourceID();
+			String pathInfo = StringUtils.substringAfter(resourceID, "/zkau");
+			if (pathInfo.startsWith(ClassWebResource.PATH_PREFIX)) {
+				String url = StringUtils.substringAfter(resourceID, ClassWebResource.PATH_PREFIX);
+				ClassWebResource webResource = webman.getClassWebResource();
+				webResource.service(httpreq, httpres, url);
+				return;
+			} else if (StringUtils.isNotEmpty(pathInfo)) {
+				String auExtensionName = pathInfo.substring(1, pathInfo.indexOf("/", 1));
+				final AuExtension aue = updateServlet.getAuExtension("/view");
+				if (aue == null) {
+					httpres.sendError(HttpServletResponse.SC_NOT_FOUND);
+					log.debug("Unknown path info: " + pathInfo);
+					return;
+				}
+
+				Charsets.setup(null, httpreq, httpres, "UTF-8");
+				try {
+					aue.service(httpreq, httpres, pathInfo);
+					if ("view".equals(auExtensionName)) {
+						response.setContentType("application/octet-stream");
+					}
+				} finally {
+					I18Ns.cleanup(httpreq, old);
+				}
+				return; //done
+			}
 			response.setProperty("Pragma", "no-cache");
 			response.setProperty("Cache-Control", "no-cache");
 			response.setProperty("Cache-Control", "no-store");
@@ -195,7 +237,8 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		return sess;
 	}
 
-	/** Process a portlet request.
+	/**
+	 * Process a portlet request.
 	 * @return false if the page is not found.
 	 * @since 3.0.0
 	 */
@@ -205,15 +248,29 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 //		if (log.debugable()) log.debug("Creates from "+path);
 		final WebManager webman = getWebManager();
 		final WebApp wapp = webman.getWebApp();
-		final WebAppCtrl wappc = (WebAppCtrl)wapp;
+		final WebAppCtrl wappc = (WebAppCtrl) wapp;
 
-		final HttpServletRequest httpreq = RenderHttpServletRequest.getInstance(request);
+
+		final HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
+		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 		final ServletContext svlctx = wapp.getServletContext();
+		httpreq.setAttribute("portlet.response", response);
+		//httpreq.setAttribute(CREATE_RESOURCE_URL, Boolean.TRUE);
+
+		try {
+			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);
+			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + Encodes.encodeURL(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
+
+		} catch (ServletException e) {
+			throw new PortletException(e);
+		}
 
 		final DesktopRecycle dtrc = wapp.getConfiguration().getDesktopRecycle();
 		Desktop desktop = dtrc != null ?
-		                  DesktopRecycles.beforeService(dtrc, svlctx, sess, httpreq, httpres, path): null;
+		                  DesktopRecycles.beforeService(dtrc, svlctx, sess, httpreq, httpres, path) : null;
 
 		try {
 			if (desktop != null) { //recycle
@@ -236,7 +293,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 				final RequestInfo ri = new RequestInfoImpl(
 						wapp, sess, desktop, httpreq,
 						PageDefinitions.getLocator(wapp, path));
-				((SessionCtrl)sess).notifyClientRequest(true);
+				((SessionCtrl) sess).notifyClientRequest(true);
 
 				final Page page;
 				final PageRenderPatch patch = getRenderPatch();
@@ -256,7 +313,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 						page.setAttribute("org.zkoss.portlet2.resourceURL", response.encodeURL(url.toString()), Page.PAGE_SCOPE);
 					}
 					wappc.getUiEngine().execNewPage(exec, richlet, page,
-							out != null ? out: response.getWriter());
+							out != null ? out : response.getWriter());
 				} else if (path != null) {
 					final PageDefinition pagedef = uf.getPageDefinition(ri, path);
 					if (pagedef == null)
@@ -271,7 +328,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 						page.setAttribute("org.zkoss.portlet2.resourceURL", response.encodeURL(url.toString()), Page.PAGE_SCOPE);
 					}
 					wappc.getUiEngine().execNewPage(exec, pagedef, page,
-							out != null ? out: response.getWriter());
+							out != null ? out : response.getWriter());
 				} else
 					return true; //nothing to do
 
@@ -284,6 +341,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 		}
 		return true; //success
 	}
+
 	private static PageRenderPatch getRenderPatch() {
 		if (_prpatch != null)
 			return _prpatch;
@@ -300,6 +358,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 					public Writer beforeRender(RequestInfo reqInfo) {
 						return null;
 					}
+
 					public void patchRender(RequestInfo reqInfo, Page page, Writer result, Writer out)
 							throws IOException {
 					}
@@ -308,7 +367,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 				try {
 					patch = (PageRenderPatch) Classes.newInstanceByThread(clsnm);
 				} catch (ClassCastException ex) {
-					throw new UiException(clsnm+" must implement "+PageRenderPatch.class.getName());
+					throw new UiException(clsnm + " must implement " + PageRenderPatch.class.getName());
 				} catch (Throwable ex) {
 					throw UiException.Aide.wrap(ex, "Unable to instantiate");
 				}
@@ -316,6 +375,7 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 			return _prpatch = patch;
 		}
 	}
+
 	private static volatile PageRenderPatch _prpatch;
 
 	private static void fixContentType(RenderResponse response) {
@@ -324,16 +384,18 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 			response.setContentType("text/html;charset=UTF-8");
 	}
 
-	/** Returns the layout servlet.
+	/**
+	 * Returns the layout servlet.
 	 */
 	private final WebManager getWebManager()
 			throws PortletException {
 		final WebManager webman =
-				(WebManager)getPortletContext().getAttribute("javax.zkoss.zk.ui.WebManager");
+				(WebManager) getPortletContext().getAttribute("javax.zkoss.zk.ui.WebManager");
 		if (webman == null)
-			throw new PortletException("The Layout Servlet not found. Make sure <load-on-startup> is specified for "+DHtmlLayoutServlet.class.getName());
+			throw new PortletException("The Layout Servlet not found. Make sure <load-on-startup> is specified for " + DHtmlLayoutServlet.class.getName());
 		return webman;
 	}
+
 	private void handleError(Session sess, RenderRequest request,
 	                         RenderResponse response, String path, Throwable err, String msg)
 			throws PortletException, IOException {
@@ -350,21 +412,21 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 					request.setAttribute("javax.servlet.error.status_code", new Integer(500));
 					if (process(sess, request, response, errpg, false))
 						return; //done
-					log.warning("The error page not found: "+errpg);
+					log.warning("The error page not found: " + errpg);
 				} catch (IOException ex) { //eat it (connection off)
 				} catch (Throwable ex) {
-					log.warning("Failed to load the error page: "+errpg, ex);
+					log.warning("Failed to load the error page: " + errpg, ex);
 				}
 			}
 
 			if (msg == null)
 				msg = Messages.get(MZk.PAGE_FAILED,
-						new Object[] {path, Exceptions.getMessage(err),
+						new Object[]{path, Exceptions.getMessage(err),
 								Exceptions.formatStackTrace(null, err, null, 6)});
 		} else {
 			if (msg == null)
 				msg = path != null ?
-				      Messages.get(MZk.PAGE_NOT_FOUND, new Object[] {path}):
+				      Messages.get(MZk.PAGE_NOT_FOUND, new Object[]{path}) :
 				      Messages.get(MZk.PORTLET_PAGE_REQUIRED);
 		}
 
@@ -378,11 +440,40 @@ public class UfosDhtmlLayoutPortlet extends GenericPortlet {
 	}
 
 	private Page getMainPage(Desktop desktop) {
-		for (Iterator it = desktop.getPages().iterator(); it.hasNext();) {
-			final Page page = (Page)it.next();
-			if (((PageCtrl)page).getOwner() == null)
+		for (Iterator it = desktop.getPages().iterator(); it.hasNext(); ) {
+			final Page page = (Page) it.next();
+			if (((PageCtrl) page).getOwner() == null)
 				return page;
 		}
 		return null;
+	}
+
+	private String createResourceUrl(ServletContext ctx, ServletRequest request, ServletResponse response, String uri) throws ServletException {
+		try {
+			request.setAttribute(CREATE_RESOURCE_URL, Boolean.TRUE);
+			return Encodes.encodeURL(ctx, request, response, uri);
+		} finally {
+			request.removeAttribute(CREATE_RESOURCE_URL);
+		}
+	}
+
+
+	static class PortletHttpServletRequestWithHeaders extends HttpServletRequestWrapper {
+		private final PortletRequest portletRequest;
+
+		public PortletHttpServletRequestWithHeaders(HttpServletRequest request, PortletRequest portletRequest) {
+			super(request);
+			this.portletRequest = portletRequest;
+		}
+
+		@Override
+		public String getHeader(String name) {
+			final String value = portletRequest.getProperty(name);
+			if (value != null) {
+				return value;
+			}
+			return super.getHeader(name);
+
+		}
 	}
 }

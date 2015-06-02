@@ -7,9 +7,11 @@
 <p class="portlet-font">Welcome, this is the ${renderRequest.portletMode} mode.</p>
 qq=<%=renderRequest.getParameter("docTypeName") %>
 <br>
+<% String imageUrl = response.encodeURL(request.getContextPath()+"/1.jpg"); %>
 <% PortletURL zkrURL = renderResponse.createActionURL();zkrURL.setParameter("name", "ZKR"); %>
 <% PortletURL raspURL = renderResponse.createActionURL();raspURL.setParameter("name", "RASHODNOE_RASPISANIE"); %>
 <% PortletURL moneyURL = renderResponse.createActionURL();moneyURL.setParameter("name", "MONEYORDER"); %>
 <a href="<%=zkrURL%>">ZKR</a><br>
 <a href="<%=raspURL%>">RASHODNOE_RASPISANIE</a><br>
 <a href="<%=moneyURL%>">MONEYORDER</a><br>
+<img src="<%=imageUrl%>">
