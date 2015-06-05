@@ -73,6 +73,7 @@
 			<param-value>/upload=com.my.MyUploader</param-value>
 		</init-param>
 		-->
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!--
 	<servlet>
@@ -126,11 +127,12 @@
 	However, it is turned on since zksandbox uses DSP to generate CSS.
 	<servlet>
 		<servlet-name>dspLoader</servlet-name>
-		<servlet-class>org.zkoss.web.servlet.dsp.InterpreterServlet</servlet-class>
+		<servlet-class>lan.test.portlet.zk.PortletInterpreterServlet</servlet-class>
 		<init-param>
 			<param-name>class-resource</param-name>
 			<param-value>true</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dspLoader</servlet-name>

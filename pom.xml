@@ -9,7 +9,6 @@
 		<module>zproducer-ear</module>
 		<module>zproducer-weblogic</module>
 		<module>zproducer-liferay</module>
-		<module>zproducer-liferay-ear</module>
 	</modules>
 	<packaging>pom</packaging>
 	<properties>
