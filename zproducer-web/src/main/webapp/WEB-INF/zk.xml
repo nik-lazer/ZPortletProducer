@@ -7,6 +7,10 @@
         <name>org.zkoss.web.classWebResource.cache</name>
         <value>false</value>
     </library-property>
+	<library-property>
+		<name>org.zkoss.zk.WPD.cache</name>
+		<value>false</value>
+	</library-property>
 	<system-config>
 		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
 	</system-config>

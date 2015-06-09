@@ -87,7 +87,6 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	private static final String ATTR_PAGE = "zk_page";
 	/** The parameter or attribute to specify the path of the richlet. */
 	private static final String ATTR_RICHLET = "zk_richlet";
-	private static final String INCLUDE_SERVLET_PATH_OVERRIDED = "javax.servlet.include.servlet_path.overrided";
 	/** The default page. */
 	private String _defpage;
 	/** Check if support JSR 286 */
@@ -171,6 +170,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
 		final Session sess = getSession(request, false);
 		httpreq.setAttribute(CREATE_PORTLET_URL_MODE, Boolean.TRUE);
+		httpreq.setAttribute(PORTLET_RESPONSE, response);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
 		boolean compress = false; //Some portal container (a.k.a GateIn) doesn't work with gzipped output stream.
@@ -194,12 +194,6 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 				ClassWebResource webResource = webman.getClassWebResource();
 				webResource.service(httpreq, httpres, url);
 				return;
-//			} else if (resourceID.endsWith(".dsp")) {
-//				PortletInterpreterServlet interpreterServlet = PortletInterpreterServlet.getInterpreteServlet(webman.getWebApp());
-//				httpreq.setAttribute(INCLUDE_SERVLET_PATH_OVERRIDED, StringUtils.substringAfter(resourceID, httpreq.getContextPath()));
-//				interpreterServlet.process(httpreq, new PortletHttpServletResponseWrapper(httpres));
-//
-//				return;
 			} else  if (StringUtils.isNotEmpty(pathInfo)) {
 				String auExtensionName = pathInfo.substring(1, pathInfo.indexOf("/", 1));
 				final AuExtension aue = updateServlet.getAuExtension("/view");
@@ -269,15 +263,14 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 		final ServletContext svlctx = wapp.getServletContext();
-		httpreq.setAttribute("portlet.response", response);
+		httpreq.setAttribute(PORTLET_RESPONSE, response);
 		httpreq.setAttribute(CREATE_PORTLET_URL_MODE, Boolean.TRUE);
 
 		try {
 			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);
 			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
 			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
-			String dspUrl = Encodes.encodeURL(svlctx, httpreq, httpres, "/zksandbox.js.dsp");
-			response.getWriter().print("<script src=" + dspUrl + "></script>\n");
+			response.getWriter().print("<script src=" + Encodes.encodeURL(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
 		} catch (ServletException e) {
 			throw new PortletException(e);
 		}
@@ -488,15 +481,5 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			return super.getHeader(name);
 
 		}
-
-		@Override
-		public Object getAttribute(String name) {
-			Object servletPath = super.getAttribute(INCLUDE_SERVLET_PATH_OVERRIDED);
-			if (Attributes.INCLUDE_SERVLET_PATH.equals(name) && servletPath != null) {
-				return servletPath;
-			}
-			return super.getAttribute(name);
-		}
 	}
-
 }

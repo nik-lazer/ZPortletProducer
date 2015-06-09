@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zk>
-	<library-property>
+	<!--<library-property>
 		<name>org.zkoss.web.servlet.http.URLEncoder</name>
-		<value>lan.test.portlet.zk.PortletURLEncoder</value>
-	</library-property>
+		<value>lan.test.portlet.zk.LiferayPortletURLEncoder</value>
+	</library-property>-->
 	<client-config>
         <debug-js>true</debug-js>
     </client-config>

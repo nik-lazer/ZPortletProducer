@@ -7,7 +7,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>HelloZK</portlet-name>
-		<!--<url-encoder-class>lan.test.liferay.PortletEncoder</url-encoder-class>-->
 		<remoteable>true</remoteable>
 		<!--<header-portlet-javascript>/zkau/web/js/zk.wpd</header-portlet-javascript>-->
 	</portlet>

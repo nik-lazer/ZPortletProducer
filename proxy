@@ -1,0 +1,32 @@
+server {
+        listen   80;
+        root /usr/share/nginx/www;
+        index index.html index.htm;
+        server_name proxy.lan;
+        client_max_body_size 1000M;
+        location / {
+            expires off;
+            proxy_pass              http://consumer.lan:38080;
+            proxy_read_timeout      1440;
+            proxy_redirect 	    off;
+            proxy_set_header        Host            $http_host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+	location ~* ^/zproducer/zkau {
+            expires off;
+            proxy_pass              http://producer.lan:28080;
+            proxy_read_timeout      1440;
+            proxy_set_header        Host            $http_host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+	}
+	location ~* ^/zproducer/(.+)\.(jpg|jpeg|gif|png|css|js|ico|xml|rss|txt|dsp)$ {
+            expires off;
+            proxy_pass              http://producer.lan:28080;
+            proxy_read_timeout      1440;
+            proxy_set_header        Host            $http_host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+}

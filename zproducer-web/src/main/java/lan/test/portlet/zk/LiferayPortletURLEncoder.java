@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
- * URLEncoder для запуска УФОСа как портлета в liferay
+ * URLEncoder for liferay WSRP
  * @author nik-lazer
  */
-public class PortletURLEncoder implements Encodes.URLEncoder {
+public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 
 	@Override
 	public String encodeURL(final ServletContext ctx, final ServletRequest request, final ServletResponse response, String url, final Encodes.URLEncoder defaultEncoder) throws Exception {
@@ -30,15 +30,21 @@ public class PortletURLEncoder implements Encodes.URLEncoder {
 					}
 
 					String updateUrl = ctx.getContextPath() + "/zkau";
+					String rootUrl = ctx.getContextPath() + "/";
 					String pathInfo = StringUtils.substringAfter(url, updateUrl);
 					boolean isAuExtension = (StringUtils.isNotEmpty(pathInfo) && !pathInfo.startsWith(ClassWebResource.PATH_PREFIX)) || (isPortletMode(request) && isResourceUrl(url));
 
 					if (isAuExtension) {
 						ResourceURL resourceURL = portletResponse.createResourceURL();
 						resourceURL.setResourceID(url);
-						return resourceURL.toString();
+						String resUrl = resourceURL.toString();
+						if (StringUtils.equals(rootUrl, url)) {
+							// Pretend url breaking in WpdExtendlet
+							resUrl += "/";
+						}
+						return resUrl;
 					}
-					if (isPortletMode(request) && isStaticResourse(url)) {
+					if (isPortletMode(request) && !isResourceUrl(url)) {
 						return createStaticProxyUrl(ctx, url);
 					}
 					if (!url.startsWith("/")) {
@@ -55,7 +61,7 @@ public class PortletURLEncoder implements Encodes.URLEncoder {
 	}
 
 	private String createStaticProxyUrl(ServletContext ctx, String url) {
-		String prefix = "/wsrp-portlet/proxy?url=";
+		String prefix = "/wsrp-resource/proxy?url=";
 		String serverUrl = "http://producer.lan:28080";
 		String retUrl = prefix + serverUrl + url;
 		return retUrl;
@@ -73,9 +79,5 @@ public class PortletURLEncoder implements Encodes.URLEncoder {
 
 	private boolean isResourceUrl(String url) {
 		return StringUtils.endsWith(url, "zkau") || StringUtils.endsWith(url, "/") || StringUtils.endsWith(url, ".wcs");
-	}
-
-	private boolean isStaticResourse(String url) {
-		return StringUtils.endsWith(url, ".dsp") || StringUtils.endsWith(url, ".jpg") || StringUtils.endsWith(url, ".png") || StringUtils.endsWith(url, ".jpeg") || StringUtils.endsWith(url, ".gif");
 	}
 }
