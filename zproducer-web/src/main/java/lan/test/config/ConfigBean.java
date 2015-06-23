@@ -3,6 +3,8 @@ package lan.test.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * Bean for configuration parameters
  * @author nik-lazer  18.05.2015   17:18

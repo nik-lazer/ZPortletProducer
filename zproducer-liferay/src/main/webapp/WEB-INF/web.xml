@@ -214,9 +214,9 @@
 		<filter-name>Auto Login Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.autologin.AutoLoginFilter</filter-class>
 	</filter>-->
-	<listener>
+	<!--<listener>
 		<listener-class>com.liferay.portal.kernel.servlet.PortletContextListener</listener-class>
-	</listener>
+	</listener>-->
 
 	<context-param>
 		<param-name>company_id</param-name>
