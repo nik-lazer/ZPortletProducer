@@ -116,6 +116,44 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0-6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>openejb-core</artifactId>
+			<version>4.7.2</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.openjpa</groupId>
+					<artifactId>openjpa</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.openwebbeans</groupId>
+					<artifactId>openwebbeans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.openwebbeans</groupId>
+					<artifactId>openwebbeans-impl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>tomee-catalina</artifactId>
+			<version>1.7.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>tomee-myfaces</artifactId>
+			<version>1.7.2</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>zproducer-liferay</finalName>
