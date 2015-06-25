@@ -1,6 +1,7 @@
 package lan.test.portlet.zk;
 
 import com.liferay.portal.kernel.util.HttpUtil;
+import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.util.UIUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.zkoss.lang.Classes;
@@ -258,13 +259,13 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final WebApp wapp = webman.getWebApp();
 		final WebAppCtrl wappc = (WebAppCtrl) wapp;
 
-
 		final HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 		final ServletContext svlctx = wapp.getServletContext();
 		httpreq.setAttribute(PORTLET_RESPONSE, response);
 		httpreq.setAttribute(CREATE_PORTLET_URL_MODE, Boolean.TRUE);
+		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 
 		try {
 			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);

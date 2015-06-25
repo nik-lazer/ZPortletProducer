@@ -8,10 +8,8 @@
        ">
 
 	<bean class="lan.test.config.JNDIBean">
-		<property name="resourceConfigBean">
-			<jee:jndi-lookup id="jndiRes" jndi-name="java:openejb/Resource/configBean" expected-type="lan.test.config.ResourceConfigBean" />
+		<property name="homeDir">
+			<jee:jndi-lookup id="jndiRes" jndi-name="openejb:Resource/homeDir" expected-type="java.lang.String" default-value="." />
 		</property>
 	</bean>
-
-
 </beans>

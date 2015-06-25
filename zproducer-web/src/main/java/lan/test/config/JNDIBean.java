@@ -7,6 +7,7 @@ import javax.annotation.Resource;
  */
 public class JNDIBean {
 	private ResourceConfigBean resourceConfigBean;
+	private String homeDir;
 
 	public ResourceConfigBean getResourceConfigBean() {
 		return resourceConfigBean;
@@ -14,5 +15,13 @@ public class JNDIBean {
 
 	public void setResourceConfigBean(ResourceConfigBean resourceConfigBean) {
 		this.resourceConfigBean = resourceConfigBean;
+	}
+
+	public String getHomeDir() {
+		return homeDir;
+	}
+
+	public void setHomeDir(String homeDir) {
+		this.homeDir = homeDir;
 	}
 }

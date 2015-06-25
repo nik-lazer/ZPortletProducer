@@ -1,4 +1,4 @@
-package lan.test.portlet.zk;
+package lan.test.spring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

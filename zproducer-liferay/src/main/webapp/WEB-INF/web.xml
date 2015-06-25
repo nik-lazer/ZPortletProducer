@@ -7,6 +7,8 @@
 		<param-value>
 			classpath:applicationContext.xml,
 			classpath:browserHistoryContext.xml,
+			classpath:jndiContext.xml,
+			classpath:liferay-authContext.xml
 		</param-value>
 	</context-param>
 
@@ -223,4 +225,18 @@
 		<param-value>liferay.com</param-value>
 	</context-param>
 	<display-name>zproducer-portlet</display-name>
+
+	<!--<listener>
+		<listener-class>lan.test.spring.CustomCodeContextLoaderListener</listener-class>
+	</listener>-->
+
+	<filter>
+		<filter-name>authFilter</filter-name>
+		<filter-class>lan.test.auth.PreAuthenticationFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>/zkau</url-pattern>
+	</filter-mapping>
 </web-app>

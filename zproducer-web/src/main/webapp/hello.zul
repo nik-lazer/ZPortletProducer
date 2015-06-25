@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
         title="My First window" border="normal" width="500px" apply="lan.test.portlet.zk.TestComposer">
     <vlayout>
-		<label>Hello, World!</label>
+		<label id="helloLabel">Hello, World!</label>
 		<div id="div">
 			<image id="picture"/>
 		</div>

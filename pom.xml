@@ -9,6 +9,7 @@
 		<module>zproducer-ear</module>
 		<module>zproducer-weblogic</module>
 		<module>zproducer-liferay</module>
+		<module>tomcat-string-jndi-initilizer</module>
 	</modules>
 	<packaging>pom</packaging>
 	<properties>

@@ -1,5 +1,6 @@
 package lan.test.config;
 
+import lan.test.auth.PreAuthenticationService;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -28,6 +29,10 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 
 	public static WebBrowserHistoryManager getHistoryManager() {
 		return context.getBean("webBrowserHistoryManager", WebBrowserHistoryManager.class);
+	}
+
+	public static PreAuthenticationService getPreAuthService() {
+		return context.getBean("preAuthenticationService", PreAuthenticationService.class);
 	}
 
 }

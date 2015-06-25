@@ -13,9 +13,11 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 
 import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -40,11 +42,19 @@ public class TestComposer extends SelectorComposer {
 	private Div div;
 	@Wire
 	private Image picture;
+	@Wire
+	private Label helloLabel;
+
 	private WebBrowserHistoryManager webBrowserHistoryManager = ApplicationContextProvider.getHistoryManager();
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
+		HttpServletRequest request = (HttpServletRequest) Executions.getCurrent().getNativeRequest();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("currentUser") != null) {
+			helloLabel.setValue("Hello, " + session.getAttribute("currentUser"));
+		}
 	}
 
 	@Listen("onClick = button#btn")

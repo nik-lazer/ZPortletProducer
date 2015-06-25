@@ -209,6 +209,6 @@
 	</welcome-file-list>
 	
 	<listener>
-		<listener-class>lan.test.portlet.zk.CustomCodeContextLoaderListener</listener-class>
+		<listener-class>lan.test.spring.CustomCodeContextLoaderListener</listener-class>
 	</listener>
 </web-app>
