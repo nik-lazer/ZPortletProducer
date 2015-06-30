@@ -22,7 +22,7 @@ public class LiferayPreAuthenticationServiceImpl implements PreAuthenticationSer
 		if (userId != null) {
 			try {
 				user = UserLocalServiceUtil.getUser(Long.valueOf(userId));
-				String userName = user.getFirstName();
+				String userName = user.getScreenName();
 				preAuth(servletRequest, userName);
 			} catch (PortalException e) {
 				e.printStackTrace();
