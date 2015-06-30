@@ -20,6 +20,8 @@ public class ConfigBean {
 	@Value("${history.needRewriteUrl:false}")
 	private Boolean needRewriteUrl;
 
+	private String homeDir;
+
 	public String getResContextPrefix() {
 		return resContextPrefix;
 	}
@@ -50,5 +52,13 @@ public class ConfigBean {
 
 	public void setNeedRewriteUrl(Boolean needRewriteUrl) {
 		this.needRewriteUrl = needRewriteUrl;
+	}
+
+	public String getHomeDir() {
+		return homeDir;
+	}
+
+	public void setHomeDir(String homeDir) {
+		this.homeDir = homeDir;
 	}
 }
