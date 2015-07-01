@@ -7,10 +7,17 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
        ">
 
-	<jee:jndi-lookup id="jndiRes" jndi-name="openejb:Resource/homeDir" expected-type="java.lang.String" default-value="." />
+	<beans profile="tomee">
+		<jee:jndi-lookup id="jndiRes" jndi-name="openejb:Resource/homeDir" expected-type="java.lang.String" default-value="." />
+	</beans>
 
-	<bean class="lan.test.config.JNDIBean">
-		<property name="homeDir" ref="jndiRes">
-		</property>
-	</bean>
+	<beans profile="!tomee">
+		<jee:jndi-lookup id="jndiRes" jndi-name="homeDir" expected-type="java.lang.String" default-value="." />
+	</beans>
+
+	<beans>
+		<bean class="lan.test.config.JNDIBean">
+			<property name="homeDir" ref="jndiRes"/>
+		</bean>
+	</beans>
 </beans>
