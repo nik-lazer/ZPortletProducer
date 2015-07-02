@@ -3,7 +3,17 @@ package lan.tomcat.jndi;
 import java.util.Properties;
 
 /**
- * String JNDI resource factory
+ * String JNDI resource factory<br/>
+ * Example:
+ * <pre>
+ * {@code
+ * <tomee>
+ * 	<Resource id="stringRes" type="java.lang.String" class-name="lan.tomcat.jndi.StringFactory" factory-name="create">
+ * 		value Foo
+ * 	</Resource>
+ * <tomee>
+ * }
+ * </pre>
  * @author nik-lazer  24.06.2015   12:15
  */
 public class StringFactory {

@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>tomcat-string-jndi-initializer</artifactId>
+	<artifactId>tomcat-support</artifactId>
 
 
 </project>
