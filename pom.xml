@@ -11,6 +11,8 @@
 		<module>zproducer-liferay</module>
 		<module>tomcat-support</module>
 		<module>websphere-support</module>
+		<module>zproducer-websphere</module>
+		<module>zproducer-websphere-ear</module>
 	</modules>
 	<packaging>pom</packaging>
 	<properties>
@@ -38,6 +40,14 @@
 			<id>zkmaven</id>
 			<name>ZK Maven Plugin Repository</name>
 			<url>http://mavensync.zkoss.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
 </project>
