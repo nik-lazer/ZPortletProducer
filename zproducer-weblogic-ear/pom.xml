@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>lan.test.portlet</groupId>
-	<artifactId>zproducer-ear</artifactId>
+	<artifactId>zproducer-weblogic-ear</artifactId>
 	<packaging>ear</packaging>
 
 	<dependencies>
@@ -27,6 +27,10 @@
 			<id>deploy_weblogic</id>
 			<build>
 				<plugins>
+					<!--
+					 Plugin small with instruction here
+					https://github.com/nik-lazer/weblogic-maven-plugin
+					-->
 					<plugin>
 						<groupId>com.oracle.weblogic</groupId>
 						<artifactId>weblogic-maven-plugin</artifactId>

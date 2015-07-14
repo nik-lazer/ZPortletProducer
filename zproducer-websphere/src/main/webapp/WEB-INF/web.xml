@@ -3,10 +3,15 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>default,websphere</param-value>
+	</context-param>
+
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:applicationContext.xml,
-			classpath:browserHistoryContext.xml,
+			classpath:weblogic-browserHistoryContext.xml,
 		</param-value>
 	</context-param>
 
@@ -207,8 +212,5 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
-	
-	<!--<listener>
-		<listener-class>lan.test.spring.CustomCodeContextLoaderListener</listener-class>
-	</listener>-->
+
 </web-app>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<portlet-app version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<portlet>
+		<description xml:lang="EN">HelloZK</description>
+		<portlet-name>HelloZK</portlet-name>
+		<display-name xml:lang="EN">HelloZK</display-name>
+		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
+		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
+		<init-param>
+			<name>zk_page</name>
+			<value>/hello.zul</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<portlet-info>
+			<title>HelloZK Portlet</title>
+			<short-title>HelloZK</short-title>
+			<keywords>zk</keywords>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>zk_page</name>
+				<value>/hello.zul</value>
+			</preference>
+		</portlet-preferences>
+		<supported-public-render-parameter>location</supported-public-render-parameter>
+	</portlet>
+
+	<portlet>
+		<portlet-name>InitPortlet</portlet-name>
+		<display-name xml:lang="en-US">Init Portlet</display-name>
+		<display-name xml:lang="en">Init English Portlet</display-name>
+		<portlet-class>lan.test.portlet.simple.InitPortlet</portlet-class>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en-US</supported-locale>
+		<portlet-info>
+			<title>Init Portlet</title>
+			<short-title>Init Portlet</short-title>
+			<keywords/>
+		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>portletTitle</name>
+			</preference>
+		</portlet-preferences>
+	</portlet>
+
+
+	<public-render-parameter>
+		<identifier>location</identifier>
+		<name>location</name>
+	</public-render-parameter>
+
+	<container-runtime-option>
+		<name>javax.portlet.actionScopedRequestAttributes</name>
+		<value>true</value>
+	</container-runtime-option>
+	<container-runtime-option>
+		<name>javax.portlet.renderHeaders</name>
+		<value>true</value>
+	</container-runtime-option>
+</portlet-app>

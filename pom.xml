@@ -6,7 +6,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>zproducer-web</module>
-		<module>zproducer-ear</module>
+		<module>zproducer-weblogic-ear</module>
 		<module>zproducer-weblogic</module>
 		<module>zproducer-liferay</module>
 		<module>tomcat-support</module>
