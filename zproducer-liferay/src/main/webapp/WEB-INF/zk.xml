@@ -2,7 +2,7 @@
 <zk>
 	<!--<library-property>
 		<name>org.zkoss.web.servlet.http.URLEncoder</name>
-		<value>lan.test.portlet.zk.LiferayPortletURLEncoder</value>
+		<value>lan.test.portlet.zk.encoder.LiferayPortletURLEncoder</value>
 	</library-property>-->
 	<client-config>
         <debug-js>true</debug-js>

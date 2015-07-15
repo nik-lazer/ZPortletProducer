@@ -1,4 +1,4 @@
-package lan.test.portlet.zk;
+package lan.test.portlet.zk.encoder;
 
 import lan.test.config.ApplicationContextProvider;
 import org.zkoss.web.servlet.http.Encodes;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * URLEncoder для запуска УФОСа как портлета
+ * URL Encoder for webcenter with custom proxy as consumer
  * @author nik-lazer
  */
 public class PortletBridgeURLEncoder implements Encodes.URLEncoder {
