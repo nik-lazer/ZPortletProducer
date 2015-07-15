@@ -17,6 +17,7 @@
 			<portlet-mode>view</portlet-mode>
 		</supports>
 		<supported-locale>en</supported-locale>
+		<supported-locale>en-US</supported-locale>
 		<portlet-info>
 			<title>HelloZK Portlet</title>
 			<short-title>HelloZK</short-title>

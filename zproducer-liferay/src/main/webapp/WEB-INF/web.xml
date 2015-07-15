@@ -13,7 +13,6 @@
 			classpath:applicationContext.xml,
 			classpath:browserHistoryContext.xml,
 			classpath:jndiContext.xml,
-			classpath:liferay-authContext.xml
 		</param-value>
 	</context-param>
 
