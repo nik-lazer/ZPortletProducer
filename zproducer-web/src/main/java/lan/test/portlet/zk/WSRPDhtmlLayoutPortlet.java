@@ -1,14 +1,13 @@
 package lan.test.portlet.zk;
 
-import com.liferay.portal.kernel.util.HttpUtil;
-import lan.test.config.ApplicationContextProvider;
-import lan.test.portlet.zk.util.UIUtils;
+import lan.test.portlet.zk.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.lang.Classes;
 import org.zkoss.lang.Exceptions;
 import org.zkoss.lang.Library;
 import org.zkoss.mesg.Messages;
-import org.zkoss.util.logging.Log;
 import org.zkoss.web.Attributes;
 import org.zkoss.web.portlet.Portlets;
 import org.zkoss.web.portlet.RenderHttpServletRequest;
@@ -16,7 +15,6 @@ import org.zkoss.web.portlet.RenderHttpServletResponse;
 import org.zkoss.web.portlet.ResourceHttpServletRequest;
 import org.zkoss.web.portlet.ResourceHttpServletResponse;
 import org.zkoss.web.servlet.Charsets;
-import org.zkoss.web.servlet.dsp.InterpreterServlet;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.web.util.resource.ClassWebResource;
 import org.zkoss.zk.au.http.AuExtension;
@@ -59,15 +57,10 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -75,14 +68,11 @@ import java.util.Map;
 
 /**
  * Omplementation WSRP portlet class
+ * @see <a href="https://github.com/v0v87/zkoss-wsrp">zkoss-wsrp</a>
  * @author nik-lazer 28.05.2013   15:09
  */
 public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
-	public static final String PORTLET_RESPONSE = "portlet.response";
-	public static final String CREATE_RESOURCE_URL = "create.resource.url";
-	public static final String CREATE_PORTLET_URL_MODE = "create.portlet.irl.mode";
-
-	private static final Log log = Log.lookup(DHtmlLayoutPortlet.class);
+	private static final Logger log = LoggerFactory.getLogger(DHtmlLayoutPortlet.class);
 
 	/** The parameter or attribute to specify the path of the ZUML page. */
 	private static final String ATTR_PAGE = "zk_page";
@@ -91,7 +81,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	/** The default page. */
 	private String _defpage;
 	/** Check if support JSR 286 */
-	private boolean isJSR286 = false;
+	private boolean isJSR286 = true;
 
 	public void init() throws PortletException {
 		_defpage = getPortletConfig().getInitParameter(ATTR_PAGE);
@@ -121,8 +111,9 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 						if (!bRichlet) {
 							path = prefs.getValue(ATTR_RICHLET, null);
 							bRichlet = path != null;
-							if (!bRichlet)
+							if (!bRichlet) {
 								path = _defpage;
+							}
 						}
 					}
 				}
@@ -140,13 +131,18 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			// Bug ZK-1179: process I18N in portlet environment
 			HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
 			HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
+			httpreq.setAttribute(WebcenterPortletURLEncoder.ORACLE_WEBCENTER_PORTLET_RESPONSE, response);
+
 			HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
+
 			final Object old = I18Ns.setup(httpreq.getSession(), httpreq, httpres,
 					sess.getWebApp().getConfiguration().getResponseCharset());
 			try {
-				if (!process(sess, request, response, path, bRichlet))
+				if (!process(sess, request, response, path, bRichlet)) {
 					handleError(sess, request, response, path, null, null);
+				}
 			} catch (Throwable ex) {
+				log.error("Error in porlet doView method ", ex);
 				handleError(sess, request, response, path, ex, null);
 			} finally {
 				I18Ns.cleanup(httpreq, old);
@@ -170,14 +166,13 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
 		final Session sess = getSession(request, false);
-		httpreq.setAttribute(CREATE_PORTLET_URL_MODE, Boolean.TRUE);
-		httpreq.setAttribute(PORTLET_RESPONSE, response);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
 		boolean compress = false; //Some portal container (a.k.a GateIn) doesn't work with gzipped output stream.
 		final String sid = httpreq.getHeader("ZK-SID");
-		if (sid != null)
+		if (sid != null) {
 			response.setProperty("ZK-SID", sid);
+		}
 		if (sess == null) {
 			try {
 				updateServlet.denoteSessionTimeout(wapp, httpreq, httpres, compress);
@@ -186,8 +181,11 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			}
 			return;
 		}
+
 		final Object old = I18Ns.setup(httpreq.getSession(), httpreq, httpres, "UTF-8");
+		SessionsCtrl.setCurrent(sess);
 		try {
+			httpreq.setAttribute(WebcenterPortletURLEncoder.ORACLE_WEBCENTER_PORTLET_RESPONSE, response);
 			String resourceID = request.getResourceID();
 			String pathInfo = StringUtils.substringAfter(resourceID, "/zkau");
 			if (pathInfo.startsWith(ClassWebResource.PATH_PREFIX)) {
@@ -195,7 +193,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 				ClassWebResource webResource = webman.getClassWebResource();
 				webResource.service(httpreq, httpres, url);
 				return;
-			} else  if (StringUtils.isNotEmpty(pathInfo)) {
+			} else if (StringUtils.isNotEmpty(pathInfo)) {
 				String auExtensionName = pathInfo.substring(1, pathInfo.indexOf("/", 1));
 				final AuExtension aue = updateServlet.getAuExtension("/view");
 				if (aue == null) {
@@ -215,6 +213,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 				}
 				return; //done
 			}
+
 			response.setProperty("Pragma", "no-cache");
 			response.setProperty("Cache-Control", "no-cache");
 			response.setProperty("Cache-Control", "no-store");
@@ -225,6 +224,8 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			e.printStackTrace();
 		} finally {
 			I18Ns.cleanup(httpreq, old);
+			SessionsCtrl.requestExit(sess);
+			SessionsCtrl.setCurrent((Session) null);
 		}
 	}
 
@@ -234,14 +235,16 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final WebApp wapp = getWebManager().getWebApp();
 
 		PortletSession psess = null;
-		if (request instanceof RenderRequest)
+		if (request instanceof RenderRequest) {
 			psess = ((RenderRequest) request).getPortletSession();
-		else if (request instanceof ResourceRequest)
+		} else if (request instanceof ResourceRequest) {
 			psess = ((ResourceRequest) request).getPortletSession();
+		}
 
 		Session sess = SessionsCtrl.getSession(wapp, psess);
-		if (sess == null && create)
+		if (sess == null && create) {
 			sess = SessionsCtrl.newSession(wapp, psess, request);
+		}
 
 		return sess;
 	}
@@ -254,7 +257,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	protected boolean process(Session sess, RenderRequest request,
 	                          RenderResponse response, String path, boolean bRichlet)
 			throws PortletException, IOException {
-//		if (log.debugable()) log.debug("Creates from "+path);
+//		if (log.isDebugEnabled()) log.debug("Creates from "+path);
 		final WebManager webman = getWebManager();
 		final WebApp wapp = webman.getWebApp();
 		final WebAppCtrl wappc = (WebAppCtrl) wapp;
@@ -263,15 +266,14 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 		final ServletContext svlctx = wapp.getServletContext();
-		httpreq.setAttribute(PORTLET_RESPONSE, response);
-		httpreq.setAttribute(CREATE_PORTLET_URL_MODE, Boolean.TRUE);
-		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
+
 
 		try {
 			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);
-			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
-			response.getWriter().print("<script src=" + createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
 			response.getWriter().print("<script src=" + Encodes.encodeURL(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
+
 		} catch (ServletException e) {
 			throw new PortletException(e);
 		}
@@ -289,14 +291,17 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 					fixContentType(response);
 					wappc.getUiEngine()
 							.recycleDesktop(exec, page, response.getWriter());
-				} else
+				} else {
 					desktop = null; //something wrong (not possible; just in case)
+				}
 			}
 
 			if (desktop == null) {
 				desktop = webman.getDesktop(sess, httpreq, httpres, path, true);
 				if (desktop == null) //forward or redirect
+				{
 					return true;
+				}
 
 				final RequestInfo ri = new RequestInfoImpl(
 						wapp, sess, desktop, httpreq,
@@ -309,8 +314,9 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 				final UiFactory uf = wappc.getUiFactory();
 				if (uf.isRichlet(ri, bRichlet)) {
 					final Richlet richlet = uf.getRichlet(ri, path);
-					if (richlet == null)
+					if (richlet == null) {
 						return false; //not found
+					}
 
 					page = WebManager.newPage(uf, ri, richlet, httpres, path);
 					final Execution exec =
@@ -319,13 +325,15 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 					if (isJSR286) {
 						ResourceURL url = response.createResourceURL();
 						page.setAttribute("org.zkoss.portlet2.resourceURL", response.encodeURL(url.toString()), Page.PAGE_SCOPE);
+						page.setAttribute("org.zkoss.portlet2.namespace", getNamespace(response), Page.PAGE_SCOPE);
 					}
 					wappc.getUiEngine().execNewPage(exec, richlet, page,
 							out != null ? out : response.getWriter());
 				} else if (path != null) {
 					final PageDefinition pagedef = uf.getPageDefinition(ri, path);
-					if (pagedef == null)
+					if (pagedef == null) {
 						return false; //not found
+					}
 
 					page = WebManager.newPage(uf, ri, pagedef, httpres, path);
 					final Execution exec =
@@ -333,30 +341,51 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 					fixContentType(response);
 					if (isJSR286) {
 						ResourceURL url = response.createResourceURL();
-						page.setAttribute("org.zkoss.portlet2.resourceURL", response.encodeURL(url.toString()), Page.PAGE_SCOPE);
+						url.setResourceID("/zkau");
+						page.setAttribute("org.zkoss.portlet2.resourceURL", url.toString(), Page.PAGE_SCOPE);
+						page.setAttribute("org.zkoss.portlet2.namespace", getNamespace(response), Page.PAGE_SCOPE);
 					}
 					wappc.getUiEngine().execNewPage(exec, pagedef, page,
 							out != null ? out : response.getWriter());
-				} else
+				} else {
 					return true; //nothing to do
+				}
 
-				if (out != null)
+				if (out != null) {
 					patch.patchRender(ri, page, out, response.getWriter());
+				}
 			}
 		} finally {
-			if (dtrc != null)
+			if (dtrc != null) {
 				DesktopRecycles.afterService(dtrc, desktop);
+			}
 		}
 		return true; //success
 	}
 
+	/**
+	 * Returns the namespace for resource request parameters
+	 * <p>
+	 * Default: "".
+	 * @since 6.5.6
+	 */
+	protected String getNamespace(RenderResponse response) {
+		final String s = Library.getProperty("org.zkoss.zk.portlet2.namespacedParameter.enabled");
+		if (s == null || "false".equals(s)) {
+			return "";
+		}
+		return response.getNamespace();
+	}
+
 	private static PageRenderPatch getRenderPatch() {
-		if (_prpatch != null)
+		if (_prpatch != null) {
 			return _prpatch;
+		}
 
 		synchronized (DHtmlLayoutPortlet.class) {
-			if (_prpatch != null)
+			if (_prpatch != null) {
 				return _prpatch;
+			}
 
 			final PageRenderPatch patch;
 			final String clsnm = Library.getProperty(
@@ -388,8 +417,9 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 	private static void fixContentType(RenderResponse response) {
 		//Bug 1548478: content-type is required for some implementation (JBoss Portal)
-		if (response.getContentType() == null)
+		if (response.getContentType() == null) {
 			response.setContentType("text/html;charset=UTF-8");
+		}
 	}
 
 	/**
@@ -398,12 +428,18 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	private final WebManager getWebManager()
 			throws PortletException {
 		final WebManager webman =
-				(WebManager) getPortletContext().getAttribute("javax.zkoss.zk.ui.WebManager");
-		if (webman == null)
+				(WebManager) getPortletContext().getAttribute(/*WebManager.ATTR_WEB_MANAGER*/"javax.zkoss.zk.ui.WebManager");
+		if (webman == null) {
 			throw new PortletException("The Layout Servlet not found. Make sure <load-on-startup> is specified for " + DHtmlLayoutServlet.class.getName());
+		}
 		return webman;
 	}
 
+	/**
+	 * Handles exception being thrown when rendering a page.
+	 * @param ex the exception being throw. If null, it means the page
+	 *           is not found.
+	 */
 	private void handleError(Session sess, RenderRequest request,
 	                         RenderResponse response, String path, Throwable err, String msg)
 			throws PortletException, IOException {
@@ -418,24 +454,27 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 					request.setAttribute("javax.servlet.error.exception", err);
 					request.setAttribute("javax.servlet.error.exception_type", err.getClass());
 					request.setAttribute("javax.servlet.error.status_code", new Integer(500));
-					if (process(sess, request, response, errpg, false))
+					if (process(sess, request, response, errpg, false)) {
 						return; //done
-					log.warning("The error page not found: " + errpg);
+					}
+					log.warn("The error page not found: " + errpg);
 				} catch (IOException ex) { //eat it (connection off)
 				} catch (Throwable ex) {
-					log.warning("Failed to load the error page: " + errpg, ex);
+					log.warn("Failed to load the error page: " + errpg, ex);
 				}
 			}
 
-			if (msg == null)
+			if (msg == null) {
 				msg = Messages.get(MZk.PAGE_FAILED,
 						new Object[]{path, Exceptions.getMessage(err),
 								Exceptions.formatStackTrace(null, err, null, 6)});
+			}
 		} else {
-			if (msg == null)
+			if (msg == null) {
 				msg = path != null ?
 				      Messages.get(MZk.PAGE_NOT_FOUND, new Object[]{path}) :
 				      Messages.get(MZk.PORTLET_PAGE_REQUIRED);
+			}
 		}
 
 		final Map<String, String> attrs = new HashMap<String, String>();
@@ -447,22 +486,19 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		//protlet request will mangle attribute name)
 	}
 
-	private Page getMainPage(Desktop desktop) {
+	/**
+	 * Returns the main page of the desktop.
+	 * It assumes there is at most one main page (that is, a page without owner)
+	 */
+	/*package*/
+	static Page getMainPage(Desktop desktop) {
 		for (Iterator it = desktop.getPages().iterator(); it.hasNext(); ) {
 			final Page page = (Page) it.next();
-			if (((PageCtrl) page).getOwner() == null)
+			if (((PageCtrl) page).getOwner() == null) {
 				return page;
+			}
 		}
 		return null;
-	}
-
-	private String createResourceUrl(ServletContext ctx, ServletRequest request, ServletResponse response, String uri) throws ServletException {
-		try {
-			request.setAttribute(CREATE_RESOURCE_URL, Boolean.TRUE);
-			return Encodes.encodeURL(ctx, request, response, uri);
-		} finally {
-			request.removeAttribute(CREATE_RESOURCE_URL);
-		}
 	}
 
 	static class PortletHttpServletRequestWithHeaders extends HttpServletRequestWrapper {

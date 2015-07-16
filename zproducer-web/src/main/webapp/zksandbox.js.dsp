@@ -6,7 +6,6 @@ ${z:setCWRCacheControl()}
 var fUploadUrl = '${c:encodeURL('/upload')}';
 
 <c:include page="~./js/zul.layout.wpd"/>
-<c:include page="~./js/zul.lang.wpd"/>
 <c:include page="~./js/zul.utl.wpd"/>
 <c:include page="~./js/zul.wnd.wpd"/>
 <c:include page="~./js/zul.box.wpd"/>

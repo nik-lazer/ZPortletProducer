@@ -50,6 +50,14 @@
 			<short-title>HelloZK</short-title>
 			<keywords>zk</keywords>
 		</portlet-info>
+		<container-runtime-option>
+			<name>com.oracle.portlet.requireIFrame</name>
+			<value>true</value>
+		</container-runtime-option>
+		<container-runtime-option>
+			<name>com.oracle.portlet.minimumWsrpVersion</name>
+			<value>2</value>
+		</container-runtime-option>
 		<portlet-preferences>
 			<preference>
 				<name>zk_page</name>
@@ -262,5 +270,14 @@
 		<name>com.oracle.portlet.minimumWsrpVersion</name>
 		<value>2</value>
 	</container-runtime-option>
+	<filter>
+		<filter-name>zkPortletFilter</filter-name>
+		<filter-class>lan.test.portlet.zk.WebcenterWsrpEncoderFixResourceFilter</filter-class>
+		<lifecycle>RESOURCE_PHASE</lifecycle>
+	</filter>
+	<filter-mapping>
+		<filter-name>zkPortletFilter</filter-name>
+		<portlet-name>HelloZK</portlet-name>
+	</filter-mapping>
 
 </portlet-app>

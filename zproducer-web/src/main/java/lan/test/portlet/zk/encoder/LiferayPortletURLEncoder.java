@@ -21,12 +21,12 @@ public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 
 	@Override
 	public String encodeURL(final ServletContext ctx, final ServletRequest request, final ServletResponse response, String url, final Encodes.URLEncoder defaultEncoder) throws Exception {
-		final MimeResponse portletResponse = (MimeResponse) request.getAttribute(WSRPDhtmlLayoutPortlet.PORTLET_RESPONSE);
+		final MimeResponse portletResponse = (MimeResponse) request.getAttribute("WSRPDhtmlLayoutPortlet.PORTLET_RESPONSE");
 		if (portletResponse != null) {
 			HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) response) {
 				@Override
 				public String encodeURL(String url) {
-					if (request.getAttribute(WSRPDhtmlLayoutPortlet.CREATE_RESOURCE_URL) != null) {
+					if (request.getAttribute("WSRPDhtmlLayoutPortlet.CREATE_RESOURCE_URL") != null) {
 						return createResourceUrl(portletResponse, url);
 					}
 
@@ -75,7 +75,7 @@ public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 	}
 
 	private boolean isPortletMode(ServletRequest request) {
-		return request.getAttribute(WSRPDhtmlLayoutPortlet.CREATE_PORTLET_URL_MODE) != null;
+		return request.getAttribute("WSRPDhtmlLayoutPortlet.CREATE_PORTLET_URL_MODE") != null;
 	}
 
 	private boolean isResourceUrl(String url) {
