@@ -164,7 +164,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 		final HttpServletRequest httpServletRequest = ResourceHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
-		final HttpServletResponse httpres = TracedResourceHttpServletResponse.getInstance(response);
+		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
 		final Session sess = getSession(request, false);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
