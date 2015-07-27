@@ -26,9 +26,9 @@ public class WsrpTraceResourceFilter implements ResourceFilter {
 			CustomPortletResponseWrapper newPortletResponse = new CustomPortletResponseWrapper(resourceResponse);
 			filterChain.doFilter(resourceRequest, newPortletResponse);
 			String response = new String(newPortletResponse.getByteArray());
-			log.warn("WSRP RESPONSE START");
+			log.warn("WSRP RESPONSE '" + resourceID + "' START");
 			log.warn(response);
-			log.warn("WSRP RESPONSE END");
+			log.warn("WSRP RESPONSE '\" + resourceID + \"' END");
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.println(response);
 		} else{

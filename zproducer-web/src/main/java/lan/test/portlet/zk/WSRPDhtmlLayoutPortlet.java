@@ -1,5 +1,6 @@
 package lan.test.portlet.zk;
 
+import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -94,6 +95,9 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 	protected void doView(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
+		HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
+		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
+		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		//try parameter first and then attribute
 		boolean bRichlet = false;
 		String path = request.getParameter(ATTR_PAGE);
@@ -129,8 +133,6 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		SessionsCtrl.setCurrent(sess);
 		try {
 			// Bug ZK-1179: process I18N in portlet environment
-			HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
-			HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 			httpreq.setAttribute(WebcenterPortletURLEncoder.ORACLE_WEBCENTER_PORTLET_RESPONSE, response);
 
 			HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
@@ -511,12 +513,18 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 		@Override
 		public String getHeader(String name) {
+			String ret = null;
 			final String value = portletRequest.getProperty(name);
 			if (value != null) {
-				return value;
+				ret = value;
 			}
-			return super.getHeader(name);
-
+			ret = super.getHeader(name);
+			if (name.equals("accept-encoding")) {
+				if ((ret != null) && (ret.indexOf("gzip") >= 0)) {
+					ret = ret.replaceAll("gzip", "g1zip");
+				}
+			}
+			return ret;
 		}
 	}
 }
