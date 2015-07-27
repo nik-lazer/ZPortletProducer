@@ -4,10 +4,12 @@
 	<portlet>
 		<portlet-name>InitPortlet</portlet-name>
 		<remoteable>true</remoteable>
+		<user-principal-strategy>screenName</user-principal-strategy>
 	</portlet>
 	<portlet>
 		<portlet-name>HelloZK</portlet-name>
 		<remoteable>true</remoteable>
+		<user-principal-strategy>screenName</user-principal-strategy>
 		<!--<header-portlet-javascript>/zkau/web/js/zk.wpd</header-portlet-javascript>-->
 	</portlet>
 </liferay-portlet-app>

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
  * Base implementation {@link lan.test.auth.PreAuthenticationService}
  * @author nik-lazer  15.07.2015   14:40
  */
-public class BasePreAuthenticationServiceImpl implements PreAuthenticationService {
+public class PreAuthenticationServiceImpl implements PreAuthenticationService {
 	@Override
 	public void preAuth(ServletRequest servletRequest) {
 		String userName = ((HttpServletRequest) servletRequest).getRemoteUser();
