@@ -52,6 +52,10 @@ public class CustomPortletResponseWrapper extends ResourceResponseWrapper {
 		return output.toString();
 	}
 
+	public byte[] getByteArrayWithFlash() {
+		return output.toByteArrayWithFlash();
+	}
+
 	private static class ByteArrayPortletStream extends OutputStream {
 		ByteArrayOutputStream baos;
 
@@ -83,6 +87,17 @@ public class CustomPortletResponseWrapper extends ResourceResponseWrapper {
 
 		byte[] toByteArray() {
 			return baos.toByteArray();
+		}
+
+		public byte[] toByteArrayWithFlash() {
+			byte[] ret = baos.toByteArray();
+			try {
+				baos.flush();
+				baos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return ret;
 		}
 	}
 }

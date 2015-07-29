@@ -63,6 +63,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -189,6 +190,12 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		try {
 			httpreq.setAttribute(WebcenterPortletURLEncoder.ORACLE_WEBCENTER_PORTLET_RESPONSE, response);
 			String resourceID = request.getResourceID();
+			Enumeration headerNames = httpreq.getHeaderNames();
+			log.warn("WSRP serveResource resourceID:" + resourceID);
+			while (headerNames.hasMoreElements()) {
+				String headerName = (String) headerNames.nextElement();
+				log.warn("WSRP serveResource header:" + headerName + "=" + httpreq.getHeader(headerName));
+			}
 			String pathInfo = StringUtils.substringAfter(resourceID, "/zkau");
 			if (pathInfo.startsWith(ClassWebResource.PATH_PREFIX)) {
 				String url = StringUtils.substringAfter(resourceID, ClassWebResource.PATH_PREFIX);

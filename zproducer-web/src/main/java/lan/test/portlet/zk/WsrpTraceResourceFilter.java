@@ -25,10 +25,11 @@ public class WsrpTraceResourceFilter implements ResourceFilter {
 		if (resourceID != null && (resourceID.endsWith(".wpd") || (resourceID.endsWith(".wcs")))) {
 			CustomPortletResponseWrapper newPortletResponse = new CustomPortletResponseWrapper(resourceResponse);
 			filterChain.doFilter(resourceRequest, newPortletResponse);
-			String response = new String(newPortletResponse.getByteArray());
+			String response = new String(newPortletResponse.getByteArrayWithFlash());
 			log.warn("WSRP RESPONSE '" + resourceID + "' START");
+			log.warn("WSRP response length: " + response.length());
 			log.warn(response);
-			log.warn("WSRP RESPONSE '\" + resourceID + \"' END");
+			log.warn("WSRP RESPONSE '" + resourceID + "' END");
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.println(response);
 		} else{
