@@ -34,7 +34,7 @@
 		<portlet-name>HelloZK</portlet-name>
 		<display-name xml:lang="EN">HelloZK</display-name>
 		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
-		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.wsrp.WSRPDhtmlLayoutPortlet</portlet-class>
 		<init-param>
 			<name>zk_page</name>
 			<value>/hello.zul</value>
@@ -71,7 +71,7 @@
 		<description xml:lang="EN">HelloZK Recent</description>
 		<portlet-name>HelloZK Recent</portlet-name>
 		<display-name xml:lang="EN">HelloZK Recent</display-name>
-		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.wsrp.WSRPDhtmlLayoutPortlet</portlet-class>
 		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -203,7 +203,7 @@
 		<portlet-name>zk-recent-portlet</portlet-name>
 		<display-name xml:lang="ru">ZKRecentPortlet</display-name>
 		<display-name xml:lang="en">English Recent ZkPortlet</display-name>
-		<portlet-class>lan.test.portlet.zk.WSRPDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.wsrp.WSRPDhtmlLayoutPortlet</portlet-class>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -243,7 +243,7 @@
 
 	<filter>
 		<filter-name>zkPortletFilter</filter-name>
-		<filter-class>lan.test.portlet.zk.WebcenterWsrpEncoderFixResourceFilter</filter-class>
+		<filter-class>lan.test.portlet.zk.wsrp.WebcenterWsrpEncoderFixResourceFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
 	</filter>
 	<filter-mapping>

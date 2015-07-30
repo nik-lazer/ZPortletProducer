@@ -1,4 +1,4 @@
-package lan.test.portlet.zk;
+package lan.test.portlet.zk.wsrp;
 
 import javax.portlet.ResourceResponse;
 import javax.portlet.filter.ResourceResponseWrapper;

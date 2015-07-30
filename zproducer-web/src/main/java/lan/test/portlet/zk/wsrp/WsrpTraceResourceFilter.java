@@ -1,4 +1,4 @@
-package lan.test.portlet.zk;
+package lan.test.portlet.zk.wsrp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class WsrpTraceResourceFilter implements ResourceFilter {
 		if (resourceID != null && (resourceID.endsWith(".wpd") || (resourceID.endsWith(".wcs")))) {
 			CustomPortletResponseWrapper newPortletResponse = new CustomPortletResponseWrapper(resourceResponse);
 			filterChain.doFilter(resourceRequest, newPortletResponse);
-			String response = new String(newPortletResponse.getByteArrayWithFlash());
+			String response = new String(newPortletResponse.getByteArrayWithFlash(), resourceResponse.getCharacterEncoding());
 			log.warn("WSRP RESPONSE '" + resourceID + "' START");
 			log.warn("WSRP response length: " + response.length());
 			log.warn(response);
@@ -35,7 +35,6 @@ public class WsrpTraceResourceFilter implements ResourceFilter {
 		} else{
 			filterChain.doFilter(resourceRequest, resourceResponse);
 		}
-
 	}
 
 	@Override

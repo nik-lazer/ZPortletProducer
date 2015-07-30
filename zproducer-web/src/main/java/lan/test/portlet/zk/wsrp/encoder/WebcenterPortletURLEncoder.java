@@ -1,4 +1,4 @@
-package lan.test.portlet.zk.encoder;
+package lan.test.portlet.zk.wsrp.encoder;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

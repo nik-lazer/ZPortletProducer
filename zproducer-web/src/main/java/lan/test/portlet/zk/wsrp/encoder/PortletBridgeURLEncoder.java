@@ -1,4 +1,4 @@
-package lan.test.portlet.zk.encoder;
+package lan.test.portlet.zk.wsrp.encoder;
 
 import lan.test.config.ApplicationContextProvider;
 import org.zkoss.web.servlet.http.Encodes;
@@ -8,7 +8,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * URL Encoder for webcenter with custom proxy as consumer

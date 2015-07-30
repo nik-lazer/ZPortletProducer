@@ -1,7 +1,7 @@
-package lan.test.portlet.zk;
+package lan.test.portlet.zk.wsrp;
 
 import lan.test.config.ApplicationContextProvider;
-import lan.test.portlet.zk.encoder.WebcenterPortletURLEncoder;
+import lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

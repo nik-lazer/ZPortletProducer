@@ -1,6 +1,5 @@
-package lan.test.portlet.zk.encoder;
+package lan.test.portlet.zk.wsrp.encoder;
 
-import lan.test.portlet.zk.WSRPDhtmlLayoutPortlet;
 import org.apache.commons.lang3.StringUtils;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.web.util.resource.ClassWebResource;
