@@ -5,7 +5,7 @@
 		<value>lan.test.portlet.zk.encoder.WebcenterPortletURLEncoder</value>
 	</library-property>
     <client-config>
-        <debug-js>false</debug-js>
+        <debug-js>true</debug-js>
     </client-config>
     <library-property>
         <name>org.zkoss.web.classWebResource.cache</name>

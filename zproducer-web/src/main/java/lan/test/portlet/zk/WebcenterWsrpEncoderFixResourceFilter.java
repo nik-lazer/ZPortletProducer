@@ -28,8 +28,9 @@ public class WebcenterWsrpEncoderFixResourceFilter implements ResourceFilter {
 		if (resourceID != null && resourceID.endsWith("zk.wpd")) {
 			CustomPortletResponseWrapper newPortletResponse = new CustomPortletResponseWrapper(resourceResponse);
 			filterChain.doFilter(resourceRequest, newPortletResponse);
-			String response = new String(newPortletResponse.getByteArray());
-			response = response.replaceAll("resourceStateForRewritewsrp_rewrite", "resourceStateForRewrite/wsrp_rewrite");
+			log.warn("response encoding: " + resourceResponse.getCharacterEncoding());
+			String response = new String(newPortletResponse.getByteArray(), resourceResponse.getCharacterEncoding());
+			response = response.replaceAll("falsewsrp_rewrite", "resourceStateForRewrite/wsrp_rewrite");
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.println(response);
 		} else{

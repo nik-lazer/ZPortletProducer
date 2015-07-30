@@ -60,7 +60,7 @@
 		<filter-class>lan.test.portlet.zk.WebcenterWsrpEncoderFixResourceFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
 	</filter>
-	<filter>
+<!--	<filter>
 		<filter-name>zkTraceFilter</filter-name>
 		<filter-class>lan.test.portlet.zk.WsrpTraceResourceFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
@@ -68,7 +68,7 @@
 	<filter-mapping>
 		<filter-name>zkTraceFilter</filter-name>
 		<portlet-name>HelloZK</portlet-name>
-	</filter-mapping>
+	</filter-mapping>-->
 	<filter-mapping>
 		<filter-name>zkPortletFilter</filter-name>
 		<portlet-name>HelloZK</portlet-name>
