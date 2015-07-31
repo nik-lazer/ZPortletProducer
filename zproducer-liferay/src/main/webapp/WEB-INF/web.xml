@@ -13,6 +13,7 @@
 			classpath:applicationContext.xml,
 			classpath:browserHistoryContext.xml,
 			classpath:jndiContext.xml,
+			classpath:rmiContext.xml,
 		</param-value>
 	</context-param>
 

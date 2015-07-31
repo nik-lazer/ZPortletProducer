@@ -2,6 +2,7 @@ package lan.test.config;
 
 import lan.test.auth.PreAuthenticationService;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
+import lan.test.rmi.BookServiceProxyBean;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -35,4 +36,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 		return context.getBean("preAuthenticationService", PreAuthenticationService.class);
 	}
 
+	public static BookServiceProxyBean getBookServiceBean() {
+		return context.getBean("bookServiceBean", BookServiceProxyBean.class);
+	}
 }

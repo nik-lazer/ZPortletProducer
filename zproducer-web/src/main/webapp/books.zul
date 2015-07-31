@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<window xmlns="http://www.zkoss.org/2005/zul" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
+	        title="books window" border="normal" width="100%" apply="lan.test.portlet.zk.composer.BookComposer">
+		<listbox id="books">
+			<listhead>
+				<listheader>name</listheader>
+				<listheader>author</listheader>
+				<listheader>isbn</listheader>
+			</listhead>
+		</listbox>
+	</window>
+
+</zk>
