@@ -146,6 +146,16 @@
 		<url-pattern>*.dsp</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Snoop Servlet</servlet-name>
+		<servlet-class>lan.test.auth.SnoopServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Snoop Servlet</servlet-name>
+		<url-pattern>/snoop</url-pattern>
+	</servlet-mapping>
+
 	<!-- /////////// -->
 	<!-- [Optional] Session timeout -->
 	<session-config>
