@@ -223,4 +223,40 @@
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
 
+	<filter>
+		<filter-name>authFilter</filter-name>
+		<filter-class>lan.test.auth.PreAuthenticationFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>/zkau</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>*.zul</url-pattern>
+	</filter-mapping>
+
+	<security-constraint>
+		<display-name>Security constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>allresources</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>defaultWIMFileBasedRealm</realm-name>
+	</login-config>
 </web-app>

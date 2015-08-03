@@ -254,4 +254,26 @@
 		<filter-name>authFilter</filter-name>
 		<url-pattern>/zkau</url-pattern>
 	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>authFilter</filter-name>
+		<url-pattern>*.zul</url-pattern>
+	</filter-mapping>
+
+	<security-constraint>
+		<display-name>Security constraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>allresources</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
 </web-app>
