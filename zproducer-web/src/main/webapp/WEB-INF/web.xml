@@ -212,11 +212,19 @@
 	</mime-mapping>
 
 	<welcome-file-list>
-		<welcome-file>index.zul</welcome-file>
-		<welcome-file>index.zhtml</welcome-file>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
+		<welcome-file>hello.zul</welcome-file>
 	</welcome-file-list>
+
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
 	
 	<!--<listener>
 		<listener-class>lan.test.spring.CustomCodeContextLoaderListener</listener-class>
