@@ -11,5 +11,18 @@
 
 	<artifactId>tomcat-support</artifactId>
 
-
+   <dependencies>
+	   <dependency>
+		   <groupId>javax.servlet</groupId>
+		   <artifactId>servlet-api</artifactId>
+		   <version>2.5</version>
+		   <scope>provided</scope>
+	   </dependency>
+	   <dependency>
+		   <groupId>org.apache.tomcat</groupId>
+		   <artifactId>tomcat-catalina</artifactId>
+		   <version>7.0.40</version>
+		   <scope>provided</scope>
+	   </dependency>
+   </dependencies>
 </project>
