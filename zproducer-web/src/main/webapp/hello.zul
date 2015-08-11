@@ -4,15 +4,16 @@
 <window xmlns="http://www.zkoss.org/2005/zul"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
-        title="My First window" border="normal" width="500px" apply="lan.test.portlet.zk.TestComposer">
+        title="My First window" border="normal" width="500px" apply="lan.test.portlet.zk.composer.TestComposer">
     <vlayout>
 		<label id="helloLabel">Hello, World!</label>
 		<div id="div">
 			<image id="picture"/>
 		</div>
 		<button id="btn" label="Hi"/>
-	    <button id="histButton" label="Bad history"/>
-	    <button id="downloadButton" label="download"/>
+		<button id="histButton" label="Bad history"/>
+		<button id="downloadButton" label="download"/>
+		<button id="actionButton" label="action"/>
     </vlayout>
 </window>
 </zk>

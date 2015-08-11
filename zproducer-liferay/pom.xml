@@ -180,6 +180,8 @@
 							<targetPath>WEB-INF</targetPath>
 							<includes>
 								<include>web.xml</include>
+								<include>portlet.xml</include>
+								<include>zk.xml</include>
 							</includes>
 							<filtering>true</filtering>
 						</resource>
@@ -197,45 +199,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>deploy_liferay</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.tomcat.maven</groupId>
-							<artifactId>tomcat6-maven-plugin</artifactId>
-							<version>2.2</version>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.tomcat.maven</groupId>
-							<artifactId>tomcat7-maven-plugin</artifactId>
-							<version>2.2</version>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.tomcat.maven</groupId>
-						<artifactId>tomcat7-maven-plugin</artifactId>
-						<version>2.2</version>
-						<executions>
-							<execution>
-								<id>tomcat-run</id>
-								<goals>
-									<goal>exec-war-only</goal>
-								</goals>
-								<phase>package</phase>
-								<configuration>
-									<path>/opt/work/liferay/liferay-tomee/apache-tomee-plus-1.7.2/</path>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>

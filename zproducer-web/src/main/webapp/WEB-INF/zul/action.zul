@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Hello"?>
+<zk>
+<window xmlns="http://www.zkoss.org/2005/zul"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
+        title="Action window" closable="true" border="normal" height="200px" width="200px" apply="lan.test.portlet.zk.composer.ActionComposer">
+    <vlayout>
+	    <label id="actionLabel">Empty</label>
+    </vlayout>
+</window>
+</zk>

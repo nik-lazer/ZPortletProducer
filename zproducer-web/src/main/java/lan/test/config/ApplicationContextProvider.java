@@ -1,5 +1,6 @@
 package lan.test.config;
 
+import com.google.common.cache.Cache;
 import lan.test.auth.PreAuthenticationService;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import lan.test.rmi.BookServiceProxyBean;
@@ -38,5 +39,9 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 
 	public static BookServiceProxyBean getBookServiceBean() {
 		return context.getBean("bookServiceBean", BookServiceProxyBean.class);
+	}
+
+	public static Cache getPortletSessionCache() {
+		return context.getBean("portletSessionCache", Cache.class);
 	}
 }

@@ -1,12 +1,14 @@
-package lan.test.portlet.zk;
+package lan.test.portlet.zk.composer;
 
 import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import lan.test.portlet.zk.util.UIUtils;
+import lan.test.portlet.zk.wsrp.session.DualSimpleSession;
 import org.zkoss.zhtml.Filedownload;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.EventQueue;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -14,8 +16,10 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Window;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayInputStream;
@@ -23,7 +27,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 
 import static lan.test.portlet.zk.util.UIUtils.resolveFileName;
 
@@ -82,5 +85,14 @@ public class TestComposer extends SelectorComposer {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Listen("onClick = button#actionButton")
+	public void action() {
+		Session session = Sessions.getCurrent();
+		session.setAttribute("action.time", new Date());
+		Window window = UIUtils.loadComponentFromZul("/WEB-INF/zul/action.zul");
+		window.setPosition("center");
+		window.doModal();
 	}
 }

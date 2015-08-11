@@ -3,6 +3,10 @@ package lan.test.portlet.zk.util;
 import com.liferay.portal.util.PortalUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.util.IOUtils;
+import org.zkoss.util.logging.Log;
+import org.zkoss.zk.ui.Execution;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.util.WebAppInit;
 
@@ -19,6 +23,8 @@ import java.util.Calendar;
  * @author nik-lazer  15.05.2015   12:20
  */
 public class UIUtils implements WebAppInit {
+	private static final Log log = Log.lookup(UIUtils.class);
+
 	private static WebApp wapp;
 	private static String servletContextPath;
 
@@ -57,6 +63,19 @@ public class UIUtils implements WebAppInit {
 
 	public static String getStaticURL(HttpServletRequest request, String path) {
 		return PortalUtil.getStaticResourceURL(request, path);
+	}
+
+	public static <T> T loadComponentFromZul(String url) throws UiException {
+		final Execution execution = Executions.getCurrent();
+		if (execution != null) {
+			try {
+				return (T) execution.createComponents(url, null, null);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new UiException(e.getMessage(), e);
+			}
+		}
+		throw new IllegalStateException("Unable to create component. Do you access it in ZK event listener?");
 	}
 
 }
