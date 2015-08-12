@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
  * Extension of {@link org.zkoss.zk.ui.http.SimpleSession} with joining with portlet session in Liferay portlet
  * @author nik-lazer  10.08.2015   14:33
  */
-public class DualSimpleSession extends SimpleSession {
+public class DualSimpleSession extends SimpleSession implements DualSession {
 	private String portletSessionId;
 
 	public DualSimpleSession(WebApp wapp, HttpSession hsess, Object request) {

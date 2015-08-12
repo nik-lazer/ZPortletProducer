@@ -20,11 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LiferayProxiedPortletURLEncoder implements Encodes.URLEncoder {
 	@Override
 	public String encodeURL(ServletContext ctx, ServletRequest request, ServletResponse response, String url, Encodes.URLEncoder defaultEncoder) throws Exception {
-		if (url.endsWith("zkau")) {
-			if (request instanceof RenderHttpServletRequest) {
-				HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-				url = url + "?" + DualSessionHelper.PORTLET_SESSION_ID + "=" + httpServletRequest.getSession().getId();
-			}
+		if (request instanceof RenderHttpServletRequest) {
+			HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+			url = url + "?" + DualSessionHelper.PORTLET_SESSION_ID + "=" + httpServletRequest.getSession().getId();
 		}
 		return defaultEncoder.encodeURL(ctx, request, response, url, defaultEncoder);
 	}

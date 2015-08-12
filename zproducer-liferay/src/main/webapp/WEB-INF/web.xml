@@ -69,7 +69,7 @@
 	<servlet>
 		<description>The asynchronous update engine for ZK</description>
 		<servlet-name>auEngine</servlet-name>
-		<servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
+		<servlet-class>lan.test.portlet.zk.wsrp.LiferayDHtmlUpdateServlet</servlet-class>
 		<init-param>
 			<param-name>compress</param-name>
 			<param-value>false</param-value>
