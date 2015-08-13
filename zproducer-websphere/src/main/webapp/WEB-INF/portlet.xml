@@ -11,6 +11,10 @@
 			<name>zk_page</name>
 			<value>/hello.zul</value>
 		</init-param>
+		<init-param>
+			<name>remove_compress_headers</name>
+			<value>true</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

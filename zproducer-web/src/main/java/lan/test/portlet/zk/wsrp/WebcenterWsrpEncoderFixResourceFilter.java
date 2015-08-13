@@ -23,8 +23,6 @@ import java.util.regex.Pattern;
  */
 public class WebcenterWsrpEncoderFixResourceFilter implements ResourceFilter {
 	private static final Logger log = LoggerFactory.getLogger(WebcenterWsrpEncoderFixResourceFilter.class);
-	private Pattern pattern;
-	private String replacement;
 
 	@Override
 	public void doFilter(ResourceRequest resourceRequest, ResourceResponse resourceResponse, FilterChain filterChain) throws IOException, PortletException {
@@ -34,7 +32,7 @@ public class WebcenterWsrpEncoderFixResourceFilter implements ResourceFilter {
 			filterChain.doFilter(resourceRequest, newPortletResponse);
 			log.debug("response encoding: " + resourceResponse.getCharacterEncoding());
 			String response = new String(newPortletResponse.getByteArray(), resourceResponse.getCharacterEncoding());
-			response = fixTokens(response);
+			response = WSRPUtils.fixTokens(response);
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.println(response);
 		} else{
@@ -42,17 +40,8 @@ public class WebcenterWsrpEncoderFixResourceFilter implements ResourceFilter {
 		}
 	}
 
-	String fixTokens(String original) {
-		Matcher matcher = pattern.matcher(original);
-		String response = matcher.replaceAll(replacement);
-		return response;
-	}
-
 	@Override
 	public void init(FilterConfig paramFilterConfig) throws PortletException {
-		String regex = "(?<prefix>[^\\/])wsrp_rewrite(?<suffix>[^\\?])";
-		replacement = "${prefix}/wsrp_rewrite${suffix}";
-		pattern = Pattern.compile(regex);
 	}
 
 	@Override

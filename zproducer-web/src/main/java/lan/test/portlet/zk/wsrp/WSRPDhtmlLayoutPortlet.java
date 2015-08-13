@@ -5,6 +5,7 @@ import lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.zkoss.lang.Classes;
 import org.zkoss.lang.Exceptions;
 import org.zkoss.lang.Library;
@@ -80,10 +81,16 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	private static final String ATTR_PAGE = "zk_page";
 	/** The parameter or attribute to specify the path of the richlet. */
 	private static final String ATTR_RICHLET = "zk_richlet";
+	/**
+	 * The parameter or attribute to removing gzip-compressing form request headers
+	 */
+	private static final String ATTR_REMOVE_COMPRESS = "remove_compress_headers";
 	/** The default page. */
 	private String _defpage;
 	/** Check if support JSR 286 */
 	private boolean isJSR286 = true;
+
+	private boolean removeCompressHeaders = false;
 
 	public void init() throws PortletException {
 		_defpage = getPortletConfig().getInitParameter(ATTR_PAGE);
@@ -91,6 +98,10 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			Class.forName("javax.portlet.ResourceURL");
 		} catch (ClassNotFoundException e) {
 			isJSR286 = false;
+		}
+		String removeCompressHeadersValue = getPortletConfig().getInitParameter(ATTR_REMOVE_COMPRESS);
+		if (Boolean.parseBoolean(removeCompressHeadersValue)) {
+			removeCompressHeaders = Boolean.valueOf(removeCompressHeadersValue);
 		}
 	}
 
@@ -506,7 +517,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		return null;
 	}
 
-	static class PortletHttpServletRequestWithHeaders extends HttpServletRequestWrapper {
+	class PortletHttpServletRequestWithHeaders extends HttpServletRequestWrapper {
 		private final PortletRequest portletRequest;
 
 		public PortletHttpServletRequestWithHeaders(HttpServletRequest request, PortletRequest portletRequest) {
@@ -522,9 +533,10 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 				ret = value;
 			}
 			ret = super.getHeader(name);
-			if (name.equals("accept-encoding")) {
-				if ((ret != null) && (ret.indexOf("gzip") >= 0)) {
-					ret = ret.replaceAll("gzip", "g1zip");
+			// remove gzip form header - disabling gzip-compressing for WAS
+			if (removeCompressHeaders) {
+				if (name.equalsIgnoreCase("accept-encoding")) {
+					ret = WSRPUtils.removeTokens(ret, "gzip", ",");
 				}
 			}
 			return ret;
