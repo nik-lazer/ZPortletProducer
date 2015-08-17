@@ -36,5 +36,6 @@
 		<bean id="applicationContextProvder" class="lan.test.config.ApplicationContextProvider"/>
 		<context:component-scan base-package="lan.test"/>
 		<bean id="preAuthenticationService" class="lan.test.auth.PreAuthenticationServiceImpl"/>
+		<bean id="portletAuthenticationService" class="lan.test.auth.PortletAuthenticationServiceImpl"/>
 	</beans>
 </beans>

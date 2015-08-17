@@ -109,7 +109,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			throws PortletException, IOException {
 		HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
-		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
+		ApplicationContextProvider.getPortletAuthService().preAuth(request);
 		//try parameter first and then attribute
 		boolean bRichlet = false;
 		String path = request.getParameter(ATTR_PAGE);
@@ -179,6 +179,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final HttpServletRequest httpServletRequest = ResourceHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
 		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
+		ApplicationContextProvider.getPortletAuthService().preAuth(request);
 		final Session sess = getSession(request, false);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);

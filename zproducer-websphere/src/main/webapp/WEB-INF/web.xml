@@ -258,7 +258,7 @@
 	<security-role>
 		<role-name>user</role-name>
 	</security-role>-->
-
+	<!--
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>alljsresources</web-resource-name>
@@ -292,5 +292,5 @@
 	<login-config>
 		<auth-method>BASIC</auth-method>
 		<realm-name>defaultWIMFileBasedRealm</realm-name>
-	</login-config>
+	</login-config>-->
 </web-app>

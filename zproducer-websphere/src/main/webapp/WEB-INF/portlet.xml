@@ -91,4 +91,9 @@
 		<name>javax.portlet.renderHeaders</name>
 		<value>true</value>
 	</container-runtime-option>
+	<container-runtime-option>
+		<name>com.oracle.portlet.useWsrpUserContextForUserAuthenticationInfo</name>
+		<value>true</value>
+	</container-runtime-option>
+
 </portlet-app>
