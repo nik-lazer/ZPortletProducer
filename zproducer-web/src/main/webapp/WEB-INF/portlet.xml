@@ -241,6 +241,11 @@
 		<portlet-mode>print</portlet-mode>
 	</custom-portlet-mode>
 
+	<user-attribute>
+		<name>user.login.id</name>
+	</user-attribute>
+
+
 	<filter>
 		<filter-name>zkPortletFilter</filter-name>
 		<filter-class>lan.test.portlet.zk.wsrp.WebcenterWsrpEncoderFixResourceFilter</filter-class>
@@ -280,5 +285,8 @@
 		<name>com.oracle.portlet.minimumWsrpVersion</name>
 		<value>2</value>
 	</container-runtime-option>
-
+	<container-runtime-option>
+		<name>com.oracle.portlet.useWsrpUserContextForUserAuthenticationInfo</name>
+		<value>true</value>
+	</container-runtime-option>
 </portlet-app>
