@@ -14,19 +14,21 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.catalina.valves.ValveBase;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Valve for tomcat - put any user name to getRemoteUser()
  * @author nik-lazer  06.08.2015   08:35
  */
 public class RemoteUserValve extends ValveBase {
-	private static final Log log = LogFactory.getLog(RemoteUserValve.class);
+	private static final Logger log = LoggerFactory.getLogger(RemoteUserValve.class);
 
 	protected String context;
 	protected String token;
-	protected String type = "header";
+	protected String type = HEADER_TYPE;
+	private static final String HEADER_TYPE = "header";
+	private static final String COOKIE_TYPE = "cookie";
 
 	public RemoteUserValve() {
 	}
@@ -49,29 +51,29 @@ public class RemoteUserValve extends ValveBase {
 							credentials, roles);
 
 					request.setUserPrincipal(principal);
-					log.info("RUV: user " + username + " setted for request " + request.getRequestURI());
+					log.debug("User {} setted for request {}", username, request.getRequestURI());
 				} else {
-					log.warn("RUV: user not found for request " + request.getRequestURI());
+					log.warn("User not found for request {}", request.getRequestURI());
 				}
 			} else {
-				log.debug("RUV: remote user exists=" + request.getRemoteUser());
+				log.debug("Remote user exists={}", request.getRemoteUser());
 			}
 		}
 		getNext().invoke(request, response);
 	}
 
 	private void logRequestInfo(Request request) {
-		log.trace("RUV: URI=" + request.getRequestURI());
-		log.trace("RUV: URL=" + request.getRequestURL());
-		log.trace("RUV: remoteUser" + request.getRemoteUser());
+		log.trace("URI={}", request.getRequestURI());
+		log.trace("URL={}", request.getRequestURL());
+		log.trace("remoteUser {}", request.getRemoteUser());
 		Enumeration<String> headers = request.getHeaderNames();
 		while (headers.hasMoreElements()) {
 			String headerName = headers.nextElement();
-			log.trace("RUV: header: " + headerName + "=" + request.getHeader(headerName));
+			log.trace("Header: {}={}", headerName, request.getHeader(headerName));
 		}
 		List<Cookie> cookieList = Arrays.asList(request.getCookies());
 		for (Cookie cookie: cookieList) {
-			log.trace("RUV: cookie: " + cookie.getName() + "=" + cookie.getValue());
+			log.trace("Cookie: {}={}", cookie.getName(), cookie.getValue());
 		}
 	}
 
@@ -84,33 +86,14 @@ public class RemoteUserValve extends ValveBase {
 			if (!isCookie()) {
 				String userName = request.getHeader(token);
 				if (userName != null)  {
-					log.debug("RUV: user founded in header[" + token + "]" + userName);
+					log.debug("User founded in header[{}] {}", token, userName);
 					return userName;
 				}
 			} else {
 				List<Cookie> cookies = Arrays.asList(request.getCookies());
 				for (Cookie cookie: cookies) {
 					if (cookie.getName().equals(token)) {
-						log.debug("RUV: user founded in header[" + cookie.getName() + "]" + cookie.getValue());
-						return cookie.getValue();
-					}
-				}
-			}
-		}
-		return getUserName(request, "cookie", "userName");
-	}
-
-	private String getUserName(Request request, String atype, String atoken) {
-		if (atoken != null) {
-			if (!"cookie".equals(atype)) {
-				String userName = request.getHeader(atoken);
-				log.debug("RUV: userName founded in header[" + atoken + "]" + userName);
-				return userName;
-			} else {
-				List<Cookie> cookies = Arrays.asList(request.getCookies());
-				for (Cookie cookie: cookies) {
-					if (cookie.getName().equals(atoken)) {
-						log.debug("RUV: userName founded in cookie[" + cookie.getName() + "]" + cookie.getValue());
+						log.debug("User founded in header[{}] {}" ,cookie.getName(), cookie.getValue());
 						return cookie.getValue();
 					}
 				}
@@ -120,7 +103,7 @@ public class RemoteUserValve extends ValveBase {
 	}
 
 	private boolean isCookie() {
-		return (type != null) && (type.equals("cookie"));
+		return (type != null) && (type.equals(COOKIE_TYPE));
 	}
 
 	public String getContext() {
@@ -145,4 +128,5 @@ public class RemoteUserValve extends ValveBase {
 
 	public void setType(String type) {
 		this.type = type;
-	}}
+	}
+}
