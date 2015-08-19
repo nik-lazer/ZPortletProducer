@@ -59,9 +59,12 @@
 		</portlet-preferences>
 	</portlet>
 
+	<!--<user-attribute>
+		<name>user.name.prefix</name>
+	</user-attribute>
 	<user-attribute>
 		<name>user.login.id</name>
-	</user-attribute>
+	</user-attribute>-->
 
 	<filter>
 		<filter-name>zkPortletFilter</filter-name>
@@ -96,7 +99,7 @@
 		<value>true</value>
 	</container-runtime-option>
 	<container-runtime-option>
-		<name>com.oracle.portlet.useWsrpUserContextForUserAuthenticationInfo</name>
+		<name>com.oracle.portlet.useWsrpUserContextForUserAuthentication</name>
 		<value>true</value>
 	</container-runtime-option>
 </portlet-app>

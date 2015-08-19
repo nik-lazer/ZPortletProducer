@@ -19,12 +19,13 @@ public class PortletAuthenticationServiceImpl implements PortletAuthenticationSe
 	@Override
 	public void preAuth(PortletRequest request, HttpServletRequest httpServletRequest) {
 		String userName = request.getRemoteUser();
-		log.warn("PASL: remoteUser=" + userName);
+		log.debug("remoteUser={}", userName);
 		if (userName == null) {
-			Map userInfoMap = (Map) request.getAttribute(PortletRequest.USER_INFO);
-			if (userInfoMap != null) {
+			Object userInfo = request.getAttribute(PortletRequest.USER_INFO);
+			if (userInfo != null) {
+				Map userInfoMap = (Map)userInfo;
 				userName = (String) userInfoMap.get("user.login.id");
-				log.warn("PASL: user.login.id=" + userName);
+				log.debug("User.login.id={}", userName);
 			}
 		}
 		preAuth(request, httpServletRequest, userName);

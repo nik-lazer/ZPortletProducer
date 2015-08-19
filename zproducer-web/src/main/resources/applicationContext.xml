@@ -24,6 +24,14 @@
 		</bean>
 	</beans>
 
+	<beans profile="websphere">
+		<bean id="preAuthenticationService" class="lan.test.auth.WebspherePreAuthenticationImpl"/>
+	</beans>
+
+	<beans profile="!websphere">
+		<bean id="preAuthenticationService" class="lan.test.auth.PreAuthenticationServiceImpl"/>
+	</beans>
+
 	<beans>
 		<context:property-placeholder location="classpath:config.properties"/>
 		<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -35,7 +43,5 @@
 		</bean>
 		<bean id="applicationContextProvder" class="lan.test.config.ApplicationContextProvider"/>
 		<context:component-scan base-package="lan.test"/>
-		<bean id="preAuthenticationService" class="lan.test.auth.PreAuthenticationServiceImpl"/>
-		<bean id="portletAuthenticationService" class="lan.test.auth.PortletAuthenticationServiceImpl"/>
 	</beans>
 </beans>
