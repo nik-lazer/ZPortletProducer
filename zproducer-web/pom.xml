@@ -13,9 +13,6 @@
 	<groupId>lan.test.portlet</groupId>
 	<artifactId>zproducer-web</artifactId>
 
-	<properties>
-		<liferay.version>6.1.2</liferay.version>
-	</properties>
 	<profiles>
 		<profile>
 			<id>jetty_run</id>

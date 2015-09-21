@@ -10,9 +10,6 @@
 	<packaging>war</packaging>
 	<name>zproducer-liferay Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	<properties>
-		<liferay.version>6.2.3</liferay.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
