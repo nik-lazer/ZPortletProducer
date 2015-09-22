@@ -12,9 +12,16 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 /**
  * TODO: comment
@@ -68,5 +75,23 @@ public class InitPortlet extends GenericPortlet {
 		TestEvent testEvent = new TestEvent();
 		testEvent.setValue(docTypeName);
 		response.setEvent(qname, testEvent);
+	}
+
+	public void serveResource(ResourceRequest request, ResourceResponse response)
+			throws PortletException, IOException {
+		URL res = getClass().getResource(request.getResourceID());
+		InputStream resourceStream = getPortletContext().getResourceAsStream(request.getResourceID());
+		copyStream(resourceStream, response.getPortletOutputStream());
+	}
+
+	public static void copyStream(InputStream input, OutputStream output)
+			throws IOException
+	{
+		byte[] buffer = new byte[1024]; // Adjust if you want
+		int bytesRead;
+		while ((bytesRead = input.read(buffer)) != -1)
+		{
+			output.write(buffer, 0, bytesRead);
+		}
 	}
 }
