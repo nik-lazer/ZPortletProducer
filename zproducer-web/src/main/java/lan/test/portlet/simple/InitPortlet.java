@@ -1,6 +1,8 @@
 package lan.test.portlet.simple;
 
 import lan.test.portlet.zk.TestEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -14,6 +16,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
@@ -24,11 +27,11 @@ import java.io.OutputStream;
 import java.net.URL;
 
 /**
- * TODO: comment
+ * Simple portlet with jsp page
  * @author nik-lazer 24.06.2013   16:13
  */
 public class InitPortlet extends GenericPortlet {
-
+	private Logger log = LoggerFactory.getLogger(InitPortlet.class);
 
 
 	protected void doDispatch(RenderRequest request,
@@ -60,14 +63,10 @@ public class InitPortlet extends GenericPortlet {
 		} else {
 			super.doDispatch(request, response);
 		}
+		log.debug("Render Session ID: {}", request.getPortletSession(false).getId());
 	}
 
-//	public void processAction(ActionRequest request, ActionResponse response) {
-//		String docTypeName = request.getParameter("name");
-//		response.setRenderParameter("docTypeName", docTypeName);
-//	}
-	public void processAction(ActionRequest request, ActionResponse response)
-			throws PortletException,IOException {
+	public void processAction(ActionRequest request, ActionResponse response) throws PortletException,IOException {
 		String docTypeName = request.getParameter("name");
 
 		QName qname = new QName("http://otr.ru/testevent" , "testEvent");
@@ -77,16 +76,14 @@ public class InitPortlet extends GenericPortlet {
 		response.setEvent(qname, testEvent);
 	}
 
-	public void serveResource(ResourceRequest request, ResourceResponse response)
-			throws PortletException, IOException {
+	public void serveResource(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
+		log.debug("Resource Session ID: {}", request.getPortletSession(false).getId());
 		URL res = getClass().getResource(request.getResourceID());
 		InputStream resourceStream = getPortletContext().getResourceAsStream(request.getResourceID());
 		copyStream(resourceStream, response.getPortletOutputStream());
 	}
 
-	public static void copyStream(InputStream input, OutputStream output)
-			throws IOException
-	{
+	public static void copyStream(InputStream input, OutputStream output) throws IOException {
 		byte[] buffer = new byte[1024]; // Adjust if you want
 		int bytesRead;
 		while ((bytesRead = input.read(buffer)) != -1)

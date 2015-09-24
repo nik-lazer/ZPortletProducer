@@ -2,7 +2,7 @@
 <zk>
 	<library-property>
 		<name>org.zkoss.web.servlet.http.URLEncoder</name>
-		<value>lan.test.portlet.zk.wsrp.encoder.LiferayProxiedPortletURLEncoder</value>
+		<value>lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder</value>
 	</library-property>
 	<client-config>
         <debug-js>true</debug-js>
@@ -21,6 +21,5 @@
 	</listener>
 	<system-config>
 		<cache-provider-class>org.zkoss.zk.ui.impl.GlobalDesktopCacheProvider</cache-provider-class>
-		<ui-factory-class>lan.test.portlet.zk.wsrp.session.DualSerializableUiFactory</ui-factory-class>
 	</system-config>
 </zk>
