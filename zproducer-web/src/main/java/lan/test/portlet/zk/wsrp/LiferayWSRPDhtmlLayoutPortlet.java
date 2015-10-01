@@ -1,6 +1,8 @@
 package lan.test.portlet.zk.wsrp;
 
 import lan.test.config.ApplicationContextProvider;
+import lan.test.portlet.zk.wsrp.encoder.LiferayPortletURLEncoder;
+import lan.test.portlet.zk.wsrp.encoder.LiferayProxiedPortletURLEncoder;
 import lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -181,6 +183,7 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		log.debug("Resource sessionID: {}", request.getRequestedSessionId());
 		final Session sess = getSession(request, false);
+		request.setAttribute(LiferayPortletURLEncoder.CREATE_STATIC_RESOURCE_URL, Boolean.TRUE);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
 		boolean compress = false; //Some portal container (a.k.a GateIn) doesn't work with gzipped output stream.
@@ -288,9 +291,9 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 		try {
 			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);
-			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
-			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
-			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
+			response.getWriter().print("<script src=" + LiferayPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + LiferayPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + LiferayPortletURLEncoder.getCreateStaticResourceUrl(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
 
 		} catch (ServletException e) {
 			throw new PortletException(e);

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.web.util.resource.ClassWebResource;
+import org.zkoss.zk.ui.Executions;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.ResourceURL;
@@ -12,8 +13,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * URLEncoder for liferay WSRP
@@ -28,6 +33,7 @@ public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 	public static final String ORACLE_WEBCENTER_PORTLET_RESPONSE = "oracle.webcenter.portlet.response";
 
 	public static final String CREATE_RESOURCE_URL = "create.resource.url";
+	public static final String CREATE_STATIC_RESOURCE_URL = "create.static.resource.url";
 
 	@Override
 	public String encodeURL(final ServletContext ctx, final ServletRequest request, ServletResponse response, String url, Encodes.URLEncoder defaultEncoder) throws Exception {
@@ -39,6 +45,11 @@ public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 					if (request.getAttribute(CREATE_RESOURCE_URL) != null) {
 						String ret = createResourceUrl(portletResponse, url);
 						log.debug("RURL: {} {}", url, ret);
+						return ret;
+					}
+					if (request.getAttribute(CREATE_STATIC_RESOURCE_URL) != null) {
+						String ret = createStaticUrl((HttpServletRequest)request, portletResponse, super.encodeURL(url));
+						log.debug("SSURL: {} {}", url, ret);
 						return ret;
 					}
 
@@ -84,9 +95,43 @@ public class LiferayPortletURLEncoder implements Encodes.URLEncoder {
 		}
 	}
 
+	public static String getCreateStaticResourceUrl(ServletContext ctx, ServletRequest request, ServletResponse response, String uri) throws ServletException {
+		try {
+			request.setAttribute(CREATE_STATIC_RESOURCE_URL, Boolean.TRUE);
+			return Encodes.encodeURL(ctx, request, response, uri);
+		} finally {
+			request.removeAttribute(CREATE_STATIC_RESOURCE_URL);
+		}
+	}
+
 	private String createResourceUrl(MimeResponse portletResponse, String url) {
 		ResourceURL resourceURL = portletResponse.createResourceURL();
 		resourceURL.setResourceID(url);
 		return resourceURL.toString();
+	}
+
+	private String createStaticUrl(HttpServletRequest request, MimeResponse portletResponse, String url) {
+		String resourceURL = portletResponse.createResourceURL().toString();
+		String encodedUrl = url;
+		try {
+			String requestUrl = request.getRequestURL().toString();
+			URL reqUrl = null;
+			try {
+				reqUrl = new URL(requestUrl);
+				URL resUrl = new URL(reqUrl.getProtocol(), reqUrl.getHost(), reqUrl.getPort(), url);
+				log.debug("resUrl: {}", resUrl);
+				encodedUrl = Encodes.encodeURIComponent(resUrl.toString());
+				encodedUrl = encodedUrl.replace("%2f", "%2F");
+				encodedUrl = encodedUrl.replace("%3a", "%3A");
+
+			} catch (MalformedURLException e) {
+				log.error("Parsing request URL error", e);
+			}
+		} catch (UnsupportedEncodingException e) {
+			log.error("Creating static URL encoding error", e);
+		}
+		String ret = resourceURL.replace("wsrp_rewrite?wsrp-urlType=resource&", "wsrp_rewrite?wsrp-urlType=resource&wsrp-url=" + encodedUrl + "&");
+		log.debug("Static URL: {}", ret);
+		return ret;
 	}
 }

@@ -90,6 +90,16 @@
 		<value-type>lan.lan.test.portlet.zk.zk.TestEvent</value-type>
 	</event-definition>-->
 
+	<filter>
+		<filter-name>zkPortletFilter</filter-name>
+		<filter-class>lan.test.portlet.zk.wsrp.WebcenterWsrpEncoderFixResourceFilter</filter-class>
+		<lifecycle>RESOURCE_PHASE</lifecycle>
+	</filter>
+	<filter-mapping>
+		<filter-name>zkPortletFilter</filter-name>
+		<portlet-name>HelloZK</portlet-name>
+	</filter-mapping>
+
 	<public-render-parameter>
 		<identifier>location</identifier>
 		<name>location</name>
