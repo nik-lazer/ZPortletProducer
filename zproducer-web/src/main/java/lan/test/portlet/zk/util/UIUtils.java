@@ -4,6 +4,7 @@ import com.liferay.portal.util.PortalUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.util.IOUtils;
 import org.zkoss.util.logging.Log;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.UiException;
@@ -17,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Map;
 
 /**
  * Utils for application
@@ -70,6 +72,19 @@ public class UIUtils implements WebAppInit {
 		if (execution != null) {
 			try {
 				return (T) execution.createComponents(url, null, null);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				throw new UiException(e.getMessage(), e);
+			}
+		}
+		throw new IllegalStateException("Unable to create component. Do you access it in ZK event listener?");
+	}
+
+	public static <T> T loadComponentFromZul(String url, Component parent, Map args) throws UiException {
+		final Execution execution = Executions.getCurrent();
+		if (execution != null) {
+			try {
+				return (T) execution.createComponents(url, parent, args);
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				throw new UiException(e.getMessage(), e);

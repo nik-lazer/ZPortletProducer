@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Portlet hello"?>
+<zk>
+<window xmlns="http://www.zkoss.org/2005/zul"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
+        title="Portlet window" border="normal" width="500px" use="lan.test.portlet.zk.component.PortletWindow">
+</window>
+</zk>

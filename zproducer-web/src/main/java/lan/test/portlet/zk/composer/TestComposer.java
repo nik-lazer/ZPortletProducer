@@ -34,7 +34,7 @@ import static lan.test.portlet.zk.util.UIUtils.resolveFileName;
  * Composer for hello.zul
  * @author nik-lazer 20.06.2013   14:52
  */
-public class TestComposer extends SelectorComposer {
+public class TestComposer extends SelectorComposer<Window> {
 	@Wire
 	private Button btn;
 	@Wire
@@ -51,12 +51,15 @@ public class TestComposer extends SelectorComposer {
 	private WebBrowserHistoryManager webBrowserHistoryManager = ApplicationContextProvider.getHistoryManager();
 
 	@Override
-	public void doAfterCompose(Component comp) throws Exception {
-		super.doAfterCompose(comp);
+	public void doAfterCompose(Window window) throws Exception {
+		super.doAfterCompose(window);
 		HttpServletRequest request = (HttpServletRequest) Executions.getCurrent().getNativeRequest();
 		HttpSession session = request.getSession();
 		if (session.getAttribute("currentUser") != null) {
 			helloLabel.setValue("Hello, " + session.getAttribute("currentUser"));
+		}
+		if (Executions.getCurrent().getArg().get("portletMode") != null) {
+			window.setTitle(window.getTitle() + " (portlet mode)");
 		}
 	}
 

@@ -9,7 +9,7 @@
 		<portlet-class>lan.test.portlet.zk.wsrp.LiferayWSRPDhtmlLayoutPortlet</portlet-class>
 		<init-param>
 			<name>zk_page</name>
-			<value>/hello.zul</value>
+			<value>/portlet.zul</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -25,7 +25,7 @@
 		<portlet-preferences>
 			<preference>
 				<name>zk_page</name>
-				<value>/hello.zul</value>
+				<value>/portlet.zul</value>
 			</preference>
 		</portlet-preferences>
 		<supported-public-render-parameter>location</supported-public-render-parameter>
