@@ -84,7 +84,7 @@ public class TestComposer extends SelectorComposer<Window> {
 		InputStream inputStream = null;
 		try {
 			inputStream = new ByteArrayInputStream(text.getBytes("UTF-8"));
-			Filedownload.save(inputStream, null, resolveFileName(Calendar.getInstance()));
+			Filedownload.save(inputStream, "application/octet-stream", resolveFileName(Calendar.getInstance()));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

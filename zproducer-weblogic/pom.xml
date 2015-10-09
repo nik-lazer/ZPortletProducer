@@ -43,6 +43,9 @@
 							<Implementation-Version>${implementation.version}</Implementation-Version>
 						</manifestEntries>
 					</archive>
+					<packagingExcludes>
+						WEB-INF/lib/slf4j-jdk14*.jar,
+					</packagingExcludes>
 					<webResources>
 						<resource>
 							<targetPath>WEB-INF</targetPath>

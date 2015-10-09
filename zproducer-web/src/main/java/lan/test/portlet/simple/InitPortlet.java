@@ -80,6 +80,7 @@ public class InitPortlet extends GenericPortlet {
 		log.debug("Resource Session ID: {}", request.getPortletSession(false).getId());
 		URL res = getClass().getResource(request.getResourceID());
 		InputStream resourceStream = getPortletContext().getResourceAsStream(request.getResourceID());
+		response.setContentType("image/jpeg");
 		copyStream(resourceStream, response.getPortletOutputStream());
 	}
 

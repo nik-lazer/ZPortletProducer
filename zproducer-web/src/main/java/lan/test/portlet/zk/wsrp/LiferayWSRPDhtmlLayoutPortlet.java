@@ -183,7 +183,6 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		log.debug("Resource sessionID: {}", request.getRequestedSessionId());
 		final Session sess = getSession(request, false);
-		request.setAttribute(LiferayPortletURLEncoder.CREATE_STATIC_RESOURCE_URL, Boolean.TRUE);
 
 		final DHtmlUpdateServlet updateServlet = DHtmlUpdateServlet.getUpdateServlet(wapp);
 		boolean compress = false; //Some portal container (a.k.a GateIn) doesn't work with gzipped output stream.
@@ -212,6 +211,7 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 				String url = StringUtils.substringAfter(resourceID, ClassWebResource.PATH_PREFIX);
 				ClassWebResource webResource = webman.getClassWebResource();
 				webResource.service(httpreq, httpres, url);
+				log.debug("Response content type1: {}, resourceID: {}", response.getContentType(), resourceID);
 				return;
 			} else if (StringUtils.isNotEmpty(pathInfo)) {
 				String auExtensionName = pathInfo.substring(1, pathInfo.indexOf("/", 1));
@@ -231,6 +231,7 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 				} finally {
 					I18Ns.cleanup(httpreq, old);
 				}
+				log.debug("Response content type2: {}, resourceID: {}", response.getContentType(), resourceID);
 				return; //done
 			}
 
@@ -240,6 +241,7 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 			response.setProperty("Expires", "-1");
 
 			updateServlet.process(sess, httpreq, httpres, compress);
+			log.debug("Response content type3: {}, resourceID: {}", response.getContentType(), resourceID);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} finally {
@@ -296,6 +298,7 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 			response.getWriter().print("<script src=" + LiferayPortletURLEncoder.getCreateStaticResourceUrl(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
 
 		} catch (ServletException e) {
+			log.error("Process exception", e);
 			throw new PortletException(e);
 		}
 
@@ -528,6 +531,14 @@ public class LiferayWSRPDhtmlLayoutPortlet extends GenericPortlet {
 		public PortletHttpServletRequestWithHeaders(HttpServletRequest request, PortletRequest portletRequest) {
 			super(request);
 			this.portletRequest = portletRequest;
+		}
+
+		@Override
+		public Object getAttribute(String name) {
+			if (Attributes.INCLUDE_CONTEXT_PATH.equals(name)) {
+				return null;
+			}
+			return super.getAttribute(name);
 		}
 
 		@Override
