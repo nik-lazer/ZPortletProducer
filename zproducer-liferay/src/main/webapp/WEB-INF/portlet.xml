@@ -5,8 +5,7 @@
 		<description xml:lang="EN">HelloZK</description>
 		<portlet-name>HelloZK</portlet-name>
 		<display-name xml:lang="EN">HelloZK</display-name>
-		<!--<portlet-class>org.zkoss.zk.ui.http.DHtmlLayoutPortlet</portlet-class>-->
-		<portlet-class>lan.test.portlet.zk.wsrp.LiferayWSRPDhtmlLayoutPortlet</portlet-class>
+		<portlet-class>lan.test.portlet.zk.wsrp.WSRPDhtmlLayoutPortlet</portlet-class>
 		<init-param>
 			<name>zk_page</name>
 			<value>/portlet.zul</value>

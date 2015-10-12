@@ -11,7 +11,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:applicationContext.xml,
-			classpath:browserHistoryContext.xml,
+			classpath:weblogic-browserHistoryContext.xml,
 			classpath:jndiContext.xml,
 			classpath:rmiContext.xml,
 		</param-value>

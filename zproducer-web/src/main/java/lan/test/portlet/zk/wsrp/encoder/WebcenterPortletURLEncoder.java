@@ -12,6 +12,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -57,7 +58,7 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 						// если не сделать java.lang.IllegalArgumentException: Relative path [1.jpg] must start with a '/'
 						url = ctx.getContextPath() + "/" + url;
 					}
-					return super.encodeURL(url);
+					return createDefaultPortletUrl((HttpServletRequest) request, portletResponse, super.encodeURL(url));
 				}
 
 			};
@@ -77,10 +78,14 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 		}
 	}
 
-	private String createResourceUrl(MimeResponse portletResponse, String url) {
+	protected String createResourceUrl(MimeResponse portletResponse, String url) {
 		ResourceURL resourceURL = portletResponse.createResourceURL();
 		resourceURL.setResourceID(url);
 		return resourceURL.toString();
+	}
+
+	protected String createDefaultPortletUrl(HttpServletRequest request, MimeResponse portletResponse, String url) {
+		return url;
 	}
 
 }
