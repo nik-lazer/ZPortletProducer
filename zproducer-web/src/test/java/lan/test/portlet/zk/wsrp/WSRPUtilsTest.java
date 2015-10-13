@@ -34,4 +34,13 @@ public class WSRPUtilsTest {
 		assertEquals("deflate,compressed", WSRPUtils.removeTokens(withoutToken, "qwert", ":"));
 	}
 
+	@Test
+	public void overwriteWsrpUrlTest() {
+		String resourceUrl = "wsrp_rewrite?wsrp-urlType=resource&wsrp-windowState=wsrp%3Anormal&wsrp-mode=wsrp%3Aview&wsrp-resourceCacheability=cacheLevelPage&wsrp-navigationalState=X0hlbGxvWktfV0FSX3pwcm9kdWNlcl93c3JwPTEm/wsrp_rewrite";
+		String httpUrl = "http://tomee.lan:58080/c/portal/layout";
+		String urlToEncode = "/zproducer/zksandbox.js.dsp";
+		String expectedUrl = "wsrp_rewrite?wsrp-urlType=resource&wsrp-url=http%3a%2f%2ftomee.lan%3a58080%2fzproducer%2fzksandbox.js.dsp&wsrp-windowState=wsrp%3Anormal&wsrp-mode=wsrp%3Aview&wsrp-resourceCacheability=cacheLevelPage&wsrp-navigationalState=X0hlbGxvWktfV0FSX3pwcm9kdWNlcl93c3JwPTEm/wsrp_rewrite";
+		assertEquals(expectedUrl, WSRPUtils.overwriteWsrpUrl(resourceUrl, httpUrl, urlToEncode));
+	}
+
 }

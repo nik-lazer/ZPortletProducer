@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
  * @since 21.05.2015
  */
 public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
-	private static final Logger log = LoggerFactory.getLogger(PortletBridgeURLEncoder.class);
+	private static final Logger log = LoggerFactory.getLogger(WebcenterPortletURLEncoder.class);
 	// См http://docs.oracle.com/cd/E16764_01/webcenter.1111/e10148/jpsdg_java_adv.htm#BABGACEG
 	// How to Implement Stateless Resource Proxying
 	public static final String ORACLE_PORTLET_SERVER_USE_STATELESS_PROXYING = "oracle.portlet.server.useStatelessProxying";

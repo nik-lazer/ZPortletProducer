@@ -1,6 +1,5 @@
 package lan.test.portlet.zk.composer;
 
-import lan.test.portlet.zk.wsrp.session.DualSimpleSession;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.select.SelectorComposer;

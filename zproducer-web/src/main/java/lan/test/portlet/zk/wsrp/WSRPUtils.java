@@ -1,5 +1,12 @@
 package lan.test.portlet.zk.wsrp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.zkoss.web.servlet.http.Encodes;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +17,8 @@ import java.util.regex.Pattern;
 public class WSRPUtils {
 	private static String replacement;
 	private static Pattern pattern;
+
+	private static final Logger log = LoggerFactory.getLogger(WSRPUtils.class);
 
 	static {
 		String regex = "(?<prefix>[^\\/])wsrp_rewrite(?<suffix>[^\\?])";
@@ -33,4 +42,31 @@ public class WSRPUtils {
 		return data.replaceAll(pattern, "");
 	}
 
+	/**
+	 * Overwrites source resourceUrl by means adding wsrp-url parameter. Takes protocol, host and port from actual HTTP request
+	 * @param resourceUrl
+	 * @param httpURL
+	 * @param urlToEncode
+	 * @return
+	 */
+	public static String overwriteWsrpUrl(String resourceUrl, String httpURL, String urlToEncode) {
+		String encodedUrl = urlToEncode;
+		try {
+			URL reqUrl = null;
+			try {
+				reqUrl = new URL(httpURL);
+				URL resUrl = new URL(reqUrl.getProtocol(), reqUrl.getHost(), reqUrl.getPort(), urlToEncode);
+				if (log.isDebugEnabled()) {
+					log.debug("resUrl: {}", resUrl);
+				}
+				encodedUrl = Encodes.encodeURIComponent(resUrl.toString());
+
+			} catch (MalformedURLException e) {
+				log.error("Parsing request URL error", e);
+			}
+		} catch (UnsupportedEncodingException e) {
+			log.error("Creating static URL encoding error", e);
+		}
+		return resourceUrl.replace("wsrp_rewrite?wsrp-urlType=resource&", "wsrp_rewrite?wsrp-urlType=resource&wsrp-url=" + encodedUrl + "&");
+	}
 }

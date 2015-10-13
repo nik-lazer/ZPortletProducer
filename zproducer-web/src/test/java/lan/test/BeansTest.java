@@ -1,6 +1,5 @@
 package lan.test;
 
-import junit.framework.Assert;
 import lan.test.config.ApplicationContextProvider;
 import lan.test.config.ConfigBean;
 import org.junit.Ignore;

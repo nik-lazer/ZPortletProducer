@@ -3,7 +3,6 @@ package lan.test.portlet.zk.composer;
 import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import lan.test.portlet.zk.util.UIUtils;
-import lan.test.portlet.zk.wsrp.session.DualSimpleSession;
 import org.zkoss.zhtml.Filedownload;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
