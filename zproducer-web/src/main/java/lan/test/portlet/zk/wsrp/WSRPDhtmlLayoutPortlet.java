@@ -287,7 +287,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 		try {
 			httpreq.setAttribute("javax.zkoss.zk.lang.js.generated", Boolean.TRUE);
-			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
+			response.getWriter().print("<script src=" + Encodes.encodeURL(svlctx, httpreq, httpres, "~./js/zk.wpd") + "></script>\n");
 			response.getWriter().print("<script src=" + WebcenterPortletURLEncoder.createResourceUrl(svlctx, httpreq, httpres, "~./js/zul.lang.wpd") + "></script>\n");
 			response.getWriter().print("<script src=" + Encodes.encodeURL(svlctx, httpreq, httpres, "/zksandbox.js.dsp") + "></script>\n");
 
