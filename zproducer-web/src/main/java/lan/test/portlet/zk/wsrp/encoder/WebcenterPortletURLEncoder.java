@@ -48,7 +48,7 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 					String pathInfo = StringUtils.substringAfter(url, updateUrl);
 					boolean isAuExtension = StringUtils.isNotEmpty(pathInfo) && !pathInfo.startsWith(ClassWebResource.PATH_PREFIX);
 
-					if (isAuExtension || url.endsWith("wcs")) {
+					if (isAuExtension || url.endsWith("wcs") || pathInfo.endsWith(".css.dsp")) {
 						return createResourceUrl(portletResponse, url);
 					}
 					// Запрос ресурса через javax.portlet.ResourceServingPortlet.serveResource()

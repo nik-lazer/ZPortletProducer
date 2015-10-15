@@ -35,7 +35,10 @@ public class WebcenterWsrpEncoderFixResourceFilter implements ResourceFilter {
 			response = WSRPUtils.fixTokens(response);
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.println(response);
-		} else{
+		} else if (resourceID != null && resourceID.endsWith("css.dsp")) {
+			filterChain.doFilter(resourceRequest, resourceResponse);
+			resourceResponse.setContentType("text/css");
+		} else {
 			filterChain.doFilter(resourceRequest, resourceResponse);
 		}
 	}
