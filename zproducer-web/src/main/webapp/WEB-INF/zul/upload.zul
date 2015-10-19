@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Hello"?>
+<zk>
+<window xmlns="http://www.zkoss.org/2005/zul"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd"
+        title="Action window" closable="true" border="normal" apply="lan.test.portlet.zk.composer.UploadComposer">
+    <vlayout>
+	    <label id="actionLabel">Upload dialog</label>
+	    <CustomFileUpload id="fileupload" maxNumberOfFiles="1" multiple="false"/>
+	    <textbox id="resultsBox" cols="80" rows="10"></textbox>
+    </vlayout>
+</window>
+</zk>

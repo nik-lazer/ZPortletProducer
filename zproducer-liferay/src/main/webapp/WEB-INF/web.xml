@@ -165,6 +165,21 @@
 		<url-pattern>/lbClassicStatus</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>FileUploadServlet</servlet-class>
+		<init-param>
+			<param-name>lan.test.portlet.zk.component.fileupload.fileStoreClass</param-name>
+			<param-value>lan.test.portlet.zk.component.fileupload.GlobalFileUploadStore</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+
 	<!-- /////////// -->
 	<!-- [Optional] Session timeout -->
 	<session-config>

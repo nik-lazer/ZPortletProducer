@@ -14,6 +14,7 @@
 		<button id="histButton" label="Bad history"/>
 		<button id="downloadButton" label="download"/>
 		<button id="actionButton" label="action"/>
+	    <button id="uploadButton" label="upload"/>
     </vlayout>
 </window>
 </zk>

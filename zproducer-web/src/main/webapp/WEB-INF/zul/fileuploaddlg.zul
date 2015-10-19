@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?page language="xul/html"?>
+<?component name="uploaddlg" extends="window" class="lan.test.portlet.zk.component.fileupload.FileuploadDlg" widgetClass="zul.fud.FileuploadDlg"?>
+
+
+<uploaddlg title="${arg.title}" border="normal" width="550px" closable="true" xmlns:w="http://www.zkoss.org/2005/zk/client"
+           w:max="${arg.max}">
+
+	<label id="labelId" value="${arg.message}"/>
+	<CustomFileUpload id="fileupload" multiple="false" maxFileSize="2000000" maxNumberOfFiles="3"/>
+	<separator bar="true" style="margin-top: 10px"/>
+	<div id="btns" style="padding: 5px 0px 5px 25px;">
+		<button id="okButton" label="${c:l('mesg:org.zkoss.zul.mesg.MZul:UPLOAD_SUBMIT')}"/>
+		<button id="cancelButton" label="${c:l('mesg:org.zkoss.zul.mesg.MZul:UPLOAD_CANCEL')}"/>
+	</div>
+</uploaddlg>

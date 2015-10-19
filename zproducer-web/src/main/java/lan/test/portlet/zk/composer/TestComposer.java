@@ -41,6 +41,8 @@ public class TestComposer extends SelectorComposer<Window> {
 	@Wire
 	private Button downloadButton;
 	@Wire
+	private Button uploadButton;
+	@Wire
 	private Div div;
 	@Wire
 	private Image picture;
@@ -94,6 +96,13 @@ public class TestComposer extends SelectorComposer<Window> {
 		Session session = Sessions.getCurrent();
 		session.setAttribute("action.time", new Date());
 		Window window = UIUtils.loadComponentFromZul("/WEB-INF/zul/action.zul");
+		window.setPosition("center");
+		window.doModal();
+	}
+
+	@Listen("onClick = button#uploadButton")
+	public void uploadWindow() {
+		Window window = UIUtils.loadComponentFromZul("/WEB-INF/zul/upload.zul");
 		window.setPosition("center");
 		window.doModal();
 	}

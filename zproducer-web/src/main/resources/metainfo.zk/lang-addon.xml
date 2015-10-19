@@ -1,0 +1,16 @@
+<language-addon>
+	<addon-name>zproducer</addon-name>
+	<language-name>xul/html</language-name>
+
+	<component>
+		<component-name>CustomFileUpload</component-name>
+		<component-class>lan.test.portlet.zk.component.fileupload.CustomFileUpload</component-class>
+		        
+		<widget-class>lan.test.CustomFileUpload</widget-class>
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/customfileupload.js</mold-uri>
+			<css-uri>css/customfileupload.css.dsp</css-uri>
+		</mold>
+	</component>
+</language-addon>
