@@ -36,7 +36,6 @@ ${z:setCSSCacheControl()}
 }
 
 .btn {
-	background-image:url(${c:encodeThemeURL('~./icons/24/apply_changes.png')});
 	background-position: -5px 0;
 	background-repeat: no-repeat;
 	display: inline-block;
@@ -158,7 +157,6 @@ table {
 }
 
 .button a, .button a:hover, .button a:focus, .button a:active {
-	background-image:url(${c:encodeThemeURL('~./icons/16/wnd-exit.png')});
     background-position: 0 0;
     background-repeat: no-repeat;
     padding-left: 20px;

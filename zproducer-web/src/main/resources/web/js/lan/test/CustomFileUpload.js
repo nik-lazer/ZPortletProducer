@@ -149,7 +149,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 					if (wgt.maxFileSize && wgt.maxFileSize > 0) {
 						$.each(data.originalFiles, function (index, file) {
 							if (file.size && file.size > wgt.maxFileSize) {
-								uploadErrors.push('Слишком большой файл: "' + file.name + '"');
+								uploadErrors.push('Too large file: "' + file.name + '"');
 							}
 						});
 					}
@@ -164,7 +164,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 								}
 							}
 							if (notAccepted == 1) {
-								uploadErrors.push('Вложения данного типа не разрешены. Допустимы расширения: "' + wgt.extensionsSet + '"');
+								uploadErrors.push('Files of this type is not allowed. Allowed: "' + wgt.extensionsSet + '"');
 							}
 						});
 					} else if (wgt.extensionsSet && wgt.extensionsSet != '') {
@@ -178,7 +178,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 								}
 							}
 							if (notAccepted == 1) {
-								uploadErrors.push('Вложения данного типа не разрешены. Запрещенные расширения: "' + wgt.extensionsSet + '"');
+								uploadErrors.push('Files of this type is not allowed. Prohibited: "' + wgt.extensionsSet + '"');
 							}
 						});
 					}
@@ -187,7 +187,6 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 						if (wgt.showFileList != "true") {
 							totalUploaded = wgt.totalCount;
 						}
-						// Если задано ограничение в 1 файл - заменяем, не кидаем ошибку
 						if (totalUploaded == 1 && wgt.maxNumberOfFiles == 1) {
 							zAu.send(new zk.Event(wgt, 'onFilesClear', '', {
 								toServer: true
@@ -195,7 +194,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 							$("#uploaded-files").empty();
 						}
 						else if (wgt.maxNumberOfFiles <= totalUploaded) {
-							uploadErrors.push('Превышено максимальное количество загружаемых файлов');
+							uploadErrors.push('Too many files');
 						}
 					}
 					if (uploadErrors.length == 0) {
@@ -248,7 +247,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 						});
 						var td = $('<td/>');
 						tr.append(td);
-						var fileName = wgt.maxNumberOfFiles == 1 ? "Файл: " + file.fileName : file.fileName;
+						var fileName = wgt.maxNumberOfFiles == 1 ? "File: " + file.fileName : file.fileName;
 						td.append($('<span/>').addClass("name").text(fileName)).append($('<span/>').addClass("sparator").text("|"));
 						td.append($('<span/>').addClass("filesize").text(wgt.humanFileSize(file.fileSize, true)));
 						if (file.error) {
@@ -261,7 +260,7 @@ lan.test.CustomFileUpload = zk.$extends(zul.Widget, {
 							$("#uploaded-files").append(tr);
 						}
 					} else {
-						uploadErrors.push('Превышено максимальное количество загружаемых файлов');
+						uploadErrors.push('Too many files');
 						wgt.showErrors(uploadErrors);
 					}
 				});

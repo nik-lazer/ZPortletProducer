@@ -9,10 +9,10 @@ function (out) {
     }
     out.push('<div class="btnHolder">');
     if (this.showDropzone == "true") {
-        out.push('<div id="orSpan">или нажмите</div>');
+        out.push('<div id="orSpan">or press</div>');
     }
 	out.push('<div class="fileUpload btn">');
-	out.push('    <span>Загрузить</span>');
+	out.push('    <span>Upload</span>');
 	//out.push('<input id="', this.id, '" type="file" data-url="' , url_ ,'" name="files[]" ' ,
 	out.push('<input id="', this.id, '" type="file" name="files[]" ',
 			' class="upload ', this.getZclass(), '" ', multiple_, ' />');
@@ -26,7 +26,6 @@ function (out) {
 	}
 	if (this.showFileList == "true") {
         if(this.maxNumberOfFiles == 1){
-            //out.push('Файл:');
         } else {
            out.push('<b>Files:</b>');
         }

@@ -1,6 +1,7 @@
 package lan.test.portlet.zk.wsrp;
 
 import lan.test.config.ApplicationContextProvider;
+import lan.test.portlet.zk.component.fileupload.FileUploadServlet;
 import lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ import org.zkoss.zk.ui.sys.UiFactory;
 import org.zkoss.zk.ui.sys.WebAppCtrl;
 import org.zkoss.zk.ui.util.DesktopRecycle;
 
+import javax.portlet.ClientDataRequest;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -59,10 +61,12 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -108,7 +112,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	protected void doView(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
 		HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
-		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
+		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWrapper<PortletRequest>(httpServletRequest, request);
 		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		//try parameter first and then attribute
 		boolean bRichlet = false;
@@ -177,7 +181,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final WebApp wapp = webman.getWebApp();
 
 		final HttpServletRequest httpServletRequest = ResourceHttpServletRequest.getInstance(request);
-		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
+		HttpServletRequestWrapper httpreq = new ClientDataHttpServletRequestWrapper(httpServletRequest, request);
 		final HttpServletResponse httpres = ResourceHttpServletResponse.getInstance(response);
 		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		final Session sess = getSession(request, false);
@@ -204,6 +208,12 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			String resourceID = request.getResourceID();
 			Enumeration headerNames = httpreq.getHeaderNames();
 			log.debug("WSRP serveResource resourceID:" + resourceID);
+			String uploadUrl = httpreq.getContextPath() + "/upload";
+			if (uploadUrl.equals(resourceID)) {
+				FileUploadServlet uploadServlet = FileUploadServlet.getFileUploadServlet(wapp);
+				uploadServlet.process(httpreq, httpres);
+				return;
+			}
 			String pathInfo = StringUtils.substringAfter(resourceID, "/zkau");
 			if (pathInfo.startsWith(ClassWebResource.PATH_PREFIX)) {
 				String url = StringUtils.substringAfter(resourceID, ClassWebResource.PATH_PREFIX);
@@ -280,7 +290,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		final WebAppCtrl wappc = (WebAppCtrl) wapp;
 
 		final HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
-		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWithHeaders(httpServletRequest, request);
+		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWrapper<PortletRequest>(httpServletRequest, request);
 		final HttpServletResponse httpres = RenderHttpServletResponse.getInstance(response);
 		final ServletContext svlctx = wapp.getServletContext();
 
@@ -518,10 +528,10 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		return null;
 	}
 
-	class PortletHttpServletRequestWithHeaders extends HttpServletRequestWrapper {
-		private final PortletRequest portletRequest;
+	class PortletHttpServletRequestWrapper<T extends PortletRequest> extends HttpServletRequestWrapper {
+		protected final T portletRequest;
 
-		public PortletHttpServletRequestWithHeaders(HttpServletRequest request, PortletRequest portletRequest) {
+		public PortletHttpServletRequestWrapper(HttpServletRequest request, T portletRequest) {
 			super(request);
 			this.portletRequest = portletRequest;
 		}
@@ -551,5 +561,52 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			}
 			return stringBuffer;
 		}
+
+		@Override
+		public String getContentType() {
+			if (portletRequest instanceof ClientDataRequest) {
+				ClientDataRequest clientDataRequest = (ClientDataRequest) portletRequest;
+				if (clientDataRequest.getContentType() != null) {
+					return clientDataRequest.getContentType();
+				}
+			}
+			return super.getContentType();
+		}
 	}
+
+	class ClientDataHttpServletRequestWrapper extends PortletHttpServletRequestWrapper<ClientDataRequest> {
+
+		public ClientDataHttpServletRequestWrapper(HttpServletRequest request, ClientDataRequest portletRequest) {
+			super(request, portletRequest);
+		}
+
+		@Override
+		public String getContentType() {
+			final String value = portletRequest.getContentType();
+			return value != null ? value : super.getContentType();
+		}
+
+		@Override
+		public String getMethod() {
+			final String value = portletRequest.getMethod();
+			return value != null ? value : super.getMethod();
+		}
+
+		@Override
+		public ServletInputStream getInputStream() throws IOException {
+			final InputStream portletInputStream = portletRequest.getPortletInputStream();
+			return new ServletInputStream() {
+				@Override
+				public int read() throws IOException {
+					return portletInputStream.read();
+				}
+
+				@Override
+				public void close() throws IOException {
+					portletInputStream.close();
+				}
+			};
+		}
+	}
+
 }

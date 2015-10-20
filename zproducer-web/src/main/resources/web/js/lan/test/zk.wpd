@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="lan.test" language="xul/html" depends="zul.wgt,zul.sel,zul.inp">
+<package name="lan.test" language="xul/html" depends="zul.wgt,zul.inp">
+	<script src="jquery.ui.widget.js"/>
+	<script src="jquery.iframe-transport.js"/>
+	<script src="jquery.fileupload.js"/>
 	<widget name="CustomFileUpload"/>
 </package>

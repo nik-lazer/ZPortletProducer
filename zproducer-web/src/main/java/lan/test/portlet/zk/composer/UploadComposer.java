@@ -1,5 +1,6 @@
 package lan.test.portlet.zk.composer;
 
+import com.google.common.io.CharStreams;
 import lan.test.portlet.zk.component.fileupload.CustomFileUpload;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
@@ -9,16 +10,18 @@ import org.zkoss.util.media.AMedia;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.SerializableEventListener;
-import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
-import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -27,23 +30,24 @@ import java.util.List;
 public class UploadComposer extends SelectorComposer<Window> {
 	protected static final Logger log = LoggerFactory.getLogger(UploadComposer.class);
 	@Wire
-	private CustomFileUpload fileUpload;
+	private CustomFileUpload fileupload;
 	@Wire
 	private Textbox resultsBox;
 
 	@Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		fileUpload.addEventListener(CustomFileUpload.ON_FILE_UPLOAD, new SerializableEventListener() {
+		fileupload.addEventListener(CustomFileUpload.ON_FILE_UPLOAD, new SerializableEventListener() {
 			@Override
 			public void onEvent(Event event) throws Exception {
 				onFileUpload(event);
 			}
 		});
+		fileupload.setExtensionsSet(new HashSet<String>(Arrays.asList("txt")));
 	}
 
 	public void onFileUpload(Event event) {
-		List<FileItem> result = fileUpload.getResult();
+		List<FileItem> result = fileupload.getResult();
 
 		if (result == null || result.size() < 1) {
 			return;
@@ -53,7 +57,8 @@ public class UploadComposer extends SelectorComposer<Window> {
 			Media media = new AMedia(fileItem.getName(), FilenameUtils.getExtension(fileItem.getName()), fileItem.getContentType(), fileItem.getInputStream());
 			if (media != null) {
 				if ("txt".equals(media.getFormat())) {
-					resultsBox.setValue(media.getStringData());
+					String data = CharStreams.toString(new InputStreamReader(media.getStreamData()));
+					resultsBox.setValue(data);
 				} else {
 					Messagebox.show("Wrong format: "+media.getContentType(), "Error", Messagebox.OK, Messagebox.ERROR);
 				}

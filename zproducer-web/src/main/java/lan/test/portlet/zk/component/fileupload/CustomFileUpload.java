@@ -226,7 +226,6 @@ public class CustomFileUpload extends HtmlBasedComponent implements UiLifeCycle,
 	public void service(org.zkoss.zk.au.AuRequest request, boolean everError) {
 		final String cmd = request.getCommand();
 
-		// Файл только выбран пользователем и еще не загружен на сервер
 		if (cmd.equals(ON_FILE_ADD)) {
 			try {
 				fireEvent(ON_FILE_ADD, request.getData());
@@ -234,7 +233,6 @@ public class CustomFileUpload extends HtmlBasedComponent implements UiLifeCycle,
 
 			}
 		}
-		// Удаляем загруженный файл
 		if (cmd.equals(ON_FILE_DELETE)) {
 			String fileName = (String) request.getData().get("fileName");
 			Integer fileSize = (Integer) request.getData().get("fileSize");

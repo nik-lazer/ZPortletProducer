@@ -9,8 +9,6 @@ ${z:setCWRCacheControl()}
 <c:include page="~./js/zul.wnd.wpd"/>
 <c:include page="~./js/zul.box.wpd"/>
 <c:include page="~./js/zk.cpsp.wpd"/>
-<c:include page="/js/jquery.ui.widget.js"/>
-<c:include page="/js/jquery.iframe-transport.js"/>
-<c:include page="/js/jquery.fileupload.js"/>
 <c:include page="~./js/zul.inp.wpd"/>
+<c:include page="~./js/lan.test.wpd"/>
 

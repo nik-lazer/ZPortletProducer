@@ -51,6 +51,9 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 					if (isAuExtension || url.endsWith("wcs") || pathInfo.endsWith(".css.dsp")) {
 						return createResourceUrl(portletResponse, url);
 					}
+					if (url.endsWith("/upload")) {
+						return createResourceUrl(portletResponse, url);
+					}
 					// Запрос ресурса через javax.portlet.ResourceServingPortlet.serveResource()
 					// zk.wcs zk.wpd файлы внутри которых есть урлы для rewrite
 					request.setAttribute(ORACLE_PORTLET_SERVER_USE_STATELESS_PROXYING, Boolean.TRUE);

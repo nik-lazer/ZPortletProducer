@@ -167,11 +167,12 @@
 
 	<servlet>
 		<servlet-name>upload</servlet-name>
-		<servlet-class>FileUploadServlet</servlet-class>
+		<servlet-class>lan.test.portlet.zk.component.fileupload.FileUploadServlet</servlet-class>
 		<init-param>
-			<param-name>lan.test.portlet.zk.component.fileupload.fileStoreClass</param-name>
+			<param-name>fileStoreClass</param-name>
 			<param-value>lan.test.portlet.zk.component.fileupload.GlobalFileUploadStore</param-value>
 		</init-param>
+		<load-on-startup>5</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
