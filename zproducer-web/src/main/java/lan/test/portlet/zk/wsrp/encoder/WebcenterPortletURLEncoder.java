@@ -56,8 +56,11 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 					if (isAuExtension || url.endsWith("wcs") || pathInfo.endsWith(".css.dsp")) {
 						return createResourceUrl(portletResponse, url);
 					}
-					if (!isAuExtension && url.endsWith("/upload")) {
+					if (!isAuExtension && pathInfo.endsWith("/upload")) {
 						return createActionURL(portletResponse, UPLOAD_ACTION_ID);
+					}
+					if (url.endsWith("/upload")) {
+						return createUploadURL((HttpServletRequest) request, portletResponse, super.encodeURL(url));
 					}
 					// Запрос ресурса через javax.portlet.ResourceServingPortlet.serveResource()
 					// zk.wcs zk.wpd файлы внутри которых есть урлы для rewrite
@@ -75,6 +78,10 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 		} else {
 			return defaultEncoder.encodeURL(ctx, request, response, url, defaultEncoder);
 		}
+	}
+
+	protected String createUploadURL(HttpServletRequest httpServletRequest, MimeResponse portletResponse, String url) {
+		return createDefaultPortletUrl(httpServletRequest, portletResponse, url);
 	}
 
 	public static String createResourceUrl(ServletContext ctx, ServletRequest request, ServletResponse response, String uri) throws ServletException {

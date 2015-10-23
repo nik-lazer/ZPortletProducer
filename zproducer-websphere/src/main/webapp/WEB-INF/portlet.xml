@@ -71,17 +71,29 @@
 		<filter-class>lan.test.portlet.zk.wsrp.WebcenterWsrpEncoderFixResourceFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
 	</filter>
-<!--	<filter>
-		<filter-name>zkTraceFilter</filter-name>
-		<filter-class>lan.test.portlet.zk.wsrp.WsrpTraceResourceFilter</filter-class>
+	<filter>
+		<filter-name>applicationContextFilter</filter-name>
+		<filter-class>lan.test.portlet.zk.wsrp.PortletApplicationContextFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
+		<lifecycle>RENDER_PHASE</lifecycle>
+		<lifecycle>ACTION_PHASE</lifecycle>
 	</filter>
-	<filter-mapping>
-		<filter-name>zkTraceFilter</filter-name>
-		<portlet-name>HelloZK</portlet-name>
-	</filter-mapping>-->
+
+	<!--	<filter>
+			<filter-name>zkTraceFilter</filter-name>
+			<filter-class>lan.test.portlet.zk.wsrp.WsrpTraceResourceFilter</filter-class>
+			<lifecycle>RESOURCE_PHASE</lifecycle>
+		</filter>
+		<filter-mapping>
+			<filter-name>zkTraceFilter</filter-name>
+			<portlet-name>HelloZK</portlet-name>
+		</filter-mapping>-->
 	<filter-mapping>
 		<filter-name>zkPortletFilter</filter-name>
+		<portlet-name>HelloZK</portlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>applicationContextFilter</filter-name>
 		<portlet-name>HelloZK</portlet-name>
 	</filter-mapping>
 

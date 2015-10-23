@@ -101,9 +101,26 @@
 		<lifecycle>RENDER_PHASE</lifecycle>
 		<lifecycle>ACTION_PHASE</lifecycle>
 	</filter>
+	<filter>
+		<filter-name>fixUserFilter</filter-name>
+		<filter-class>lan.test.liferay.FixUserPortletFilter</filter-class>
+		<lifecycle>RESOURCE_PHASE</lifecycle>
+		<lifecycle>RENDER_PHASE</lifecycle>
+		<lifecycle>ACTION_PHASE</lifecycle>
+	</filter>
 
 	<filter-mapping>
 		<filter-name>zkPortletFilter</filter-name>
+		<portlet-name>HelloZK</portlet-name>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>applicationContextFilter</filter-name>
+		<portlet-name>HelloZK</portlet-name>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>fixUserFilter</filter-name>
 		<portlet-name>HelloZK</portlet-name>
 	</filter-mapping>
 

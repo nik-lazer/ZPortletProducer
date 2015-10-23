@@ -39,4 +39,9 @@ public class LiferayPortletURLEncoder extends WebcenterPortletURLEncoder impleme
 	protected String createDefaultPortletUrl(HttpServletRequest request, MimeResponse portletResponse, String url) {
 		return WSRPUtils.overwriteWsrpUrl(portletResponse.createResourceURL().toString(), request.getRequestURL().toString(), url);
 	}
+
+	@Override
+	protected String createUploadURL(HttpServletRequest request, MimeResponse portletResponse, String url) {
+		return createResourceUrl(portletResponse, url);
+	}
 }
