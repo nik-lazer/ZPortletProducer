@@ -94,6 +94,14 @@
 		<filter-class>lan.test.portlet.zk.wsrp.WebcenterWsrpEncoderFixResourceFilter</filter-class>
 		<lifecycle>RESOURCE_PHASE</lifecycle>
 	</filter>
+	<filter>
+		<filter-name>applicationContextFilter</filter-name>
+		<filter-class>lan.test.portlet.zk.wsrp.PortletApplicationContextFilter</filter-class>
+		<lifecycle>RESOURCE_PHASE</lifecycle>
+		<lifecycle>RENDER_PHASE</lifecycle>
+		<lifecycle>ACTION_PHASE</lifecycle>
+	</filter>
+
 	<filter-mapping>
 		<filter-name>zkPortletFilter</filter-name>
 		<portlet-name>HelloZK</portlet-name>

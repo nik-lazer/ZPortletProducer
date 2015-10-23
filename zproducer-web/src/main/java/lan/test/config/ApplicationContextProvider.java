@@ -17,6 +17,8 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 
 	private static ApplicationContext context;
 
+	private static ThreadLocal<ApplicationContext> threadLocal = new ThreadLocal<ApplicationContext>();
+
 	public static ApplicationContext getApplicationContext() {
 		return context;
 	}
@@ -49,4 +51,13 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 	public static Cache getPortletSessionCache() {
 		return context.getBean("portletSessionCache", Cache.class);
 	}
+
+	public static ApplicationContext getThreadApplicationContext() {
+		return threadLocal.get();
+	}
+
+	public static void setThreadApplicationContext(ApplicationContext applicationContext) {
+		threadLocal.set(applicationContext);
+	}
+
 }

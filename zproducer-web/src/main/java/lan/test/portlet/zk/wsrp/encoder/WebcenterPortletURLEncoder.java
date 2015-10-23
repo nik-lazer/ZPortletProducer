@@ -5,8 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zkoss.web.servlet.http.Encodes;
 import org.zkoss.web.util.resource.ClassWebResource;
+import org.zkoss.zk.ui.Execution;
+import org.zkoss.zk.ui.Executions;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,6 +36,7 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 	public static final String ORACLE_WEBCENTER_PORTLET_RESPONSE = "oracle.webcenter.portlet.response";
 
 	public static final String CREATE_RESOURCE_URL = "create.resource.url";
+	public static final String UPLOAD_ACTION_ID = "upload";
 
 	@Override
 	public String encodeURL(final ServletContext ctx, final ServletRequest request, ServletResponse response, String url, Encodes.URLEncoder defaultEncoder) throws Exception {
@@ -51,8 +56,8 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 					if (isAuExtension || url.endsWith("wcs") || pathInfo.endsWith(".css.dsp")) {
 						return createResourceUrl(portletResponse, url);
 					}
-					if (url.endsWith("/upload")) {
-						return createResourceUrl(portletResponse, url);
+					if (!isAuExtension && url.endsWith("/upload")) {
+						return createActionURL(portletResponse, UPLOAD_ACTION_ID);
 					}
 					// Запрос ресурса через javax.portlet.ResourceServingPortlet.serveResource()
 					// zk.wcs zk.wpd файлы внутри которых есть урлы для rewrite
@@ -86,6 +91,18 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 		resourceURL.setResourceID(url);
 		return resourceURL.toString();
 	}
+
+	private String createActionURL(MimeResponse portletResponse, String actionId) {
+		PortletURL actionURL = portletResponse.createActionURL();
+		actionURL.setParameter(ActionRequest.ACTION_NAME, actionId);
+		return actionURL.toString();
+	}
+
+	public static String encodeActionURL(String uri) {
+		Execution current = Executions.getCurrent();
+		return current.encodeURL(uri);
+	}
+
 
 	protected String createDefaultPortletUrl(HttpServletRequest request, MimeResponse portletResponse, String url) {
 		return url;

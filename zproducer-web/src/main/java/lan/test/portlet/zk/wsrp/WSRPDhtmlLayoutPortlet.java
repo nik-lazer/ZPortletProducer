@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.portlet.util.PortletUtils;
 import org.zkoss.lang.Classes;
 import org.zkoss.lang.Exceptions;
 import org.zkoss.lang.Library;
@@ -48,12 +49,15 @@ import org.zkoss.zk.ui.sys.UiFactory;
 import org.zkoss.zk.ui.sys.WebAppCtrl;
 import org.zkoss.zk.ui.util.DesktopRecycle;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.ClientDataRequest;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
+import javax.portlet.ProcessAction;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -512,6 +516,25 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		//Portlets doesn't support PASS_THRU_ATTR yet (because
 		//protlet request will mangle attribute name)
 	}
+
+	@ProcessAction(name = WebcenterPortletURLEncoder.UPLOAD_ACTION_ID)
+	public void upload(ActionRequest request, ActionResponse response) throws PortletException {
+		final WebManager webman = getWebManager();
+		final WebApp wapp = webman.getWebApp();
+
+		final HttpServletRequest httpServletRequest = PortletUtils.getNativeRequest(request, HttpServletRequest.class);
+		HttpServletRequestWrapper httpreq = new ClientDataHttpServletRequestWrapper(httpServletRequest, request);
+		final HttpServletResponse httpres = PortletUtils.getNativeResponse(response, HttpServletResponse.class);
+
+		FileUploadServlet uploadServlet = FileUploadServlet.getFileUploadServlet(wapp);
+		try {
+			uploadServlet.process(httpreq, httpres);
+		} catch (ServletException | IOException e) {
+			log.error("File upload by portlet error", e);
+		}
+
+	}
+
 
 	/**
 	 * Returns the main page of the desktop.

@@ -1,5 +1,6 @@
 package lan.test.portlet.zk.component.fileupload;
 
+import lan.test.portlet.zk.wsrp.encoder.WebcenterPortletURLEncoder;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -41,7 +42,7 @@ public class CustomFileUpload extends HtmlBasedComponent implements UiLifeCycle,
 
 		private List<FileItem> files = newArrayList();
 
-		String url = Executions.getCurrent().encodeURL("/upload");
+		String url = WebcenterPortletURLEncoder.encodeActionURL("/upload");
 
 		// default true
 		boolean multiple;
