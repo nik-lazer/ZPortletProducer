@@ -11,6 +11,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:applicationContext.xml,
+			classpath:websphere-authContext.xml,
 			classpath:weblogic-browserHistoryContext.xml,
 		</param-value>
 	</context-param>

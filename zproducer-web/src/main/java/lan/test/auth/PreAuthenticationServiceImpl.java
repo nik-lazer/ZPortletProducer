@@ -1,5 +1,6 @@
 package lan.test.auth;
 
+import javax.portlet.PortletRequest;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,12 @@ public class PreAuthenticationServiceImpl implements PreAuthenticationService {
 	@Override
 	public void preAuth(ServletRequest servletRequest) {
 		String userName = ((HttpServletRequest) servletRequest).getRemoteUser();
+		preAuth(servletRequest, userName);
+	}
+
+	@Override
+	public void preAuth(PortletRequest portletRequest, ServletRequest servletRequest) {
+		String userName = portletRequest.getRemoteUser();
 		preAuth(servletRequest, userName);
 	}
 

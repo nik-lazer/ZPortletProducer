@@ -117,7 +117,7 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			throws PortletException, IOException {
 		HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWrapper<PortletRequest>(httpServletRequest, request);
-		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
+		ApplicationContextProvider.getPreAuthService().preAuth(request, httpreq);
 		//try parameter first and then attribute
 		boolean bRichlet = false;
 		String path = request.getParameter(ATTR_PAGE);

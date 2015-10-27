@@ -11,40 +11,10 @@ import javax.annotation.Resource;
  */
 @Component("config")
 public class ConfigBean {
-	@Value("${resources.context.prefix:Application1-Portal-context-root}")
-	private String resContextPrefix;
-	@Value("${resources.context.suffix:/resourceproxy/cache/portlets/resources}")
-	private String resContextSuffix;
-	@Value("${resources.portlet.keyword:adfportlet}")
-	private String resPortletKeyword;
 	@Value("${history.needRewriteUrl:false}")
 	private Boolean needRewriteUrl;
 
 	private String homeDir;
-
-	public String getResContextPrefix() {
-		return resContextPrefix;
-	}
-
-	public void setResContextPrefix(String resContextPrefix) {
-		this.resContextPrefix = resContextPrefix;
-	}
-
-	public String getResContextSuffix() {
-		return resContextSuffix;
-	}
-
-	public void setResContextSuffix(String resContextSuffix) {
-		this.resContextSuffix = resContextSuffix;
-	}
-
-	public String getResPortletKeyword() {
-		return resPortletKeyword;
-	}
-
-	public void setResPortletKeyword(String resPortletKeyword) {
-		this.resPortletKeyword = resPortletKeyword;
-	}
 
 	public Boolean isNeedRewriteUrl() {
 		return needRewriteUrl;

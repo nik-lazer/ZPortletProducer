@@ -6,29 +6,15 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	<beans profile="!tomeee">
 		<bean id="config" class="lan.test.config.ConfigBean">
-			<property name="resContextPrefix" value="${resources.context.prefix}"/>
-			<property name="resContextSuffix" value="${resources.context.suffix}"/>
-			<property name="resPortletKeyword" value="${resources.portlet.keyword}"/>
 			<property name="needRewriteUrl" value="${history.needRewriteUrl}"/>
 		</bean>
 	</beans>
 
 	<beans profile="tomee">
 		<bean id="config" class="lan.test.config.ConfigBean">
-			<property name="resContextPrefix" value="${resources.context.prefix}"/>
-			<property name="resContextSuffix" value="${resources.context.suffix}"/>
-			<property name="resPortletKeyword" value="${resources.portlet.keyword}"/>
 			<property name="needRewriteUrl" value="${history.needRewriteUrl}"/>
 			<property name="homeDir" value="#{jndiRes}/"/>
 		</bean>
-	</beans>
-
-	<beans profile="websphere">
-		<bean id="preAuthenticationService" class="lan.test.auth.WebspherePreAuthenticationImpl"/>
-	</beans>
-
-	<beans profile="!websphere">
-		<bean id="preAuthenticationService" class="lan.test.auth.PreAuthenticationServiceImpl"/>
 	</beans>
 
 	<beans>
