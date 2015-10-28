@@ -93,12 +93,16 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 	 * The parameter or attribute to removing gzip-compressing form request headers
 	 */
 	private static final String ATTR_REMOVE_COMPRESS = "remove_compress_headers";
+	private static final String ATTR_REMOTE_USER = "attr_remote_user";
 	/** The default page. */
 	private String _defpage;
 	/** Check if support JSR 286 */
 	private boolean isJSR286 = true;
 
 	private boolean removeCompressHeaders = false;
+
+	private String attrRemoteUser;
+
 
 	public void init() throws PortletException {
 		_defpage = getPortletConfig().getInitParameter(ATTR_PAGE);
@@ -111,13 +115,14 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		if (Boolean.parseBoolean(removeCompressHeadersValue)) {
 			removeCompressHeaders = Boolean.valueOf(removeCompressHeadersValue);
 		}
+		attrRemoteUser = getPortletConfig().getInitParameter(ATTR_REMOTE_USER);
 	}
 
 	protected void doView(RenderRequest request, RenderResponse response)
 			throws PortletException, IOException {
 		HttpServletRequest httpServletRequest = RenderHttpServletRequest.getInstance(request);
 		HttpServletRequestWrapper httpreq = new PortletHttpServletRequestWrapper<PortletRequest>(httpServletRequest, request);
-		ApplicationContextProvider.getPreAuthService().preAuth(request, httpreq);
+		ApplicationContextProvider.getPreAuthService().preAuth(httpreq);
 		//try parameter first and then attribute
 		boolean bRichlet = false;
 		String path = request.getParameter(ATTR_PAGE);
@@ -595,6 +600,15 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 			}
 			return super.getContentType();
 		}
+
+		@Override
+		public String getRemoteUser() {
+			if (attrRemoteUser != null) {
+				return (String) portletRequest.getPortletSession().getAttribute(attrRemoteUser);
+			}
+			return super.getRemoteUser();
+		}
+
 	}
 
 	class ClientDataHttpServletRequestWrapper extends PortletHttpServletRequestWrapper<ClientDataRequest> {
