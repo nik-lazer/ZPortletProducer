@@ -56,9 +56,6 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 					if (isAuExtension || url.endsWith("wcs") || pathInfo.endsWith(".css.dsp")) {
 						return createResourceUrl(portletResponse, url);
 					}
-					if (!isAuExtension && pathInfo.endsWith("/upload")) {
-						return createActionURL(portletResponse, UPLOAD_ACTION_ID);
-					}
 					if (url.endsWith("/upload")) {
 						return createUploadURL((HttpServletRequest) request, portletResponse, super.encodeURL(url));
 					}
@@ -97,12 +94,6 @@ public class WebcenterPortletURLEncoder implements Encodes.URLEncoder {
 		ResourceURL resourceURL = portletResponse.createResourceURL();
 		resourceURL.setResourceID(url);
 		return resourceURL.toString();
-	}
-
-	private String createActionURL(MimeResponse portletResponse, String actionId) {
-		PortletURL actionURL = portletResponse.createActionURL();
-		actionURL.setParameter(ActionRequest.ACTION_NAME, actionId);
-		return actionURL.toString();
 	}
 
 	public static String encodeActionURL(String uri) {

@@ -522,25 +522,6 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 		//protlet request will mangle attribute name)
 	}
 
-	@ProcessAction(name = WebcenterPortletURLEncoder.UPLOAD_ACTION_ID)
-	public void upload(ActionRequest request, ActionResponse response) throws PortletException {
-		final WebManager webman = getWebManager();
-		final WebApp wapp = webman.getWebApp();
-
-		final HttpServletRequest httpServletRequest = PortletUtils.getNativeRequest(request, HttpServletRequest.class);
-		HttpServletRequestWrapper httpreq = new ClientDataHttpServletRequestWrapper(httpServletRequest, request);
-		final HttpServletResponse httpres = PortletUtils.getNativeResponse(response, HttpServletResponse.class);
-
-		FileUploadServlet uploadServlet = FileUploadServlet.getFileUploadServlet(wapp);
-		try {
-			uploadServlet.process(httpreq, httpres);
-		} catch (ServletException | IOException e) {
-			log.error("File upload by portlet error", e);
-		}
-
-	}
-
-
 	/**
 	 * Returns the main page of the desktop.
 	 * It assumes there is at most one main page (that is, a page without owner)

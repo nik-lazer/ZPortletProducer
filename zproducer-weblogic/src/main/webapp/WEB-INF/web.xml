@@ -148,6 +148,21 @@
 		<url-pattern>/snoop</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>lan.test.portlet.zk.component.fileupload.FileUploadServlet</servlet-class>
+		<init-param>
+			<param-name>fileStoreClass</param-name>
+			<param-value>lan.test.portlet.zk.component.fileupload.GlobalFileUploadStore</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+
 	<!-- /////////// -->
 	<!-- [Optional] Session timeout -->
 	<session-config>
