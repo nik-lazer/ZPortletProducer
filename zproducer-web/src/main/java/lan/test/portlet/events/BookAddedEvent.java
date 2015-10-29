@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class BookAddedEvent implements Serializable {
 	private String name;
 	private String author;
-	private Long isbnNumber;
+	private String isbnNumber;
 	private String category;
 
 	public BookAddedEvent() {
@@ -39,10 +39,10 @@ public class BookAddedEvent implements Serializable {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public Long getIsbnNumber() {
+	public String getIsbnNumber() {
 		return isbnNumber;
 	}
-	public void setIsbnNumber(Long isbnNumber) {
+	public void setIsbnNumber(String isbnNumber) {
 		this.isbnNumber = isbnNumber;
 	}
 	public String getCategory() {

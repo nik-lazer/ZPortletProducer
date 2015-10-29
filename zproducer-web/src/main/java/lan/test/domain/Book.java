@@ -1,7 +1,7 @@
 package lan.test.domain;
 
 /**
- * TODO: comment
+ * Entity for samples
  * @author lazarev_nv 10.06.2013   15:28
  */
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Book {
 	private String name;
 	private String author;
-	private Long isbnNumber;
+	private String isbnNumber;
 	private String category;
 	private boolean preferredBook;
 
-	public Book(String category, String name, String author, long isbnNumber) {
+	public Book(String category, String name, String author, String isbnNumber) {
 		this.category = category;
 		this.name = name;
 		this.author = author;
@@ -43,11 +43,11 @@ public class Book {
 		this.author = author;
 	}
 
-	public Long getIsbnNumber() {
+	public String getIsbnNumber() {
 		return isbnNumber;
 	}
 
-	public void setIsbnNumber(Long isbnNumber) {
+	public void setIsbnNumber(String isbnNumber) {
 		this.isbnNumber = isbnNumber;
 	}
 
@@ -60,7 +60,10 @@ public class Book {
 	@Override
 	public boolean equals(Object otherObject) {
 		Book otherBook = (Book)otherObject;
-		if(otherBook.getIsbnNumber() == this.isbnNumber) {
+		if ((isbnNumber == null) || (otherBook.isbnNumber == null)) {
+			return false;
+		}
+		if(otherBook.getIsbnNumber().equals(this.isbnNumber)) {
 			return true;
 		} else {
 			return false;

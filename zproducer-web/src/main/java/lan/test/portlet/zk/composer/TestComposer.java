@@ -2,6 +2,7 @@ package lan.test.portlet.zk.composer;
 
 import lan.test.config.ApplicationContextProvider;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
+import lan.test.portlet.zk.util.DocsHelper;
 import lan.test.portlet.zk.util.UIUtils;
 import org.zkoss.zhtml.Filedownload;
 import org.zkoss.zk.ui.Component;
@@ -39,7 +40,9 @@ public class TestComposer extends SelectorComposer<Window> {
 	@Wire
 	private Button histButton;
 	@Wire
-	private Button downloadButton;
+	private Button txtDownloadButton;
+	@Wire
+	private Button xlsDownloadButton;
 	@Wire
 	private Button uploadButton;
 	@Wire
@@ -79,16 +82,21 @@ public class TestComposer extends SelectorComposer<Window> {
 		webBrowserHistoryManager.popUrlFromStackAndReplace();
 	}
 
-	@Listen("onClick = button#downloadButton")
-	public void dowloadFile() {
+	@Listen("onClick = button#txtDownloadButton")
+	public void downloadTextFile() {
 		String text = "File to download";
 		InputStream inputStream = null;
 		try {
 			inputStream = new ByteArrayInputStream(text.getBytes("UTF-8"));
-			Filedownload.save(inputStream, "application/octet-stream", resolveFileName(Calendar.getInstance()));
+			Filedownload.save(inputStream, "application/octet-stream", resolveFileName("print", "txt", Calendar.getInstance()));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Listen("onClick = button#xlsDownloadButton")
+	public void downloadBinaryFile() {
+		Filedownload.save(DocsHelper.createXls(), "application/vnd.ms-excel", resolveFileName("books", "xls", Calendar.getInstance()));
 	}
 
 	@Listen("onClick = button#actionButton")

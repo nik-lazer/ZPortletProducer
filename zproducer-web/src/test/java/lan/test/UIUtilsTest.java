@@ -21,7 +21,7 @@ public class UIUtilsTest {
 		c.set(Calendar.HOUR_OF_DAY, 13);
 		c.set(Calendar.MINUTE, 26);
 		c.set(Calendar.SECOND, 49);
-		String name = UIUtils.resolveFileName(c);
+		String name = UIUtils.resolveFileName("print", "txt", c);
 		assertEquals("print-25-05-2015 1326-49.txt", name);
 	}
 }

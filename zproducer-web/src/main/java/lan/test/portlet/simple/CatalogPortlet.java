@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Random;
 
 /**
- * TODO: comment
  * @author lazarev_nv 10.06.2013   12:14
  */
 public class CatalogPortlet extends GenericPortlet {
@@ -34,14 +33,14 @@ public class CatalogPortlet extends GenericPortlet {
 		Book book = new Book();
 		book.setAuthor("Author");
 		book.setCategory("Category");
-                Random random = new Random(); 
-		book.setIsbnNumber(random.nextLong());
+		Random random = new Random();
+		book.setIsbnNumber(new Long(random.nextLong()).toString());
 		book.setName("Name");
 		book.setPreferredBook(true);
 		//QName eventName = new QName("http://www.mynamespace.com", "bookAddedEvent");
 		//response.setEvent(eventName, new BookAddedEvent(book));
 		//response.setEvent(eventName, "Event!!!");
-		response.setRenderParameter("location", book.getIsbnNumber().toString());
+		response.setRenderParameter("location", book.getIsbnNumber());
 	}
 
 //	public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {

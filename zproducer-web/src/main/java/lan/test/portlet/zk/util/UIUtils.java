@@ -40,8 +40,8 @@ public class UIUtils implements WebAppInit {
 		return servletContextPath;
 	}
 
-	public static String resolveFileName(Calendar calendar) {
-		String format = "print-%td-%1$tm-%1$tY %1$tH%1$tM-%1$tS.txt";
+	public static String resolveFileName(String prefix, String extension, Calendar calendar) {
+		String format = prefix + "-%td-%1$tm-%1$tY %1$tH%1$tM-%1$tS." + extension;
 		return String.format(format, calendar);
 	}
 
