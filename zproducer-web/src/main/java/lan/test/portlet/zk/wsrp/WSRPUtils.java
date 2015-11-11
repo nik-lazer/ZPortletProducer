@@ -1,12 +1,18 @@
 package lan.test.portlet.zk.wsrp;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zkoss.lang.Strings;
 import org.zkoss.web.servlet.http.Encodes;
 
+import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,5 +74,50 @@ public class WSRPUtils {
 			log.error("Creating static URL encoding error", e);
 		}
 		return resourceUrl.replace("wsrp_rewrite?wsrp-urlType=resource&", "wsrp_rewrite?wsrp-urlType=resource&wsrp-url=" + encodedUrl + "&");
+	}
+
+	/**
+	 * Sets Content-Disposition for getting correct downloaded file name. It needs because Zkoss doesn't set this header properly
+	 * (at least in versions 7.0.1 and 7.0.4)
+	 * @param response
+	 * @param httpreq
+	 * @param resourceID
+	 * @throws UnsupportedEncodingException
+	 */
+	public static void fixContentDisposition(PortletResponse response, HttpServletRequest httpreq, String resourceID) throws UnsupportedEncodingException {
+		String fileName = URLDecoder.decode(resourceID.substring(resourceID.lastIndexOf("/") + 1), "UTF-8");
+		String contentDisposition = "attachment";
+		if (StringUtils.isNotEmpty(fileName)) {
+			contentDisposition += ";filename=" + encodeFilename(httpreq, fileName);
+		}
+		response.setProperty("Content-Disposition", contentDisposition);
+	}
+
+	/**
+	 * Method copied from {@link org.zkoss.web.servlet.http.Https.encodeFilename()} for using in WSRP portlet
+	 * @param request
+	 * @param filename
+	 * @return
+	 */
+	@SuppressWarnings("ALL")
+	public static String encodeFilename(HttpServletRequest request, String filename) {
+		String agent = request.getHeader("USER-AGENT");
+		if (agent != null) {
+			try {
+				if (agent.contains("Trident")) {
+					filename = URLEncoder.encode(filename, "UTF-8");
+				} else if (agent.contains("Mozilla")) {
+					byte[] bytes = filename.getBytes("UTF-8");
+					filename = "";
+					for (byte b: bytes) {
+						filename += (char)(b & 0xff);
+					}
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return '"' + Strings.escape(filename, "\"") + '"';
 	}
 }

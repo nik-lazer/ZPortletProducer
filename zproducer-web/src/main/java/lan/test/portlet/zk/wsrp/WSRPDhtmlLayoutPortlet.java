@@ -72,6 +72,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -240,8 +241,13 @@ public class WSRPDhtmlLayoutPortlet extends GenericPortlet {
 
 				Charsets.setup(null, httpreq, httpres, "UTF-8");
 				try {
+					boolean isView = "view".equals(auExtensionName);
+					// For Liferay we have to fix header before calling method service
+					if (isView) {
+						WSRPUtils.fixContentDisposition(response, httpreq, resourceID);
+					}
 					aue.service(httpreq, httpres, pathInfo);
-					if ("view".equals(auExtensionName)) {
+					if (isView) {
 						response.setContentType("application/octet-stream");
 					}
 				} finally {
