@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -115,7 +116,7 @@ public class FileUploadServlet extends HttpServlet implements FileUploadSpecific
 			for (FileItem item : fileItems) {
 				if (!item.isFormField()) {
 					g.writeStartObject();
-					g.writeStringField(FILE_NAME_KEY, item.getName());
+					g.writeStringField(FILE_NAME_KEY, URLDecoder.decode(item.getName(), "UTF-8"));
 					g.writeNumberField(FILE_SIZE_KEY, item.getSize());
 					g.writeStringField(CONTEN_ID_KEY, contentId);
 

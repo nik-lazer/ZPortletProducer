@@ -16,7 +16,7 @@
 	'use strict';
 	if (typeof define === 'function' && define.amd) {
 		// Register as an anonymous AMD module:
-		define(['../portlet01/js/jquery'], factory);
+		define(['jquery'], factory);
 	} else {
 		// Browser globals:
 		factory(window.jQuery);
