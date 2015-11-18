@@ -1,5 +1,6 @@
 package lan.test.portlet.zk.wsrp;
 
+import com.google.common.io.BaseEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,8 @@ import java.util.regex.Pattern;
 public class WSRPUtils {
 	private static String replacement;
 	private static Pattern pattern;
+	private static Pattern decodeJSPattern;
+	private static Pattern hexPattern;
 
 	private static final Logger log = LoggerFactory.getLogger(WSRPUtils.class);
 
@@ -30,6 +33,9 @@ public class WSRPUtils {
 		String regex = "(?<prefix>[^\\/])wsrp_rewrite(?<suffix>[^\\?])";
 		replacement = "${prefix}/wsrp_rewrite${suffix}";
 		pattern = Pattern.compile(regex);
+		String decodeJSRegex = "wsrp_rewrite\\\\x3F.*?\\\\x2Fwsrp_rewrite";
+		decodeJSPattern = Pattern.compile(decodeJSRegex);
+		hexPattern = Pattern.compile("\\\\x[0-9A-F]{2}+");
 	}
 
 	/**
@@ -119,5 +125,29 @@ public class WSRPUtils {
 		}
 
 		return '"' + Strings.escape(filename, "\"") + '"';
+	}
+
+	public static String decodeJavaScript(String data) {
+		StringBuilder response = new StringBuilder();
+
+		Matcher matcher = decodeJSPattern.matcher(data);
+		int mainIndex = 0;
+		while (matcher.find()) {
+			StringBuilder sb = new StringBuilder();
+			String match = matcher.group();
+			Matcher hexMatcher = hexPattern.matcher(match);
+			int index = 0;
+			while (hexMatcher.find()) {
+				String symbol = hexMatcher.group();
+				String decoded = new String(BaseEncoding.base16().decode(symbol.replace("\\x", "")));
+				sb.append(match.substring(index, hexMatcher.start())).append(decoded);
+				index = hexMatcher.end();
+			}
+			sb.append(match.substring(index));
+			response.append(data.substring(mainIndex, matcher.start())).append(sb);
+			mainIndex = matcher.end();
+		}
+		response.append(data.substring(mainIndex));
+		return response.toString();
 	}
 }
