@@ -18,6 +18,7 @@
 	    </hlayout>
 		<button id="actionButton" label="action"/>
 	    <button id="uploadButton" label="upload"/>
+	    <button id="jndiButton" label="JNDI test"/>
     </vlayout>
 </window>
 </zk>

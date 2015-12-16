@@ -60,4 +60,12 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 		threadLocal.set(applicationContext);
 	}
 
+	public static JNDIBean getJNDIBean() {
+		try {
+			return context.getBean("jndiBean", JNDIBean.class);
+		} catch (BeansException e) {
+			return null;
+		}
+	}
+
 }

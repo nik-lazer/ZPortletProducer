@@ -13,7 +13,7 @@
 			classpath:applicationContext.xml,
 			classpath:remote-authContext.xml,
 			classpath:weblogic-browserHistoryContext.xml,
-			classpath:tomeeJndiContext.xml,
+			classpath:wso2JndiContext.xml,
 			classpath:jndiBaseContext.xml,
 			classpath:rmiContext.xml,
 		</param-value>

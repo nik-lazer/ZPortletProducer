@@ -15,6 +15,7 @@
 		<module>zproducer-websphere-ear</module>
 		<module>zproducer-rmi</module>
 		<module>custom-theme</module>
+		<module>zproducer-wso2as</module>
 	</modules>
 	<packaging>pom</packaging>
 	<properties>
@@ -56,4 +57,11 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+	</dependencies>
 </project>

@@ -1,6 +1,7 @@
 package lan.test.portlet.zk.composer;
 
 import lan.test.config.ApplicationContextProvider;
+import lan.test.config.JNDIBean;
 import lan.test.portlet.zk.history.WebBrowserHistoryManager;
 import lan.test.portlet.zk.util.DocsHelper;
 import lan.test.portlet.zk.util.UIUtils;
@@ -16,6 +17,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import javax.portlet.PortletRequest;
@@ -113,5 +115,15 @@ public class TestComposer extends SelectorComposer<Window> {
 		Window window = UIUtils.loadComponentFromZul("/WEB-INF/zul/upload.zul");
 		window.setPosition("center");
 		window.doModal();
+	}
+
+	@Listen("onClick = button#jndiButton")
+	public void showJNDI() {
+		JNDIBean jndiBean = ApplicationContextProvider.getJNDIBean();
+		String message = "empty";
+		if (jndiBean != null) {
+			message = jndiBean.getHomeDir();
+		}
+		Messagebox.show(message);
 	}
 }
