@@ -8,6 +8,7 @@
 			classpath:applicationContext.xml,
 			classpath:remote-authContext.xml,
 			classpath:browserHistoryContext.xml,
+			classpath:lockContext.xml,
 		</param-value>
 	</context-param>
 
@@ -156,6 +157,17 @@
 			<param-value>lan.test.portlet.zk.component.fileupload.GlobalFileUploadStore</param-value>
 		</init-param>
 	</servlet>
+
+	<servlet>
+		<servlet-name>lockServlet</servlet-name>
+		<servlet-class>lan.test.lock.servlet.LockServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>lockServlet</servlet-name>
+		<url-pattern>/lock</url-pattern>
+	</servlet-mapping>
+
 
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>

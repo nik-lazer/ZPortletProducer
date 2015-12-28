@@ -16,6 +16,7 @@
 			classpath:wso2JndiContext.xml,
 			classpath:jndiBaseContext.xml,
 			classpath:rmiContext.xml,
+			classpath:lockContext.xml,
 		</param-value>
 	</context-param>
 
@@ -142,6 +143,17 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<servlet>
+		<servlet-name>lockServlet</servlet-name>
+		<servlet-class>lan.test.lock.servlet.LockServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>lockServlet</servlet-name>
+		<url-pattern>/lock</url-pattern>
+	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>dspLoader</servlet-name>
 		<url-pattern>*.dsp</url-pattern>
